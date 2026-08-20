@@ -1,0 +1,259 @@
+{
+  "$schema": "./project.schema.json",
+  "project": "HouseStuff",
+  "updatedAt": "2026-08-20",
+  "status": "onTrack",
+  "currentStageId": "M4",
+  "stages": [
+    {
+      "id": "M0",
+      "name": "Fundação",
+      "outcome": "Projetos executáveis, governança e acompanhamento em fonte única"
+    },
+    {
+      "id": "M1",
+      "name": "Acesso",
+      "outcome": "Administrador cria usuários e cada pessoa consegue entrar"
+    },
+    {
+      "id": "M2",
+      "name": "Residência",
+      "outcome": "Uma casa reúne vários usuários com isolamento seguro"
+    },
+    {
+      "id": "M3",
+      "name": "Potes",
+      "outcome": "Potes podem ser criados e organizados"
+    },
+    {
+      "id": "M4",
+      "name": "Tarefas",
+      "outcome": "Tarefas únicas, reutilizáveis e recorrentes podem ser cadastradas"
+    },
+    {
+      "id": "M5",
+      "name": "Sorteio",
+      "outcome": "Usuário escolhe um pote, aceita a tarefa sorteada ou pede outra"
+    },
+    {
+      "id": "M6",
+      "name": "Rotina",
+      "outcome": "Conclusões e próximas disponibilidades são registradas"
+    },
+    {
+      "id": "M7",
+      "name": "Calendário",
+      "outcome": "Usuário acompanha disponibilidade e histórico da própria casa"
+    },
+    {
+      "id": "M8",
+      "name": "Entrega",
+      "outcome": "Ambiente local reproduzível, responsivo e validado ponta a ponta"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "HOUSE-001",
+      "stageId": "M0",
+      "area": "Geral",
+      "repository": "both",
+      "type": "technical",
+      "title": "Fundação e documentação do HouseStuff",
+      "status": "completed",
+      "result": "API .NET 10 e frontend executáveis, documentação canônica e tela de acompanhamento conectada à fonte única.",
+      "subtasks": [
+        {
+          "id": "HOUSE-001-01",
+          "title": "Governança e decisões",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-001-02",
+          "title": "Fundação backend",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-001-03",
+          "title": "Fundação frontend e acompanhamento",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-001-04",
+          "title": "Fonte única e geração documental",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-001-05",
+          "title": "Validação reproduzível",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-010",
+      "stageId": "M1",
+      "area": "Geral",
+      "repository": "both",
+      "type": "feature",
+      "title": "Autenticação e administração de usuários",
+      "status": "completed",
+      "result": "Administrador cria um usuário e a pessoa entra pela tela real.",
+      "subtasks": [
+        {
+          "id": "HOUSE-010-01",
+          "title": "Persistência e identidade no backend",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-010-02",
+          "title": "Endpoints de sessão e administração",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-010-03",
+          "title": "Login e área autenticada no frontend",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-010-04",
+          "title": "Criação de usuário pelo administrador",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-010-05",
+          "title": "Integração, testes e documentação",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-020",
+      "stageId": "M2",
+      "area": "Geral",
+      "repository": "both",
+      "type": "feature",
+      "title": "Residência e isolamento dos dados",
+      "status": "completed",
+      "result": "Usuários veem apenas os dados da própria casa.",
+      "subtasks": [
+        {
+          "id": "HOUSE-020-01",
+          "title": "Domínio, vínculo único e migration",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-020-02",
+          "title": "Casos de uso e endpoints isolados",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-020-03",
+          "title": "Criação e visualização da residência",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-020-04",
+          "title": "Associação administrativa de moradores",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-020-05",
+          "title": "Integração, isolamento e documentação",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-030",
+      "stageId": "M3",
+      "area": "Geral",
+      "repository": "both",
+      "type": "feature",
+      "title": "Cadastro e organização dos potes",
+      "status": "completed",
+      "result": "Administrador mantém potes e usuários visualizam os potes disponíveis.",
+      "subtasks": [
+        {
+          "id": "HOUSE-030-01",
+          "title": "Domínio, persistência e migration",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-030-02",
+          "title": "Casos de uso e endpoints isolados",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-030-03",
+          "title": "Manutenção administrativa dos potes",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-030-04",
+          "title": "Visualização dos potes pelos moradores",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-030-05",
+          "title": "Integração, isolamento e documentação",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-040",
+      "stageId": "M4",
+      "area": "Geral",
+      "repository": "both",
+      "type": "feature",
+      "title": "Cadastro de tarefas",
+      "status": "pending",
+      "result": "Tarefas únicas, reutilizáveis e recorrentes são mantidas pela interface.",
+      "subtasks": []
+    },
+    {
+      "id": "HOUSE-050",
+      "stageId": "M5",
+      "area": "Geral",
+      "repository": "both",
+      "type": "feature",
+      "title": "Sorteio, aceite e troca de tarefa",
+      "status": "pending",
+      "result": "Usuário escolhe um pote, vê uma tarefa elegível, aceita ou pede outra.",
+      "subtasks": []
+    },
+    {
+      "id": "HOUSE-060",
+      "stageId": "M6",
+      "area": "Geral",
+      "repository": "both",
+      "type": "feature",
+      "title": "Conclusão e recorrência",
+      "status": "pending",
+      "result": "Conclusão encerra tarefa única ou calcula a próxima disponibilidade.",
+      "subtasks": []
+    },
+    {
+      "id": "HOUSE-070",
+      "stageId": "M7",
+      "area": "Geral",
+      "repository": "both",
+      "type": "feature",
+      "title": "Calendário e histórico",
+      "status": "pending",
+      "result": "Usuário consulta calendário e histórico reais da própria casa.",
+      "subtasks": []
+    },
+    {
+      "id": "HOUSE-080",
+      "stageId": "M8",
+      "area": "Geral",
+      "repository": "both",
+      "type": "technical",
+      "title": "Qualidade e entrega local",
+      "status": "pending",
+      "result": "Projeto completo inicia por roteiro único e possui validação ponta a ponta.",
+      "subtasks": []
+    }
+  ]
+}
