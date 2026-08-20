@@ -23,6 +23,19 @@ export type Pot = {
   isActive: boolean;
 };
 
+export type HouseholdTaskKind = "oneTime" | "reusable" | "recurring";
+
+export type HouseholdTask = {
+  id: string;
+  potId: string;
+  potName: string;
+  name: string;
+  description: string | null;
+  kind: HouseholdTaskKind;
+  recurrenceDays: number | null;
+  isActive: boolean;
+};
+
 type Problem = { title?: string; detail?: string; code?: string };
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5049";
@@ -74,4 +87,13 @@ export const potApi = {
   update: (id: string, input: { name: string; description: string }) => request<Pot>(`/api/v1/admin/pots/${id}`, { method: "PUT", body: JSON.stringify(input) }),
   setActive: (id: string, isActive: boolean) => request<Pot>(`/api/v1/admin/pots/${id}/status`, { method: "PATCH", body: JSON.stringify({ isActive }) }),
   move: (id: string, offset: number) => request<Pot[]>(`/api/v1/admin/pots/${id}/move`, { method: "POST", body: JSON.stringify({ offset }) }),
+};
+
+export const householdTaskApi = {
+  listAdmin: (potId?: string) => request<HouseholdTask[]>(`/api/v1/admin/tasks${potId ? `?potId=${encodeURIComponent(potId)}` : ""}`),
+  create: (input: { potId: string; name: string; description: string; kind: HouseholdTaskKind; recurrenceDays: number | null }) =>
+    request<HouseholdTask>("/api/v1/admin/tasks", { method: "POST", body: JSON.stringify(input) }),
+  update: (id: string, input: { potId: string; name: string; description: string; kind: HouseholdTaskKind; recurrenceDays: number | null }) =>
+    request<HouseholdTask>(`/api/v1/admin/tasks/${id}`, { method: "PUT", body: JSON.stringify(input) }),
+  setActive: (id: string, isActive: boolean) => request<HouseholdTask>(`/api/v1/admin/tasks/${id}/status`, { method: "PATCH", body: JSON.stringify({ isActive }) }),
 };

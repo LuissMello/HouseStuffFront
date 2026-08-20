@@ -14,6 +14,7 @@ export function AuthenticatedHeader({ user }: { user: CurrentUser }) {
       <a href="/app">Minha casa</a>
       {user.isAdministrator && <a href="/admin/users">Usuários</a>}
       {user.isAdministrator && <a href="/admin/pots">Potes</a>}
+      {user.isAdministrator && <a href="/admin/tasks">Tarefas</a>}
     </nav>
     <div className="user-menu"><span><strong>{user.name}</strong><small>{user.residenceName ?? (user.isAdministrator ? "Administrador" : "Morador")}</small></span><button onClick={signOut}>Sair</button></div>
   </header>;

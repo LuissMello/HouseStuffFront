@@ -46,6 +46,13 @@ test("renderiza o estado inicial da administração de potes", async () => {
   assert.match(html, /Organizando os potes/);
 });
 
+test("renderiza o estado inicial da administração de tarefas", async () => {
+  const response = await render("/admin/tasks");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Preparando as tarefas/);
+});
+
 test("renderiza o estado inicial da residência autenticada", async () => {
   const response = await render("/app");
   assert.equal(response.status, 200);
