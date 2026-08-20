@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-20",
   "status": "onTrack",
-  "currentStageId": "M5",
+  "currentStageId": "M6",
   "stages": [
     {
       "id": "M0",
@@ -244,7 +244,7 @@
       "repository": "both",
       "type": "feature",
       "title": "Sorteio, aceite e troca de tarefa",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Usuário escolhe um pote, vê uma tarefa elegível, aceita ou pede outra.",
       "subtasks": [
         {
@@ -260,17 +260,17 @@
         {
           "id": "HOUSE-050-03",
           "title": "Experiência responsiva de escolha e proposta",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-050-04",
           "title": "Atribuição ativa integrada à área da casa",
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "HOUSE-050-05",
           "title": "Testes, isolamento e documentação",
-          "status": "pending"
+          "status": "completed"
         }
       ]
     },
