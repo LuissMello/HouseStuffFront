@@ -36,6 +36,21 @@ export type HouseholdTask = {
   isActive: boolean;
 };
 
+export type DrawProposal = {
+  taskId: string;
+  potId: string;
+  potName: string;
+  taskName: string;
+  description: string | null;
+  kind: HouseholdTaskKind;
+  recurrenceDays: number | null;
+};
+
+export type ActiveAssignment = DrawProposal & {
+  assignmentId: string;
+  acceptedAt: string;
+};
+
 type Problem = { title?: string; detail?: string; code?: string };
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5049";
@@ -96,4 +111,10 @@ export const householdTaskApi = {
   update: (id: string, input: { potId: string; name: string; description: string; kind: HouseholdTaskKind; recurrenceDays: number | null }) =>
     request<HouseholdTask>(`/api/v1/admin/tasks/${id}`, { method: "PUT", body: JSON.stringify(input) }),
   setActive: (id: string, isActive: boolean) => request<HouseholdTask>(`/api/v1/admin/tasks/${id}/status`, { method: "PATCH", body: JSON.stringify({ isActive }) }),
+};
+
+export const assignmentApi = {
+  current: () => request<ActiveAssignment | null>("/api/v1/assignments/current"),
+  draw: (potId: string, excludedTaskIds: string[]) => request<DrawProposal>("/api/v1/draws", { method: "POST", body: JSON.stringify({ potId, excludedTaskIds }) }),
+  accept: (taskId: string) => request<ActiveAssignment>("/api/v1/assignments/accept", { method: "POST", body: JSON.stringify({ taskId }) }),
 };

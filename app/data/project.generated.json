@@ -244,9 +244,35 @@
       "repository": "both",
       "type": "feature",
       "title": "Sorteio, aceite e troca de tarefa",
-      "status": "pending",
+      "status": "inProgress",
       "result": "Usuário escolhe um pote, vê uma tarefa elegível, aceita ou pede outra.",
-      "subtasks": []
+      "subtasks": [
+        {
+          "id": "HOUSE-050-01",
+          "title": "Regras de elegibilidade e persistência da atribuição",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-050-02",
+          "title": "Casos de uso e endpoints de sorteio e aceite",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-050-03",
+          "title": "Experiência responsiva de escolha e proposta",
+          "status": "inProgress"
+        },
+        {
+          "id": "HOUSE-050-04",
+          "title": "Atribuição ativa integrada à área da casa",
+          "status": "pending"
+        },
+        {
+          "id": "HOUSE-050-05",
+          "title": "Testes, isolamento e documentação",
+          "status": "pending"
+        }
+      ]
     },
     {
       "id": "HOUSE-060",

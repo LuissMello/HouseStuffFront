@@ -2,15 +2,24 @@
 
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { AuthenticatedHeader } from "../../components/AuthenticatedHeader";
-import { accessApi, ApiError, potApi, residenceApi, type CurrentUser, type Pot, type Residence } from "../../lib/api";
+import { accessApi, ApiError, assignmentApi, potApi, residenceApi, type ActiveAssignment, type CurrentUser, type DrawProposal, type HouseholdTaskKind, type Pot, type Residence } from "../../lib/api";
+
+const taskKindLabels: Record<HouseholdTaskKind, string> = { oneTime: "Única", reusable: "Reutilizável", recurring: "Recorrente" };
 
 export default function MyHomePage() {
   const [user, setUser] = useState<CurrentUser | null>(null);
   const [residence, setResidence] = useState<Residence | null>(null);
   const [pots, setPots] = useState<Pot[]>([]);
+  const [assignment, setAssignment] = useState<ActiveAssignment | null>(null);
+  const [proposal, setProposal] = useState<DrawProposal | null>(null);
+  const [selectedPotId, setSelectedPotId] = useState("");
+  const [excludedTaskIds, setExcludedTaskIds] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [drawing, setDrawing] = useState(false);
+  const [accepting, setAccepting] = useState(false);
   const [error, setError] = useState("");
+  const [drawError, setDrawError] = useState("");
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -18,9 +27,11 @@ export default function MyHomePage() {
       const current = await accessApi.me();
       setUser(current);
       try {
-        const [home, availablePots] = await Promise.all([residenceApi.current(), potApi.list()]);
+        const [home, availablePots, currentAssignment] = await Promise.all([residenceApi.current(), potApi.list(), assignmentApi.current()]);
         setResidence(home);
         setPots(availablePots);
+        setAssignment(currentAssignment);
+        setSelectedPotId((current) => current || availablePots[0]?.id || "");
       }
       catch (reason) {
         if (reason instanceof ApiError && reason.code === "residence_not_found") { setResidence(null); setPots([]); }
@@ -51,6 +62,28 @@ export default function MyHomePage() {
     } finally { setSaving(false); }
   }
 
+  function choosePot(potId: string) {
+    setSelectedPotId(potId); setProposal(null); setExcludedTaskIds([]); setDrawError("");
+  }
+
+  async function drawAnother(isAnother = false) {
+    if (!selectedPotId) return;
+    const excluded = isAnother && proposal ? [...excludedTaskIds, proposal.taskId] : excludedTaskIds;
+    setDrawing(true); setDrawError("");
+    if (isAnother) { setExcludedTaskIds(excluded); setProposal(null); }
+    try { setProposal(await assignmentApi.draw(selectedPotId, excluded)); }
+    catch (reason) { setDrawError(reason instanceof ApiError ? reason.message : "Não foi possível sortear uma tarefa."); }
+    finally { setDrawing(false); }
+  }
+
+  async function acceptProposal() {
+    if (!proposal) return;
+    setAccepting(true); setDrawError("");
+    try { setAssignment(await assignmentApi.accept(proposal.taskId)); setProposal(null); setExcludedTaskIds([]); }
+    catch (reason) { setDrawError(reason instanceof ApiError ? reason.message : "Não foi possível aceitar a tarefa."); }
+    finally { setAccepting(false); }
+  }
+
   if (loading) return <main className="center-state"><span className="loading-dot" /><p>Preparando sua casa...</p></main>;
   if (!user) return <main className="center-state"><p role="alert">{error}</p><button onClick={load}>Tentar novamente</button></main>;
 
@@ -59,10 +92,12 @@ export default function MyHomePage() {
     <div className="app-shell">
       {residence ? <>
         <section className="welcome-panel residence-welcome"><div><p className="eyebrow">MINHA CASA</p><h1>{residence.name}</h1><p>Olá, {user.name.split(" ")[0]}. Você está vendo somente as informações vinculadas a esta residência.</p></div><span className="access-ok">CASA CONECTADA</span></section>
-        <section className="pots-section">
-          <div className="members-title"><div><p className="eyebrow">ORGANIZAÇÃO DA CASA</p><h2>Seus potes</h2></div><span>{pots.length} {pots.length === 1 ? "POTE ATIVO" : "POTES ATIVOS"}</span></div>
-          {pots.length > 0 ? <div className="pot-grid">{pots.map((pot, index) => <article className="pot-card" key={pot.id}><span className="pot-index">{String(index + 1).padStart(2, "0")}</span><div><h3>{pot.name}</h3><p>{pot.description || "Um espaço para organizar as tarefas desta categoria."}</p></div><small>DISPONÍVEL</small></article>)}</div> : <div className="pot-empty"><span>◌</span><div><strong>Nenhum pote disponível</strong><p>{user.isAdministrator ? "Crie o primeiro pote para começar a organizar as tarefas da casa." : "O administrador da casa ainda não cadastrou potes."}</p></div>{user.isAdministrator && <a href="/admin/pots">Criar pote</a>}</div>}
-        </section>
+        {assignment ? <section className="active-assignment"><div className="assignment-kicker"><span>TAREFA EM ANDAMENTO</span><strong>{assignment.potName}</strong></div><div><p className="eyebrow">VOCÊ ACEITOU</p><h2>{assignment.taskName}</h2><p>{assignment.description || "Siga a tarefa e volte para concluí-la na próxima etapa."}</p><div className="assignment-meta"><span>{taskKindLabels[assignment.kind]}</span>{assignment.kind === "recurring" && <span>A cada {assignment.recurrenceDays} dias</span>}<span>Aceita em {new Date(assignment.acceptedAt).toLocaleDateString("pt-BR")}</span></div></div><small>A conclusão será habilitada na HOUSE-060.</small></section> : <section className="draw-section">
+          <div className="members-title"><div><p className="eyebrow">QUAL É A PRÓXIMA?</p><h2>Escolha um pote</h2></div><span>{pots.length} {pots.length === 1 ? "POTE ATIVO" : "POTES ATIVOS"}</span></div>
+          {pots.length > 0 ? <><div className="pot-grid draw-pot-grid">{pots.map((pot, index) => <button aria-pressed={selectedPotId === pot.id} className={`pot-card pot-choice ${selectedPotId === pot.id ? "selected" : ""}`} key={pot.id} onClick={() => choosePot(pot.id)} type="button"><span className="pot-index">{String(index + 1).padStart(2, "0")}</span><span><strong>{pot.name}</strong><small>{pot.description || "Um espaço para as tarefas desta categoria."}</small></span><i>{selectedPotId === pot.id ? "ESCOLHIDO" : "ESCOLHER"}</i></button>)}</div>{!proposal && <div className="draw-controls"><p>O sorteio mostra uma proposta. A tarefa só fica com você depois do aceite.</p><button className="primary-button" disabled={drawing} onClick={() => drawAnother(false)} type="button">{drawing ? "Sorteando..." : "Sortear uma tarefa"}<span aria-hidden="true">✦</span></button></div>}</> : <div className="pot-empty"><span>◌</span><div><strong>Nenhum pote disponível</strong><p>{user.isAdministrator ? "Crie o primeiro pote para começar a organizar as tarefas da casa." : "O administrador da casa ainda não cadastrou potes."}</p></div>{user.isAdministrator && <a href="/admin/pots">Criar pote</a>}</div>}
+          {proposal && <article className="proposal-card"><div className="proposal-mark">✦</div><div className="proposal-copy"><p className="eyebrow">SUA PROPOSTA</p><span>{proposal.potName} · {taskKindLabels[proposal.kind]}</span><h3>{proposal.taskName}</h3><p>{proposal.description || "Esta tarefa está pronta para ser feita."}</p>{proposal.kind === "recurring" && <small>Volta ao pote {proposal.recurrenceDays} dias após a conclusão.</small>}</div><div className="proposal-actions"><button className="primary-button" disabled={accepting} onClick={acceptProposal} type="button">{accepting ? "Aceitando..." : "Aceitar tarefa"}<span aria-hidden="true">✓</span></button><button className="secondary-button" disabled={drawing} onClick={() => drawAnother(true)} type="button">Quero outra</button></div></article>}
+          {drawError && <div className="draw-error" role="alert"><p>{drawError}</p>{excludedTaskIds.length > 0 && <button onClick={() => { setExcludedTaskIds([]); setProposal(null); setDrawError(""); }} type="button">Recomeçar rodada</button>}</div>}
+        </section>}
         <section className="residence-members">
           <div className="members-title"><div><p className="eyebrow">QUEM MORA AQUI</p><h2>{residence.members.length} {residence.members.length === 1 ? "pessoa" : "pessoas"}</h2></div><span>VÍNCULO PROTEGIDO</span></div>
           <div className="member-grid">{residence.members.map((member) => <article key={member.id}><span className="avatar large-avatar">{member.name.charAt(0).toUpperCase()}</span><div><strong>{member.name}</strong><small>{member.email}</small></div><span className={`role-chip ${member.isAdministrator ? "admin" : ""}`}>{member.isAdministrator ? "Administrador" : "Morador"}</span></article>)}</div>
