@@ -37,6 +37,8 @@ Rotas apenas compõem telas. Acesso à API, schemas e comportamento ficam na fea
 - `/login`: entrada pública;
 - `/app`: área de qualquer usuário autenticado;
 - `/admin/users`: criação direta de usuários, visível apenas para administrador;
+- `/admin/pots`: manutenção e ordenação dos potes da casa;
+- `/admin/tasks`: manutenção das tarefas únicas, reutilizáveis e recorrentes;
 - a API mantém a sessão em cookie HTTP-only e o frontend sempre envia credenciais nas chamadas.
 
 ## Residência
@@ -49,3 +51,10 @@ Rotas apenas compõem telas. Acesso à API, schemas e comportamento ficam na fea
 ## Qualidade
 
 Lint, TypeScript e build são gates permanentes. Comportamentos de componentes recebem testes; os fluxos críticos recebem validação ponta a ponta quando forem implementados. Toda mudança visual exige revisão responsiva e evidência.
+
+## Tarefas
+
+- o formulário administrativo seleciona apenas potes ativos da casa;
+- o intervalo em dias aparece somente quando o tipo recorrente é escolhido;
+- listagem e filtro usam os dados persistidos da API, sem mocks;
+- em telas pequenas, formulário, filtros e cartões ficam em uma coluna com ações touch.

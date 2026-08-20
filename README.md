@@ -1,6 +1,6 @@
 # HouseStuff Frontend
 
-Aplicação web responsiva e mobile-first do HouseStuff, com autenticação, administração de usuários e potes, área da residência e acompanhamento dos dois repositórios.
+Aplicação web responsiva e mobile-first do HouseStuff, com autenticação, administração de usuários, potes e tarefas, área da residência e acompanhamento dos dois repositórios.
 
 ## Pré-requisitos
 
