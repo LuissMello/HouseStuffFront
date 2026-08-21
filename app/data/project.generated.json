@@ -59,6 +59,11 @@
       "id": "M10",
       "name": "Compras",
       "outcome": "A casa organiza compras recorrentes e desejos futuros por prioridade"
+    },
+    {
+      "id": "M11",
+      "name": "Agenda",
+      "outcome": "A casa visualiza datas, aniversários e compromissos em um calendário diário, semanal ou mensal"
     }
   ],
   "tasks": [
@@ -497,6 +502,43 @@
         {
           "id": "HOUSE-110-05",
           "title": "Integração, testes, evidência visual e documentação",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-120",
+      "stageId": "M11",
+      "area": "Agenda",
+      "repository": "both",
+      "type": "feature",
+      "title": "Agenda e calendário da casa",
+      "status": "pending",
+      "result": "Usuário cadastra eventos com participantes e consulta a agenda real nos modos diário, semanal e mensal.",
+      "subtasks": [
+        {
+          "id": "HOUSE-120-01",
+          "title": "Domínio, participantes, datas e persistência",
+          "status": "pending"
+        },
+        {
+          "id": "HOUSE-120-02",
+          "title": "CRUD de eventos e consultas por período na API",
+          "status": "pending"
+        },
+        {
+          "id": "HOUSE-120-03",
+          "title": "Cadastro responsivo com seleção de envolvidos",
+          "status": "pending"
+        },
+        {
+          "id": "HOUSE-120-04",
+          "title": "Calendário diário, semanal e mensal",
+          "status": "pending"
+        },
+        {
+          "id": "HOUSE-120-05",
+          "title": "Integração com recorrências, testes, evidência visual e documentação",
           "status": "pending"
         }
       ]
