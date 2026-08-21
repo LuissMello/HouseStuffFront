@@ -487,22 +487,22 @@
         {
           "id": "HOUSE-110-01",
           "title": "Domínio, persistência e isolamento dos desejos",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-110-02",
           "title": "CRUD e ordenação persistida na API",
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "HOUSE-110-03",
           "title": "Cadastro responsivo com link opcional",
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "HOUSE-110-04",
           "title": "Lista com prioridade por arrastar e alternativa acessível",
-          "status": "pending"
+          "status": "inProgress"
         },
         {
           "id": "HOUSE-110-05",

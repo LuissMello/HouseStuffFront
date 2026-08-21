@@ -84,6 +84,7 @@ export type RoutineOverview = {
 
 export type ShoppingItem = { id: string; categoryId: string; name: string };
 export type ShoppingCategory = { id: string; name: string; displayOrder: number; items: ShoppingItem[] };
+export type PurchaseWish = { id: string; name: string; storeUrl: string | null; priority: number };
 
 type Problem = { title?: string; detail?: string; code?: string };
 
@@ -167,4 +168,12 @@ export const shoppingApi = {
   createItem: (input: { categoryId: string; name: string }) => request<ShoppingItem>("/api/v1/shopping/items", { method: "POST", body: JSON.stringify(input) }),
   updateItem: (id: string, input: { categoryId: string; name: string }) => request<ShoppingItem>(`/api/v1/shopping/items/${id}`, { method: "PUT", body: JSON.stringify(input) }),
   deleteItem: (id: string) => request<boolean>(`/api/v1/shopping/items/${id}`, { method: "DELETE" }),
+};
+
+export const purchaseWishApi = {
+  list: () => request<PurchaseWish[]>("/api/v1/purchase-wishes"),
+  create: (input: { name: string; storeUrl: string | null }) => request<PurchaseWish>("/api/v1/purchase-wishes", { method: "POST", body: JSON.stringify(input) }),
+  update: (id: string, input: { name: string; storeUrl: string | null }) => request<PurchaseWish>(`/api/v1/purchase-wishes/${id}`, { method: "PUT", body: JSON.stringify(input) }),
+  delete: (id: string) => request<boolean>(`/api/v1/purchase-wishes/${id}`, { method: "DELETE" }),
+  reorder: (orderedIds: string[]) => request<PurchaseWish[]>("/api/v1/purchase-wishes/order", { method: "PUT", body: JSON.stringify({ orderedIds }) }),
 };

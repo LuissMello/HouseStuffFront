@@ -41,6 +41,7 @@ Rotas apenas compõem telas. Acesso à API, schemas e comportamento ficam na fea
 - `/app/pots`: manutenção e ordenação colaborativa dos potes por qualquer morador vinculado;
 - `/app/tasks`: manutenção colaborativa das tarefas únicas, reutilizáveis e recorrentes;
 - `/app/shopping`: catálogo colaborativo e geração temporária da lista de compras;
+- `/app/wishes`: desejos compartilhados da casa com link opcional e prioridade persistida;
 - `/admin/pots` e `/admin/tasks`: aliases mantidos temporariamente por compatibilidade;
 - a API mantém a sessão em cookie HTTP-only e o frontend sempre envia credenciais nas chamadas.
 
@@ -92,3 +93,11 @@ Lint, TypeScript e build são gates permanentes. Comportamentos de componentes r
 - seleção de categoria possui estados completo, parcial e vazio sem depender apenas de cor;
 - a seleção atual permanece no componente e não representa histórico ou item já comprado;
 - formulários, categorias e itens ficam em uma coluna nas telas pequenas, com navegação inferior para Compras.
+
+## Desejos da casa
+
+- cadastro, edição e exclusão consomem o CRUD real de `/api/v1/purchase-wishes`;
+- a ordem local é otimista e só se torna definitiva após a API persistir a lista completa de identificadores;
+- o puxador usa Pointer Events para toque e mouse, com setas do teclado e botões explícitos como alternativas;
+- falha ao reordenar restaura a ordem anterior e informa o usuário;
+- links externos usam nova aba sem permitir acesso à janela de origem.
