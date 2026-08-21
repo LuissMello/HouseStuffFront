@@ -37,7 +37,7 @@ export default function TasksAdminPage() {
       setDraft((currentDraft) => ({ ...currentDraft, potId: currentDraft.potId || availablePots.find((pot) => pot.isActive)?.id || "" }));
       setError("");
     } catch (reason) {
-      if (reason instanceof ApiError && reason.status === 401) window.location.href = "/login";
+      if (reason instanceof ApiError && reason.status === 401) window.location.hash = "/login";
       else setError("Não foi possível carregar as tarefas.");
     } finally { setLoading(false); }
   }, []);
@@ -87,7 +87,7 @@ export default function TasksAdminPage() {
     <div className="admin-title playful-admin-title"><div><p className="eyebrow">MURAL DA CASA</p><h1>Post-its para sortear</h1><p>Anote uma tarefa do jeito que você lembraria dela na geladeira e guarde no pote certo.</p></div><span>{tasks.filter((task) => task.isActive).length} NO MURAL</span></div>
     <div className="task-admin-grid">
       <form className="pot-form task-form task-postit-form" onSubmit={save}><span aria-hidden="true" className="postit-tape" /><span className="step-badge">{editingId ? "EDITANDO O POST-IT" : "NOVO POST-IT"}</span><h2>{editingId ? draft.name : "O que precisa ser feito?"}</h2>
-        {activePots.length === 0 ? <div className="form-alert">Crie ou reative um pote antes de cadastrar tarefas. <a href="/app/pots">Gerenciar potes</a></div> : <>
+        {activePots.length === 0 ? <div className="form-alert">Crie ou reative um pote antes de cadastrar tarefas. <a href="#/app/pots">Gerenciar potes</a></div> : <>
           <label className="note-field note-pot">Guardar no pote<select name="potId" onChange={(event) => setDraft({ ...draft, potId: event.target.value })} required value={draft.potId}>{activePots.map((pot) => <option key={pot.id} value={pot.id}>{pot.name}</option>)}</select></label>
           <label className="note-field note-title">Minha anotação<input autoComplete="off" maxLength={100} minLength={2} name="name" onChange={(event) => setDraft({ ...draft, name: event.target.value })} placeholder="Ex.: Limpar a geladeira" required value={draft.name} /></label>
           <label className="note-field note-description">Um lembrete <small>Opcional, até 300 caracteres</small><textarea maxLength={300} name="description" onChange={(event) => setDraft({ ...draft, description: event.target.value })} placeholder="Alguma dica para quem tirar este post-it?" value={draft.description} /></label>

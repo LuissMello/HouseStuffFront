@@ -20,7 +20,7 @@ export default function PotsAdminPage() {
       const items = await potApi.listForManagement();
       setUser(current); setPots(items); setError("");
     } catch (reason) {
-      if (reason instanceof ApiError && reason.status === 401) window.location.href = "/login";
+      if (reason instanceof ApiError && reason.status === 401) window.location.hash = "/login";
       else setError("Não foi possível carregar os potes.");
     } finally { setLoading(false); }
   }, []);

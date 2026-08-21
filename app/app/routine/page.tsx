@@ -33,7 +33,7 @@ export default function RoutinePage() {
       const range = await calendarApi.range({ fromDate, toDate, fromUtc, toUtc });
       setEntries(range.entries); setError("");
     } catch (reason) {
-      if (reason instanceof ApiError && reason.status === 401) window.location.href = "/login";
+      if (reason instanceof ApiError && reason.status === 401) window.location.hash = "/login";
       else setError(reason instanceof ApiError ? reason.message : "Não foi possível carregar este período.");
     } finally { setCalendarLoading(false); }
   }, [fromDate, toDate, fromUtc, toUtc]);
@@ -44,7 +44,7 @@ export default function RoutinePage() {
       const [current, data, currentResidence] = await Promise.all([accessApi.me(), routineApi.overview(), residenceApi.current()]);
       setUser(current); setOverview(data); setResidence(currentResidence);
     } catch (reason) {
-      if (reason instanceof ApiError && reason.status === 401) window.location.href = "/login";
+      if (reason instanceof ApiError && reason.status === 401) window.location.hash = "/login";
       else setError(reason instanceof ApiError ? reason.message : "Não foi possível carregar sua rotina.");
     } finally { setLoading(false); }
   }, []);

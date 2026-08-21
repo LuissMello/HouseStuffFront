@@ -43,7 +43,7 @@ export default function ShoppingPage() {
       const [current] = await Promise.all([accessApi.me(), refreshCatalog()]);
       setUser(current); setError("");
     } catch (reason) {
-      if (reason instanceof ApiError && reason.status === 401) window.location.href = "/login";
+      if (reason instanceof ApiError && reason.status === 401) window.location.hash = "/login";
       else setError(reason instanceof ApiError ? reason.message : "Não foi possível carregar sua lista de compras.");
     } finally { setLoading(false); }
   }, [refreshCatalog]);

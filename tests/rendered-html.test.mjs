@@ -108,8 +108,8 @@ test("expõe a organização da casa a qualquer morador autenticado", async () =
   const header = await readFile(new URL("../components/AuthenticatedHeader.tsx", import.meta.url), "utf8");
   const pots = await readFile(new URL("../app/admin/pots/page.tsx", import.meta.url), "utf8");
   const tasks = await readFile(new URL("../app/admin/tasks/page.tsx", import.meta.url), "utf8");
-  assert.match(header, /href="\/app\/pots">Potes/);
-  assert.match(header, /href="\/app\/tasks">Tarefas/);
+  assert.match(header, /href="#\/app\/pots">Potes/);
+  assert.match(header, /href="#\/app\/tasks">Tarefas/);
   assert.doesNotMatch(pots, /!current\.isAdministrator/);
   assert.doesNotMatch(tasks, /!current\.isAdministrator/);
 });
@@ -122,7 +122,7 @@ test("mantém seleção individual, total e parcial na lista de compras", async 
   assert.match(page, /toggleItem/);
   assert.match(page, /Ordem alfabética/);
   assert.match(page, /Limpar seleção/);
-  assert.match(header, /href="\/app\/shopping">Compras/);
+  assert.match(header, /href="#\/app\/shopping">Compras/);
 });
 
 test("mantém reordenação acessível e links seguros nos desejos", async () => {
@@ -136,7 +136,20 @@ test("mantém reordenação acessível e links seguros nos desejos", async () =>
   assert.match(page, /rel="noopener noreferrer"/);
   assert.match(page, /purchaseWishApi\.reorder/);
   assert.match(styles, /touch-action:none/);
-  assert.match(header, /href="\/app\/wishes">Desejos/);
+  assert.match(header, /href="#\/app\/wishes">Desejos/);
+});
+
+test("publica todas as telas com hash routing no GitHub Pages", async () => {
+  const entry = await readFile(new URL("../github-pages/main.tsx", import.meta.url), "utf8");
+  const config = await readFile(new URL("../vite.github-pages.config.ts", import.meta.url), "utf8");
+  const workflow = await readFile(new URL("../.github/workflows/deploy-github-pages.yml", import.meta.url), "utf8");
+  assert.match(entry, /window\.location\.hash/);
+  assert.match(entry, /"\/app\/routine"/);
+  assert.match(entry, /"\/app\/shopping"/);
+  assert.match(entry, /"\/admin\/users"/);
+  assert.match(config, /base: "\/HouseStuffFront\/"/);
+  assert.match(config, /https:\/\/housestuffapi\.fly\.dev/);
+  assert.match(workflow, /actions\/deploy-pages@v4/);
 });
 
 test("mantém cadastro exclusivo por todos ou moradores no calendário", async () => {

@@ -16,12 +16,12 @@ export default function UsersPage() {
   const load = useCallback(async () => {
     try {
       const me = await accessApi.me();
-      if (!me.isAdministrator) { window.location.href = "/app"; return; }
+      if (!me.isAdministrator) { window.location.hash = "/app"; return; }
       setCurrent(me);
       setUsers(await accessApi.listUsers());
       setError("");
     } catch (reason) {
-      if (reason instanceof ApiError && reason.status === 401) window.location.href = "/login";
+      if (reason instanceof ApiError && reason.status === 401) window.location.hash = "/login";
       else setError("Não foi possível carregar os usuários.");
     } finally { setLoading(false); }
   }, []);

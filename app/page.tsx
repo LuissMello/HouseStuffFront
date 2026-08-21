@@ -34,9 +34,9 @@ export default function Home() {
   return (
     <main>
       <header className="topbar">
-        <a className="brand" href="#top" aria-label="HouseStuff — início"><span className="brand-mark">H</span><span>HOUSESTUFF</span></a>
-        <nav aria-label="Navegação principal"><a className="nav-link is-active" href="#overview">Visão geral</a><a className="nav-link" href="#roadmap">Etapas</a><a className="nav-link" href="#tasks">Tarefas</a></nav>
-        <a className="login-link" href="/login">Entrar <span aria-hidden="true">→</span></a>
+        <a className="brand" href="#/" aria-label="HouseStuff — início"><span className="brand-mark">H</span><span>HOUSESTUFF</span></a>
+        <nav aria-label="Navegação principal"><a className="nav-link is-active" href="#/?section=overview">Visão geral</a><a className="nav-link" href="#/?section=roadmap">Etapas</a><a className="nav-link" href="#/?section=tasks">Tarefas</a></nav>
+        <a className="login-link" href="#/login">Entrar <span aria-hidden="true">→</span></a>
       </header>
 
       <div className="shell" id="top">

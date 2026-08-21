@@ -9,9 +9,10 @@
     "sync:tracking": "node scripts/sync-project-tracking.mjs",
     "dev": "npm run sync:tracking && vinext dev",
     "build": "npm run sync:tracking && vinext build",
+    "build:github-pages": "npm run sync:tracking && vite build --config vite.github-pages.config.ts",
     "start": "vinext start",
     "test": "npm run build && node --test tests/rendered-html.test.mjs",
-    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next"
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern github-pages-dist"
   },
   "dependencies": {
     "react": "19.2.6",

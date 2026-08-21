@@ -1,7 +1,6 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import Link from "next/link";
 import { accessApi, ApiError } from "../../lib/api";
 
 export default function LoginPage() {
@@ -12,7 +11,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    accessApi.me().then(() => { window.location.href = "/app"; }).catch(() => undefined);
+    accessApi.me().then(() => { window.location.hash = "/app"; }).catch(() => undefined);
   }, []);
 
   async function submit(event: FormEvent) {
@@ -21,7 +20,7 @@ export default function LoginPage() {
     setError("");
     try {
       await accessApi.login(email, password, rememberMe);
-      window.location.href = "/app";
+      window.location.hash = "/app";
     } catch (reason) {
       setError(reason instanceof ApiError ? reason.message : "A API não está disponível. Confira se o backend está rodando.");
       setLoading(false);
@@ -30,7 +29,7 @@ export default function LoginPage() {
 
   return <main className="access-page">
     <section className="access-story">
-      <Link className="brand light-brand" href="/"><span className="brand-mark light-mark">H</span><span>HOUSESTUFF</span></Link>
+      <a className="brand light-brand" href="#/"><span className="brand-mark light-mark">H</span><span>HOUSESTUFF</span></a>
       <div><p className="eyebrow">SUA ROTINA, SEM ATRITO</p><h1>A casa funciona melhor quando todo mundo sabe o próximo passo.</h1><p>Entre para acessar somente as tarefas e informações ligadas a você.</p></div>
       <small>Uma casa. Várias pessoas. Tudo no lugar.</small>
     </section>

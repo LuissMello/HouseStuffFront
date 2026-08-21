@@ -48,7 +48,7 @@ export default function PurchaseWishesPage() {
       setWishes(stored);
       setError("");
     } catch (reason) {
-      if (reason instanceof ApiError && reason.status === 401) window.location.href = "/login";
+      if (reason instanceof ApiError && reason.status === 401) window.location.hash = "/login";
       else setError(reason instanceof ApiError ? reason.message : "Não foi possível carregar os desejos da casa.");
     } finally { setLoading(false); }
   }, []);
