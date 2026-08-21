@@ -465,12 +465,12 @@
         {
           "id": "HOUSE-100-04",
           "title": "Geração, ordenação e seleção da lista",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-100-05",
           "title": "Integração, testes, evidência visual e documentação",
-          "status": "pending"
+          "status": "inProgress"
         }
       ]
     },

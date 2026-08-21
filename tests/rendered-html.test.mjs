@@ -82,6 +82,13 @@ test("renderiza o estado inicial do calendário e histórico", async () => {
   assert.match(html, /Organizando sua rotina/);
 });
 
+test("renderiza o estado inicial da lista de compras", async () => {
+  const response = await render("/app/shopping");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Preparando as compras da casa/);
+});
+
 test("mantém o cadastro de tarefas com linguagem de post-it", async () => {
   const source = await readFile(new URL("../app/admin/tasks/page.tsx", import.meta.url), "utf8");
   assert.match(source, /task-postit-form/);
@@ -98,6 +105,17 @@ test("expõe a organização da casa a qualquer morador autenticado", async () =
   assert.match(header, /href="\/app\/tasks">Tarefas/);
   assert.doesNotMatch(pots, /!current\.isAdministrator/);
   assert.doesNotMatch(tasks, /!current\.isAdministrator/);
+});
+
+test("mantém seleção individual, total e parcial na lista de compras", async () => {
+  const page = await readFile(new URL("../app/app/shopping/page.tsx", import.meta.url), "utf8");
+  const header = await readFile(new URL("../components/AuthenticatedHeader.tsx", import.meta.url), "utf8");
+  assert.match(page, /indeterminate/);
+  assert.match(page, /toggleCategory/);
+  assert.match(page, /toggleItem/);
+  assert.match(page, /Ordem alfabética/);
+  assert.match(page, /Limpar seleção/);
+  assert.match(header, /href="\/app\/shopping">Compras/);
 });
 
 test("mantém a sequência acessível do sorteio animado", async () => {
