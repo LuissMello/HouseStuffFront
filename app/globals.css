@@ -116,3 +116,34 @@ footer { border-top:1px solid var(--line); color:var(--muted); display:flex; fon
 @media(max-width:900px) { .routine-grid{grid-template-columns:1fr}.routine-hero{align-items:start;flex-direction:column;gap:28px}.mobile-app-nav{align-items:center;background:var(--surface);border-top:1px solid var(--line);bottom:0;display:flex;height:66px;justify-content:space-around;left:0;position:fixed;right:0;z-index:20}.mobile-app-nav a{align-items:center;color:var(--muted);display:flex;flex-direction:column;font-size:9px;font-weight:800;gap:4px;min-width:90px}.mobile-app-nav span{font-size:21px} }
 @media(max-width:640px) { .routine-shell{padding-bottom:92px}.routine-hero{border-radius:18px;min-height:330px;padding:30px 24px}.routine-hero h1{font-size:40px}.routine-summary{width:100%}.routine-summary article{flex:1;min-width:0}.routine-panel>header{padding:21px 18px}.upcoming-list,.history-list{padding:6px 14px 16px}.upcoming-list article{gap:13px;grid-template-columns:58px 1fr}.routine-empty{min-height:250px;padding:28px 20px} }
 @media(prefers-reduced-motion:reduce) { html{scroll-behavior:auto} }
+
+/* HOUSE-090 — tarefas anotadas como post-its */
+.playful-admin-title h1 { color:#24382d; transform:rotate(-1deg); }
+.task-postit-form { background:#fff09a; border:0; border-radius:3px 3px 18px 3px; box-shadow:0 18px 30px rgba(77,63,22,.14), inset 0 -24px 35px rgba(206,165,40,.08); overflow:visible; padding:34px 28px 30px; position:relative; transform:rotate(-.7deg); }
+.task-postit-form::after { background:linear-gradient(135deg,transparent 50%,rgba(179,137,28,.18) 51%); bottom:0; content:""; height:28px; position:absolute; right:0; width:28px; }
+.postit-tape { background:rgba(238,218,170,.72); box-shadow:0 1px 2px rgba(83,66,28,.08); height:25px; left:50%; position:absolute; top:-12px; transform:translateX(-50%) rotate(2deg); width:112px; }
+.task-postit-form .step-badge { background:rgba(89,76,24,.09); color:#785e12; }
+.task-postit-form h2 { font-family:"Comic Sans MS","Segoe Print",cursive; font-size:28px; font-weight:700; line-height:1.15; margin-bottom:24px; }
+.task-postit-form .note-field { color:#6f5b1e; }
+.task-postit-form .note-title input,.task-postit-form .note-description textarea { background:repeating-linear-gradient(transparent,transparent 31px,rgba(92,78,29,.18) 32px); border:0; border-bottom:2px solid rgba(92,78,29,.35); border-radius:0; box-shadow:none; color:#29362f; font-family:"Comic Sans MS","Segoe Print",cursive; font-size:18px; line-height:32px; outline:0; padding:3px 2px; }
+.task-postit-form .note-title input { min-height:48px; }
+.task-postit-form .note-description textarea { min-height:105px; resize:vertical; }
+.task-postit-form .note-title input:focus,.task-postit-form .note-description textarea:focus { border-color:#587231; outline:3px solid rgba(88,114,49,.12); outline-offset:3px; }
+.task-postit-form select { background:rgba(255,255,255,.5); border:1px dashed rgba(92,78,29,.38); }
+.task-postit-form .task-kind label { background:rgba(255,255,255,.34); border-color:rgba(92,78,29,.2); }
+.task-postit-form .task-kind label.selected { background:rgba(210,231,159,.72); border-color:#819c47; transform:translateX(4px); }
+.task-postit-form .primary-button { background:#3d633f; box-shadow:0 5px 0 #29462b; transform:translateY(-2px); }
+.task-postit-form .primary-button:active { box-shadow:0 2px 0 #29462b; transform:translateY(1px); }
+.postit-board { background:#e8dfcf; background-image:linear-gradient(90deg,rgba(113,88,54,.055) 1px,transparent 1px),linear-gradient(rgba(113,88,54,.055) 1px,transparent 1px); background-size:22px 22px; padding:26px; }
+.house-task-cards .task-postit { border:0; border-radius:2px 2px 14px 2px; box-shadow:0 9px 16px rgba(71,60,37,.14); min-height:240px; padding:25px 20px 19px; position:relative; transform:rotate(-1.1deg); transition:transform .2s ease,box-shadow .2s ease; }
+.house-task-cards .task-postit:nth-child(even) { transform:rotate(1.2deg); }
+.house-task-cards .task-postit:hover,.house-task-cards .task-postit:focus-within { box-shadow:0 15px 24px rgba(71,60,37,.2); transform:rotate(0) translateY(-5px); z-index:2; }
+.task-postit.postit-tone-0 { background:#fff09a; }.task-postit.postit-tone-1 { background:#ffc8c2; }.task-postit.postit-tone-2 { background:#ccecb5; }.task-postit.postit-tone-3 { background:#c9e7f5; }
+.postit-pin { background:#ee7655; border-radius:50%; box-shadow:0 2px 3px rgba(80,40,28,.25); height:10px; left:50%; position:absolute; top:9px; transform:translateX(-50%); width:10px; }
+.task-postit .pot-name-chip { background:rgba(255,255,255,.46); }
+.task-postit h3 { font-family:"Comic Sans MS","Segoe Print",cursive; font-size:22px; }
+.task-postit .task-card-meta { border-color:rgba(70,69,49,.18); }
+.task-postit .pot-actions button { background:rgba(255,255,255,.28); border-color:rgba(60,72,60,.2); }
+@media(max-width:900px) { .task-postit-form{transform:none} }
+@media(max-width:640px) { .postit-board{padding:18px}.house-task-cards .task-postit,.house-task-cards .task-postit:nth-child(even){min-height:225px;transform:rotate(-.5deg)} }
+@media(prefers-reduced-motion:reduce) { .task-postit-form .task-kind label,.house-task-cards .task-postit{transition:none}.house-task-cards .task-postit:hover,.house-task-cards .task-postit:focus-within{transform:none} }
