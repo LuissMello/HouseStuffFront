@@ -89,6 +89,13 @@ test("renderiza o estado inicial da lista de compras", async () => {
   assert.match(html, /Preparando as compras da casa/);
 });
 
+test("renderiza o estado inicial dos desejos da casa", async () => {
+  const response = await render("/app/wishes");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Organizando os desejos da casa/);
+});
+
 test("mantém o cadastro de tarefas com linguagem de post-it", async () => {
   const source = await readFile(new URL("../app/admin/tasks/page.tsx", import.meta.url), "utf8");
   assert.match(source, /task-postit-form/);
@@ -116,6 +123,20 @@ test("mantém seleção individual, total e parcial na lista de compras", async 
   assert.match(page, /Ordem alfabética/);
   assert.match(page, /Limpar seleção/);
   assert.match(header, /href="\/app\/shopping">Compras/);
+});
+
+test("mantém reordenação acessível e links seguros nos desejos", async () => {
+  const page = await readFile(new URL("../app/app/wishes/page.tsx", import.meta.url), "utf8");
+  const header = await readFile(new URL("../components/AuthenticatedHeader.tsx", import.meta.url), "utf8");
+  const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(page, /onPointerDown/);
+  assert.match(page, /document\.elementFromPoint/);
+  assert.match(page, /ArrowUp/);
+  assert.match(page, /ArrowDown/);
+  assert.match(page, /rel="noopener noreferrer"/);
+  assert.match(page, /purchaseWishApi\.reorder/);
+  assert.match(styles, /touch-action:none/);
+  assert.match(header, /href="\/app\/wishes">Desejos/);
 });
 
 test("mantém a sequência acessível do sorteio animado", async () => {

@@ -502,12 +502,12 @@
         {
           "id": "HOUSE-110-04",
           "title": "Lista com prioridade por arrastar e alternativa acessível",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-110-05",
           "title": "Integração, testes, evidência visual e documentação",
-          "status": "pending"
+          "status": "inProgress"
         }
       ]
     },
