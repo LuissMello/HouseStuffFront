@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-20",
   "status": "onTrack",
-  "currentStageId": "M7",
+  "currentStageId": "M8",
   "stages": [
     {
       "id": "M0",
@@ -318,7 +318,7 @@
       "repository": "both",
       "type": "feature",
       "title": "Calendário e histórico",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Usuário consulta calendário e histórico reais da própria casa.",
       "subtasks": [
         {
@@ -334,17 +334,17 @@
         {
           "id": "HOUSE-070-03",
           "title": "Tela responsiva e navegação",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-070-04",
           "title": "Integração, estados e isolamento",
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "HOUSE-070-05",
           "title": "Testes e documentação",
-          "status": "pending"
+          "status": "completed"
         }
       ]
     },
