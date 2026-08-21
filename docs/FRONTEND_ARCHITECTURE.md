@@ -72,7 +72,10 @@ Lint, TypeScript e build são gates permanentes. Comportamentos de componentes r
 
 ## Calendário e histórico
 
-- calendário e histórico consomem uma projeção única de `/api/v1/routine`;
+- o calendário consulta somente o intervalo visível em `/api/v1/calendar`, enquanto o histórico pessoal permanece em `/api/v1/routine`;
+- os modos diário, semanal e mensal compartilham a mesma fonte e oferecem navegação anterior, próxima e hoje;
+- datas civis são agrupadas pela chave `YYYY-MM-DD`, enquanto compromissos UTC são apresentados no fuso do navegador;
+- eventos da casa e tarefas recorrentes usam cartões visualmente distintos;
 - datas são apresentadas no fuso do navegador;
 - estados sem recorrências ou sem conclusões possuem orientação própria;
 - telas menores recebem navegação inferior para Casa, Rotina, Potes e Tarefas.

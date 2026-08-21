@@ -139,6 +139,32 @@ test("mantém reordenação acessível e links seguros nos desejos", async () =>
   assert.match(header, /href="\/app\/wishes">Desejos/);
 });
 
+test("mantém cadastro exclusivo por todos ou moradores no calendário", async () => {
+  const form = await readFile(new URL("../components/CalendarEventForm.tsx", import.meta.url), "utf8");
+  assert.match(form, /Data de nascimento/);
+  assert.match(form, /datetime-local/);
+  assert.match(form, /Todos da casa/);
+  assert.match(form, /Escolher moradores/);
+  assert.match(form, /setParticipantIds\(new Set\(\)\)/);
+  assert.match(form, /calendarApi\.update/);
+});
+
+test("oferece calendário real diário, semanal e mensal", async () => {
+  const page = await readFile(new URL("../app/app/routine/page.tsx", import.meta.url), "utf8");
+  const board = await readFile(new URL("../components/CalendarBoard.tsx", import.meta.url), "utf8");
+  assert.match(board, /\['day', 'Dia'\]/);
+  assert.match(board, /\['week', 'Semana'\]/);
+  assert.match(board, /\['month', 'Mês'\]/);
+  assert.match(board, /Período anterior/);
+  assert.match(board, />Hoje</);
+  assert.match(board, /calendar-month-grid/);
+  assert.match(board, /calendar-week-grid/);
+  assert.match(board, /calendar-timeline/);
+  assert.match(board, /todayKey/);
+  assert.match(page, /calendarApi\.range/);
+  assert.match(page, /routineApi\.overview/);
+});
+
 test("mantém a sequência acessível do sorteio animado", async () => {
   const page = await readFile(new URL("../app/app/page.tsx", import.meta.url), "utf8");
   const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");

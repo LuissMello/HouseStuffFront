@@ -539,12 +539,12 @@
         {
           "id": "HOUSE-120-04",
           "title": "Calendário diário, semanal e mensal",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-120-05",
           "title": "Integração com recorrências, testes, evidência visual e documentação",
-          "status": "pending"
+          "status": "inProgress"
         }
       ]
     },
