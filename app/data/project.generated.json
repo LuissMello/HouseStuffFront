@@ -444,7 +444,7 @@
       "repository": "both",
       "type": "feature",
       "title": "Lista de compras por categorias",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Usuário mantém categorias e itens e gera uma lista com seleção individual ou por categoria.",
       "subtasks": [
         {
@@ -470,7 +470,7 @@
         {
           "id": "HOUSE-100-05",
           "title": "Integração, testes, evidência visual e documentação",
-          "status": "inProgress"
+          "status": "completed"
         }
       ]
     },
