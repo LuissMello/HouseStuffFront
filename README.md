@@ -35,6 +35,8 @@ As tarefas são anotadas como post-its. No sorteio, o usuário inicia a brincade
 
 Em `/app/routine`, o calendário mostra as próximas recorrências da casa e o histórico apresenta as conclusões do usuário autenticado. No celular, a navegação inferior conecta Casa e Rotina.
 
+Em `/app/wishes`, os moradores cadastram coisas para comprar para a casa, guardam um link opcional e reorganizam a prioridade por toque, mouse, teclado ou botões.
+
 O comando sincroniza automaticamente `app/data/project.generated.json` a partir de `../HouseStuffAPi/docs/tracking/project.json` antes de iniciar.
 
 ## Validar

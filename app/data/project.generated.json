@@ -481,7 +481,7 @@
       "repository": "both",
       "type": "feature",
       "title": "Coisas para comprar para a casa",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Usuário mantém desejos da casa, ordena por prioridade e guarda um link opcional de loja.",
       "subtasks": [
         {
@@ -507,7 +507,7 @@
         {
           "id": "HOUSE-110-05",
           "title": "Integração, testes, evidência visual e documentação",
-          "status": "inProgress"
+          "status": "completed"
         }
       ]
     },
