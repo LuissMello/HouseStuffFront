@@ -58,3 +58,10 @@ Lint, TypeScript e build são gates permanentes. Comportamentos de componentes r
 - o intervalo em dias aparece somente quando o tipo recorrente é escolhido;
 - listagem e filtro usam os dados persistidos da API, sem mocks;
 - em telas pequenas, formulário, filtros e cartões ficam em uma coluna com ações touch.
+
+## Conclusão
+
+- `/app` confirma a ação antes de concluir a atribuição ativa;
+- o feedback de sucesso explica o efeito do tipo da tarefa;
+- após concluir, o usuário volta ao sorteio sem depender de recarregar;
+- disponibilidade e isolamento são sempre decididos pela API.

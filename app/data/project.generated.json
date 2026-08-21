@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-20",
   "status": "onTrack",
-  "currentStageId": "M6",
+  "currentStageId": "M7",
   "stages": [
     {
       "id": "M0",
@@ -281,7 +281,7 @@
       "repository": "both",
       "type": "feature",
       "title": "Conclusão e recorrência",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Conclusão encerra tarefa única ou calcula a próxima disponibilidade.",
       "subtasks": [
         {
@@ -302,12 +302,12 @@
         {
           "id": "HOUSE-060-04",
           "title": "Experiência responsiva de conclusão",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-060-05",
           "title": "Integração, testes e documentação",
-          "status": "pending"
+          "status": "completed"
         }
       ]
     },
