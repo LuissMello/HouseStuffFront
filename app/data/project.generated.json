@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-20",
   "status": "onTrack",
-  "currentStageId": "M10",
+  "currentStageId": "M12",
   "stages": [
     {
       "id": "M0",
@@ -64,6 +64,11 @@
       "id": "M11",
       "name": "Agenda",
       "outcome": "A casa visualiza datas, aniversários e compromissos em um calendário diário, semanal ou mensal"
+    },
+    {
+      "id": "M12",
+      "name": "Colaboração",
+      "outcome": "Todos os moradores organizam juntos os potes, tarefas e futuras listas da casa"
     }
   ],
   "tasks": [
@@ -539,6 +544,38 @@
         {
           "id": "HOUSE-120-05",
           "title": "Integração com recorrências, testes, evidência visual e documentação",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-130",
+      "stageId": "M12",
+      "area": "Geral",
+      "repository": "both",
+      "type": "feature",
+      "title": "Gestão colaborativa da casa",
+      "status": "inProgress",
+      "result": "Qualquer morador mantém potes e tarefas da própria casa pela interface.",
+      "subtasks": [
+        {
+          "id": "HOUSE-130-01",
+          "title": "Regra colaborativa e contrato de autorização",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-130-02",
+          "title": "Autorização de moradores na API",
+          "status": "inProgress"
+        },
+        {
+          "id": "HOUSE-130-03",
+          "title": "Navegação e telas compartilhadas no frontend",
+          "status": "pending"
+        },
+        {
+          "id": "HOUSE-130-04",
+          "title": "Integração com Luis, testes e fechamento",
           "status": "pending"
         }
       ]
