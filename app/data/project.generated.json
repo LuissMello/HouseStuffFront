@@ -355,9 +355,35 @@
       "repository": "both",
       "type": "technical",
       "title": "Qualidade e entrega local",
-      "status": "pending",
+      "status": "completed",
       "result": "Projeto completo inicia por roteiro único e possui validação ponta a ponta.",
-      "subtasks": []
+      "subtasks": [
+        {
+          "id": "HOUSE-080-01",
+          "title": "Contrato de entrega e critérios operacionais",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-080-02",
+          "title": "Prontidão e dados locais reproduzíveis",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-080-03",
+          "title": "Comandos de iniciar, parar e validar",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-080-04",
+          "title": "Smoke autenticado e auditoria responsiva",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-080-05",
+          "title": "Gates, documentação e fechamento",
+          "status": "completed"
+        }
+      ]
     }
   ]
 }

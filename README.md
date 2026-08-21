@@ -8,7 +8,17 @@ Aplicação web responsiva e mobile-first do HouseStuff, com autenticação, adm
 - `HouseStuffAPi` e `HouseStuffFront` lado a lado no mesmo diretório.
 - API e PostgreSQL iniciados conforme o README do backend.
 
-## Executar
+## Executar o projeto completo
+
+No repositório `HouseStuffAPi`, execute:
+
+```powershell
+.\scripts\start-local.ps1
+```
+
+Esse é o roteiro canônico: prepara PostgreSQL, API e este frontend, cria os dados locais demonstráveis e aguarda a prontidão. Acesse `http://localhost:3000`. Para parar os processos registrados, use `.\scripts\stop-local.ps1` no backend.
+
+## Executar somente o frontend
 
 ```powershell
 npm ci
