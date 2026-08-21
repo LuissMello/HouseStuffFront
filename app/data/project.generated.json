@@ -524,22 +524,22 @@
         {
           "id": "HOUSE-120-01",
           "title": "Domínio, participantes, datas e persistência",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-120-02",
           "title": "CRUD de eventos e consultas por período na API",
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "HOUSE-120-03",
           "title": "Cadastro responsivo com seleção de envolvidos",
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "HOUSE-120-04",
           "title": "Calendário diário, semanal e mensal",
-          "status": "pending"
+          "status": "inProgress"
         },
         {
           "id": "HOUSE-120-05",

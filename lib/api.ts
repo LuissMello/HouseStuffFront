@@ -85,6 +85,33 @@ export type RoutineOverview = {
 export type ShoppingItem = { id: string; categoryId: string; name: string };
 export type ShoppingCategory = { id: string; name: string; displayOrder: number; items: ShoppingItem[] };
 export type PurchaseWish = { id: string; name: string; storeUrl: string | null; priority: number };
+export type CalendarEventKind = "date" | "birthday" | "appointment";
+export type CalendarParticipant = { userId: string; name: string };
+export type CalendarEntry = {
+  entryId: string;
+  eventId: string | null;
+  source: "event" | "task";
+  kind: CalendarEventKind | "recurringTask";
+  title: string;
+  description: string | null;
+  date: string | null;
+  definitionDate: string | null;
+  startsAt: string | null;
+  endsAt: string | null;
+  appliesToAll: boolean;
+  participants: CalendarParticipant[];
+};
+export type CalendarRange = { fromDate: string; toDate: string; entries: CalendarEntry[] };
+export type SaveCalendarEvent = {
+  title: string;
+  description: string | null;
+  kind: CalendarEventKind;
+  appliesToAll: boolean;
+  allDayDate: string | null;
+  startsAt: string | null;
+  endsAt: string | null;
+  participantUserIds: string[];
+};
 
 type Problem = { title?: string; detail?: string; code?: string };
 
@@ -157,6 +184,16 @@ export const assignmentApi = {
 
 export const routineApi = {
   overview: () => request<RoutineOverview>("/api/v1/routine"),
+};
+
+export const calendarApi = {
+  range: (input: { fromDate: string; toDate: string; fromUtc: string; toUtc: string }) => {
+    const query = new URLSearchParams(input);
+    return request<CalendarRange>(`/api/v1/calendar?${query}`);
+  },
+  create: (input: SaveCalendarEvent) => request("/api/v1/calendar/events", { method: "POST", body: JSON.stringify(input) }),
+  update: (id: string, input: SaveCalendarEvent) => request(`/api/v1/calendar/events/${id}`, { method: "PUT", body: JSON.stringify(input) }),
+  delete: (id: string) => request<boolean>(`/api/v1/calendar/events/${id}`, { method: "DELETE" }),
 };
 
 export const shoppingApi = {
