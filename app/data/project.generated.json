@@ -481,13 +481,13 @@
       "repository": "both",
       "type": "feature",
       "title": "Coisas para comprar para a casa",
-      "status": "pending",
+      "status": "inProgress",
       "result": "Usuário mantém desejos da casa, ordena por prioridade e guarda um link opcional de loja.",
       "subtasks": [
         {
           "id": "HOUSE-110-01",
           "title": "Domínio, persistência e isolamento dos desejos",
-          "status": "pending"
+          "status": "inProgress"
         },
         {
           "id": "HOUSE-110-02",
