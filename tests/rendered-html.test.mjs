@@ -152,6 +152,13 @@ test("publica todas as telas com hash routing no GitHub Pages", async () => {
   assert.match(workflow, /actions\/deploy-pages@v4/);
 });
 
+test("encaminha a API local para o ambiente do Fly.io", async () => {
+  const config = await readFile(new URL("../vite.config.ts", import.meta.url), "utf8");
+  assert.match(config, /"\/api"/);
+  assert.match(config, /target: "https:\/\/housestuffapi\.fly\.dev"/);
+  assert.match(config, /changeOrigin: true/);
+});
+
 test("mantém cadastro exclusivo por todos ou moradores no calendário", async () => {
   const form = await readFile(new URL("../components/CalendarEventForm.tsx", import.meta.url), "utf8");
   assert.match(form, /Data de nascimento/);
