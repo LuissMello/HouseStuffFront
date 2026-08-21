@@ -73,3 +73,12 @@ Lint, TypeScript e build são gates permanentes. Comportamentos de componentes r
 - datas são apresentadas no fuso do navegador;
 - estados sem recorrências ou sem conclusões possuem orientação própria;
 - telas menores recebem navegação inferior para Casa e Rotina.
+
+## Experiência lúdica
+
+- o cadastro administrativo trata cada tarefa como uma anotação em post-it;
+- o catálogo varia cores e pequenas inclinações sem prejudicar a leitura;
+- o sorteio começa por uma chamada clara, depois pede a escolha de um pote;
+- potes são elementos HTML/CSS acessíveis, e o escolhido avança antes de chacoalhar;
+- a proposta continua vindo da API e entra no centro como post-it em um diálogo;
+- `prefers-reduced-motion` remove animações sem remover nenhuma ação ou informação.

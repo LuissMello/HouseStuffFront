@@ -31,6 +31,8 @@ No ambiente local, use `admin@housestuff.local` e `HouseStuff#2026` para adminis
 
 Na área do morador, escolha um pote, sorteie uma proposta, aceite ou peça outra. Após o aceite, a atribuição ativa permanece na tela mesmo depois de recarregar a aplicação e pode ser concluída com confirmação. Tarefas únicas encerram, reutilizáveis voltam imediatamente e recorrentes mostram quando estarão disponíveis outra vez.
 
+As tarefas são anotadas como post-its. No sorteio, o usuário inicia a brincadeira, escolhe um pote animado, vê o pote avançar e recebe a proposta em um post-it no centro da tela.
+
 Em `/app/routine`, o calendário mostra as próximas recorrências da casa e o histórico apresenta as conclusões do usuário autenticado. No celular, a navegação inferior conecta Casa e Rotina.
 
 O comando sincroniza automaticamente `app/data/project.generated.json` a partir de `../HouseStuffAPi/docs/tracking/project.json` antes de iniciar.

@@ -397,7 +397,7 @@
       "repository": "front",
       "type": "feature",
       "title": "Experiência lúdica e sorteio animado",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Usuário anota tarefas em post-its e acompanha o pote escolhido entregar a proposta em uma animação.",
       "subtasks": [
         {
@@ -418,7 +418,7 @@
         {
           "id": "HOUSE-090-04",
           "title": "Acessibilidade, responsividade, testes e fechamento",
-          "status": "inProgress"
+          "status": "completed"
         }
       ]
     }
