@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-20",
   "status": "onTrack",
-  "currentStageId": "M8",
+  "currentStageId": "M9",
   "stages": [
     {
       "id": "M0",
@@ -49,6 +49,11 @@
       "id": "M8",
       "name": "Entrega",
       "outcome": "Ambiente local reproduzível, responsivo e validado ponta a ponta"
+    },
+    {
+      "id": "M9",
+      "name": "Experiência",
+      "outcome": "Tarefas em post-its e sorteio animado tornam a rotina mais leve e divertida"
     }
   ],
   "tasks": [
@@ -382,6 +387,38 @@
           "id": "HOUSE-080-05",
           "title": "Gates, documentação e fechamento",
           "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-090",
+      "stageId": "M9",
+      "area": "Frontend",
+      "repository": "front",
+      "type": "feature",
+      "title": "Experiência lúdica e sorteio animado",
+      "status": "inProgress",
+      "result": "Usuário anota tarefas em post-its e acompanha o pote escolhido entregar a proposta em uma animação.",
+      "subtasks": [
+        {
+          "id": "HOUSE-090-01",
+          "title": "Direção visual e contrato da interação",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-090-02",
+          "title": "Cadastro e catálogo em estilo post-it",
+          "status": "inProgress"
+        },
+        {
+          "id": "HOUSE-090-03",
+          "title": "Potes e sorteio animados",
+          "status": "pending"
+        },
+        {
+          "id": "HOUSE-090-04",
+          "title": "Acessibilidade, responsividade, testes e fechamento",
+          "status": "pending"
         }
       ]
     }
