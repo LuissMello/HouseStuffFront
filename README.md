@@ -33,7 +33,7 @@ Na área do morador, escolha um pote, sorteie uma proposta, aceite ou peça outr
 
 As tarefas são anotadas como post-its. No sorteio, o usuário inicia a brincadeira, escolhe um pote animado, vê o pote avançar e recebe a proposta em um post-it no centro da tela.
 
-Em `/app/routine`, o calendário mostra as próximas recorrências da casa e o histórico apresenta as conclusões do usuário autenticado. No celular, a navegação inferior conecta Casa e Rotina.
+Em `/app/routine`, datas, aniversários, compromissos e próximas recorrências aparecem em calendário diário, semanal ou mensal; o histórico continua mostrando somente as conclusões do usuário autenticado.
 
 Em `/app/wishes`, os moradores cadastram coisas para comprar para a casa, guardam um link opcional e reorganizam a prioridade por toque, mouse, teclado ou botões.
 

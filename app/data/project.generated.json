@@ -518,7 +518,7 @@
       "repository": "both",
       "type": "feature",
       "title": "Agenda e calendário da casa",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Usuário cadastra eventos com participantes e consulta a agenda real nos modos diário, semanal e mensal.",
       "subtasks": [
         {
@@ -544,7 +544,7 @@
         {
           "id": "HOUSE-120-05",
           "title": "Integração com recorrências, testes, evidência visual e documentação",
-          "status": "inProgress"
+          "status": "completed"
         }
       ]
     },
