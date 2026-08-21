@@ -518,13 +518,13 @@
       "repository": "both",
       "type": "feature",
       "title": "Agenda e calendário da casa",
-      "status": "pending",
+      "status": "inProgress",
       "result": "Usuário cadastra eventos com participantes e consulta a agenda real nos modos diário, semanal e mensal.",
       "subtasks": [
         {
           "id": "HOUSE-120-01",
           "title": "Domínio, participantes, datas e persistência",
-          "status": "pending"
+          "status": "inProgress"
         },
         {
           "id": "HOUSE-120-02",
