@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-20",
   "status": "onTrack",
-  "currentStageId": "M12",
+  "currentStageId": "M10",
   "stages": [
     {
       "id": "M0",
@@ -444,13 +444,13 @@
       "repository": "both",
       "type": "feature",
       "title": "Lista de compras por categorias",
-      "status": "pending",
+      "status": "inProgress",
       "result": "Usuário mantém categorias e itens e gera uma lista com seleção individual ou por categoria.",
       "subtasks": [
         {
           "id": "HOUSE-100-01",
           "title": "Domínio, persistência e isolamento de categorias e itens",
-          "status": "pending"
+          "status": "inProgress"
         },
         {
           "id": "HOUSE-100-02",
