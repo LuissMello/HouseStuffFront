@@ -51,6 +51,16 @@ export type ActiveAssignment = DrawProposal & {
   acceptedAt: string;
 };
 
+export type CompletedAssignment = {
+  assignmentId: string;
+  taskId: string;
+  taskName: string;
+  kind: HouseholdTaskKind;
+  completedAt: string;
+  nextAvailableAt: string | null;
+  returnsToPot: boolean;
+};
+
 type Problem = { title?: string; detail?: string; code?: string };
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5049";
@@ -117,4 +127,5 @@ export const assignmentApi = {
   current: () => request<ActiveAssignment | null>("/api/v1/assignments/current"),
   draw: (potId: string, excludedTaskIds: string[]) => request<DrawProposal>("/api/v1/draws", { method: "POST", body: JSON.stringify({ potId, excludedTaskIds }) }),
   accept: (taskId: string) => request<ActiveAssignment>("/api/v1/assignments/accept", { method: "POST", body: JSON.stringify({ taskId }) }),
+  completeCurrent: () => request<CompletedAssignment>("/api/v1/assignments/current/complete", { method: "POST" }),
 };

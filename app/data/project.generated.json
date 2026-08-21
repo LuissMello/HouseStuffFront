@@ -281,9 +281,35 @@
       "repository": "both",
       "type": "feature",
       "title": "Conclusão e recorrência",
-      "status": "pending",
+      "status": "inProgress",
       "result": "Conclusão encerra tarefa única ou calcula a próxima disponibilidade.",
-      "subtasks": []
+      "subtasks": [
+        {
+          "id": "HOUSE-060-01",
+          "title": "Regras de conclusão e disponibilidade",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-060-02",
+          "title": "Domínio, persistência e migration",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-060-03",
+          "title": "Caso de uso e endpoint isolado",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-060-04",
+          "title": "Experiência responsiva de conclusão",
+          "status": "inProgress"
+        },
+        {
+          "id": "HOUSE-060-05",
+          "title": "Integração, testes e documentação",
+          "status": "pending"
+        }
+      ]
     },
     {
       "id": "HOUSE-070",

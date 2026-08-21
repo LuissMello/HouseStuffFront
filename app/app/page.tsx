@@ -2,7 +2,7 @@
 
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { AuthenticatedHeader } from "../../components/AuthenticatedHeader";
-import { accessApi, ApiError, assignmentApi, potApi, residenceApi, type ActiveAssignment, type CurrentUser, type DrawProposal, type HouseholdTaskKind, type Pot, type Residence } from "../../lib/api";
+import { accessApi, ApiError, assignmentApi, potApi, residenceApi, type ActiveAssignment, type CompletedAssignment, type CurrentUser, type DrawProposal, type HouseholdTaskKind, type Pot, type Residence } from "../../lib/api";
 
 const taskKindLabels: Record<HouseholdTaskKind, string> = { oneTime: "Única", reusable: "Reutilizável", recurring: "Recorrente" };
 
@@ -18,6 +18,9 @@ export default function MyHomePage() {
   const [saving, setSaving] = useState(false);
   const [drawing, setDrawing] = useState(false);
   const [accepting, setAccepting] = useState(false);
+  const [confirmingCompletion, setConfirmingCompletion] = useState(false);
+  const [completing, setCompleting] = useState(false);
+  const [completion, setCompletion] = useState<CompletedAssignment | null>(null);
   const [error, setError] = useState("");
   const [drawError, setDrawError] = useState("");
 
@@ -84,6 +87,16 @@ export default function MyHomePage() {
     finally { setAccepting(false); }
   }
 
+  async function completeAssignment() {
+    setCompleting(true); setError("");
+    try {
+      const completed = await assignmentApi.completeCurrent();
+      setCompletion(completed); setAssignment(null); setConfirmingCompletion(false);
+    } catch (reason) {
+      setError(reason instanceof ApiError ? reason.message : "Não foi possível concluir a tarefa.");
+    } finally { setCompleting(false); }
+  }
+
   if (loading) return <main className="center-state"><span className="loading-dot" /><p>Preparando sua casa...</p></main>;
   if (!user) return <main className="center-state"><p role="alert">{error}</p><button onClick={load}>Tentar novamente</button></main>;
 
@@ -92,7 +105,8 @@ export default function MyHomePage() {
     <div className="app-shell">
       {residence ? <>
         <section className="welcome-panel residence-welcome"><div><p className="eyebrow">MINHA CASA</p><h1>{residence.name}</h1><p>Olá, {user.name.split(" ")[0]}. Você está vendo somente as informações vinculadas a esta residência.</p></div><span className="access-ok">CASA CONECTADA</span></section>
-        {assignment ? <section className="active-assignment"><div className="assignment-kicker"><span>TAREFA EM ANDAMENTO</span><strong>{assignment.potName}</strong></div><div><p className="eyebrow">VOCÊ ACEITOU</p><h2>{assignment.taskName}</h2><p>{assignment.description || "Siga a tarefa e volte para concluí-la na próxima etapa."}</p><div className="assignment-meta"><span>{taskKindLabels[assignment.kind]}</span>{assignment.kind === "recurring" && <span>A cada {assignment.recurrenceDays} dias</span>}<span>Aceita em {new Date(assignment.acceptedAt).toLocaleDateString("pt-BR")}</span></div></div><small>A conclusão será habilitada na HOUSE-060.</small></section> : <section className="draw-section">
+        {completion && <section className="completion-success" aria-live="polite"><span>✓</span><div><p className="eyebrow">TAREFA CONCLUÍDA</p><h2>{completion.taskName}</h2><p>{completion.kind === "oneTime" ? "Essa tarefa única foi encerrada e não voltará ao pote." : completion.kind === "reusable" ? "Ela já está disponível novamente para os próximos sorteios." : `Ela voltará ao pote em ${new Date(completion.nextAvailableAt!).toLocaleDateString("pt-BR")}.`}</p></div><button onClick={() => setCompletion(null)} type="button">Entendi</button></section>}
+        {assignment ? <section className="active-assignment"><div className="assignment-kicker"><span>TAREFA EM ANDAMENTO</span><strong>{assignment.potName}</strong></div><div><p className="eyebrow">VOCÊ ACEITOU</p><h2>{assignment.taskName}</h2><p>{assignment.description || "Faça a tarefa e marque como concluída quando terminar."}</p><div className="assignment-meta"><span>{taskKindLabels[assignment.kind]}</span>{assignment.kind === "recurring" && <span>A cada {assignment.recurrenceDays} dias</span>}<span>Aceita em {new Date(assignment.acceptedAt).toLocaleDateString("pt-BR")}</span></div>{confirmingCompletion ? <div className="completion-confirm" role="group" aria-label="Confirmar conclusão"><p>Confirmar que você terminou esta tarefa?</p><div><button className="complete-button" disabled={completing} onClick={completeAssignment} type="button">{completing ? "Concluindo..." : "Sim, concluí"}<span aria-hidden="true">✓</span></button><button className="cancel-completion" disabled={completing} onClick={() => setConfirmingCompletion(false)} type="button">Ainda não</button></div></div> : <button className="complete-button" onClick={() => setConfirmingCompletion(true)} type="button">Concluir tarefa<span aria-hidden="true">✓</span></button>}{error && <p className="assignment-error" role="alert">{error}</p>}</div></section> : <section className="draw-section">
           <div className="members-title"><div><p className="eyebrow">QUAL É A PRÓXIMA?</p><h2>Escolha um pote</h2></div><span>{pots.length} {pots.length === 1 ? "POTE ATIVO" : "POTES ATIVOS"}</span></div>
           {pots.length > 0 ? <><div className="pot-grid draw-pot-grid">{pots.map((pot, index) => <button aria-pressed={selectedPotId === pot.id} className={`pot-card pot-choice ${selectedPotId === pot.id ? "selected" : ""}`} key={pot.id} onClick={() => choosePot(pot.id)} type="button"><span className="pot-index">{String(index + 1).padStart(2, "0")}</span><span><strong>{pot.name}</strong><small>{pot.description || "Um espaço para as tarefas desta categoria."}</small></span><i>{selectedPotId === pot.id ? "ESCOLHIDO" : "ESCOLHER"}</i></button>)}</div>{!proposal && <div className="draw-controls"><p>O sorteio mostra uma proposta. A tarefa só fica com você depois do aceite.</p><button className="primary-button" disabled={drawing} onClick={() => drawAnother(false)} type="button">{drawing ? "Sorteando..." : "Sortear uma tarefa"}<span aria-hidden="true">✦</span></button></div>}</> : <div className="pot-empty"><span>◌</span><div><strong>Nenhum pote disponível</strong><p>{user.isAdministrator ? "Crie o primeiro pote para começar a organizar as tarefas da casa." : "O administrador da casa ainda não cadastrou potes."}</p></div>{user.isAdministrator && <a href="/admin/pots">Criar pote</a>}</div>}
           {proposal && <article className="proposal-card"><div className="proposal-mark">✦</div><div className="proposal-copy"><p className="eyebrow">SUA PROPOSTA</p><span>{proposal.potName} · {taskKindLabels[proposal.kind]}</span><h3>{proposal.taskName}</h3><p>{proposal.description || "Esta tarefa está pronta para ser feita."}</p>{proposal.kind === "recurring" && <small>Volta ao pote {proposal.recurrenceDays} dias após a conclusão.</small>}</div><div className="proposal-actions"><button className="primary-button" disabled={accepting} onClick={acceptProposal} type="button">{accepting ? "Aceitando..." : "Aceitar tarefa"}<span aria-hidden="true">✓</span></button><button className="secondary-button" disabled={drawing} onClick={() => drawAnother(true)} type="button">Quero outra</button></div></article>}
