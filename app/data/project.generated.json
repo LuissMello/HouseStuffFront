@@ -318,9 +318,35 @@
       "repository": "both",
       "type": "feature",
       "title": "Calendário e histórico",
-      "status": "pending",
+      "status": "inProgress",
       "result": "Usuário consulta calendário e histórico reais da própria casa.",
-      "subtasks": []
+      "subtasks": [
+        {
+          "id": "HOUSE-070-01",
+          "title": "Regras e contratos de consulta",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-070-02",
+          "title": "Consultas e endpoints isolados",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-070-03",
+          "title": "Tela responsiva e navegação",
+          "status": "inProgress"
+        },
+        {
+          "id": "HOUSE-070-04",
+          "title": "Integração, estados e isolamento",
+          "status": "pending"
+        },
+        {
+          "id": "HOUSE-070-05",
+          "title": "Testes e documentação",
+          "status": "pending"
+        }
+      ]
     },
     {
       "id": "HOUSE-080",

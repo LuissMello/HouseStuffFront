@@ -61,6 +61,27 @@ export type CompletedAssignment = {
   returnsToPot: boolean;
 };
 
+export type RoutineOverview = {
+  generatedAt: string;
+  upcoming: Array<{
+    taskId: string;
+    potId: string;
+    potName: string;
+    taskName: string;
+    description: string | null;
+    nextAvailableAt: string;
+  }>;
+  history: Array<{
+    assignmentId: string;
+    taskId: string;
+    potName: string;
+    taskName: string;
+    kind: HouseholdTaskKind;
+    acceptedAt: string;
+    completedAt: string;
+  }>;
+};
+
 type Problem = { title?: string; detail?: string; code?: string };
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5049";
@@ -128,4 +149,8 @@ export const assignmentApi = {
   draw: (potId: string, excludedTaskIds: string[]) => request<DrawProposal>("/api/v1/draws", { method: "POST", body: JSON.stringify({ potId, excludedTaskIds }) }),
   accept: (taskId: string) => request<ActiveAssignment>("/api/v1/assignments/accept", { method: "POST", body: JSON.stringify({ taskId }) }),
   completeCurrent: () => request<CompletedAssignment>("/api/v1/assignments/current/complete", { method: "POST" }),
+};
+
+export const routineApi = {
+  overview: () => request<RoutineOverview>("/api/v1/routine"),
 };

@@ -59,3 +59,10 @@ test("renderiza o estado inicial da residência autenticada", async () => {
   const html = await response.text();
   assert.match(html, /Preparando sua casa/);
 });
+
+test("renderiza o estado inicial do calendário e histórico", async () => {
+  const response = await render("/app/routine");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Organizando sua rotina/);
+});
