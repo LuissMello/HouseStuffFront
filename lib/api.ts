@@ -128,7 +128,7 @@ export const residenceApi = {
 
 export const potApi = {
   list: () => request<Pot[]>("/api/v1/pots"),
-  listAdmin: () => request<Pot[]>("/api/v1/admin/pots"),
+  listForManagement: () => request<Pot[]>("/api/v1/admin/pots"),
   create: (input: { name: string; description: string }) => request<Pot>("/api/v1/admin/pots", { method: "POST", body: JSON.stringify(input) }),
   update: (id: string, input: { name: string; description: string }) => request<Pot>(`/api/v1/admin/pots/${id}`, { method: "PUT", body: JSON.stringify(input) }),
   setActive: (id: string, isActive: boolean) => request<Pot>(`/api/v1/admin/pots/${id}/status`, { method: "PATCH", body: JSON.stringify({ isActive }) }),
@@ -136,7 +136,7 @@ export const potApi = {
 };
 
 export const householdTaskApi = {
-  listAdmin: (potId?: string) => request<HouseholdTask[]>(`/api/v1/admin/tasks${potId ? `?potId=${encodeURIComponent(potId)}` : ""}`),
+  listForManagement: (potId?: string) => request<HouseholdTask[]>(`/api/v1/admin/tasks${potId ? `?potId=${encodeURIComponent(potId)}` : ""}`),
   create: (input: { potId: string; name: string; description: string; kind: HouseholdTaskKind; recurrenceDays: number | null }) =>
     request<HouseholdTask>("/api/v1/admin/tasks", { method: "POST", body: JSON.stringify(input) }),
   update: (id: string, input: { potId: string; name: string; description: string; kind: HouseholdTaskKind; recurrenceDays: number | null }) =>

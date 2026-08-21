@@ -54,6 +54,20 @@ test("renderiza o estado inicial da administração de tarefas", async () => {
   assert.match(html, /Preparando as tarefas/);
 });
 
+test("renderiza os potes na rota compartilhada pelos moradores", async () => {
+  const response = await render("/app/pots");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Organizando os potes/);
+});
+
+test("renderiza as tarefas na rota compartilhada pelos moradores", async () => {
+  const response = await render("/app/tasks");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Preparando as tarefas/);
+});
+
 test("renderiza o estado inicial da residência autenticada", async () => {
   const response = await render("/app");
   assert.equal(response.status, 200);
@@ -74,6 +88,16 @@ test("mantém o cadastro de tarefas com linguagem de post-it", async () => {
   assert.match(source, /O que precisa ser feito/);
   assert.match(source, /Guardar no pote/);
   assert.match(source, /postit-board/);
+});
+
+test("expõe a organização da casa a qualquer morador autenticado", async () => {
+  const header = await readFile(new URL("../components/AuthenticatedHeader.tsx", import.meta.url), "utf8");
+  const pots = await readFile(new URL("../app/admin/pots/page.tsx", import.meta.url), "utf8");
+  const tasks = await readFile(new URL("../app/admin/tasks/page.tsx", import.meta.url), "utf8");
+  assert.match(header, /href="\/app\/pots">Potes/);
+  assert.match(header, /href="\/app\/tasks">Tarefas/);
+  assert.doesNotMatch(pots, /!current\.isAdministrator/);
+  assert.doesNotMatch(tasks, /!current\.isAdministrator/);
 });
 
 test("mantém a sequência acessível do sorteio animado", async () => {

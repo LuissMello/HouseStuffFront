@@ -38,8 +38,9 @@ Rotas apenas compõem telas. Acesso à API, schemas e comportamento ficam na fea
 - `/app`: área de qualquer usuário autenticado;
 - `/app/routine`: calendário da casa e histórico pessoal;
 - `/admin/users`: criação direta de usuários, visível apenas para administrador;
-- `/admin/pots`: manutenção e ordenação dos potes da casa;
-- `/admin/tasks`: manutenção das tarefas únicas, reutilizáveis e recorrentes;
+- `/app/pots`: manutenção e ordenação colaborativa dos potes por qualquer morador vinculado;
+- `/app/tasks`: manutenção colaborativa das tarefas únicas, reutilizáveis e recorrentes;
+- `/admin/pots` e `/admin/tasks`: aliases mantidos temporariamente por compatibilidade;
 - a API mantém a sessão em cookie HTTP-only e o frontend sempre envia credenciais nas chamadas.
 
 ## Residência
@@ -72,7 +73,7 @@ Lint, TypeScript e build são gates permanentes. Comportamentos de componentes r
 - calendário e histórico consomem uma projeção única de `/api/v1/routine`;
 - datas são apresentadas no fuso do navegador;
 - estados sem recorrências ou sem conclusões possuem orientação própria;
-- telas menores recebem navegação inferior para Casa e Rotina.
+- telas menores recebem navegação inferior para Casa, Rotina, Potes e Tarefas.
 
 ## Experiência lúdica
 
