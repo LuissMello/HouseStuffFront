@@ -450,22 +450,22 @@
         {
           "id": "HOUSE-100-01",
           "title": "Domínio, persistência e isolamento de categorias e itens",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-100-02",
           "title": "CRUD de categorias e itens na API",
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "HOUSE-100-03",
           "title": "Cadastro responsivo de categorias e itens",
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "HOUSE-100-04",
           "title": "Geração, ordenação e seleção da lista",
-          "status": "pending"
+          "status": "inProgress"
         },
         {
           "id": "HOUSE-100-05",

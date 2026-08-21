@@ -40,6 +40,7 @@ Rotas apenas compõem telas. Acesso à API, schemas e comportamento ficam na fea
 - `/admin/users`: criação direta de usuários, visível apenas para administrador;
 - `/app/pots`: manutenção e ordenação colaborativa dos potes por qualquer morador vinculado;
 - `/app/tasks`: manutenção colaborativa das tarefas únicas, reutilizáveis e recorrentes;
+- `/app/shopping`: catálogo colaborativo e geração temporária da lista de compras;
 - `/admin/pots` e `/admin/tasks`: aliases mantidos temporariamente por compatibilidade;
 - a API mantém a sessão em cookie HTTP-only e o frontend sempre envia credenciais nas chamadas.
 
@@ -83,3 +84,11 @@ Lint, TypeScript e build são gates permanentes. Comportamentos de componentes r
 - potes são elementos HTML/CSS acessíveis, e o escolhido avança antes de chacoalhar;
 - a proposta continua vindo da API e entra no centro como post-it em um diálogo;
 - `prefers-reduced-motion` remove animações sem remover nenhuma ação ou informação.
+
+## Lista de compras
+
+- a mesma rota alterna claramente entre cadastro do catálogo e geração da lista;
+- categorias respeitam a ordem persistida da casa ou podem ser apresentadas em ordem alfabética;
+- seleção de categoria possui estados completo, parcial e vazio sem depender apenas de cor;
+- a seleção atual permanece no componente e não representa histórico ou item já comprado;
+- formulários, categorias e itens ficam em uma coluna nas telas pequenas, com navegação inferior para Compras.

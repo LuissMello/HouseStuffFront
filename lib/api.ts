@@ -82,6 +82,9 @@ export type RoutineOverview = {
   }>;
 };
 
+export type ShoppingItem = { id: string; categoryId: string; name: string };
+export type ShoppingCategory = { id: string; name: string; displayOrder: number; items: ShoppingItem[] };
+
 type Problem = { title?: string; detail?: string; code?: string };
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5049";
@@ -153,4 +156,15 @@ export const assignmentApi = {
 
 export const routineApi = {
   overview: () => request<RoutineOverview>("/api/v1/routine"),
+};
+
+export const shoppingApi = {
+  catalog: () => request<ShoppingCategory[]>("/api/v1/shopping/catalog"),
+  createCategory: (name: string) => request<ShoppingCategory>("/api/v1/shopping/categories", { method: "POST", body: JSON.stringify({ name }) }),
+  updateCategory: (id: string, name: string) => request<ShoppingCategory>(`/api/v1/shopping/categories/${id}`, { method: "PUT", body: JSON.stringify({ name }) }),
+  moveCategory: (id: string, offset: number) => request<ShoppingCategory[]>(`/api/v1/shopping/categories/${id}/move`, { method: "POST", body: JSON.stringify({ offset }) }),
+  deleteCategory: (id: string) => request<boolean>(`/api/v1/shopping/categories/${id}`, { method: "DELETE" }),
+  createItem: (input: { categoryId: string; name: string }) => request<ShoppingItem>("/api/v1/shopping/items", { method: "POST", body: JSON.stringify(input) }),
+  updateItem: (id: string, input: { categoryId: string; name: string }) => request<ShoppingItem>(`/api/v1/shopping/items/${id}`, { method: "PUT", body: JSON.stringify(input) }),
+  deleteItem: (id: string) => request<boolean>(`/api/v1/shopping/items/${id}`, { method: "DELETE" }),
 };
