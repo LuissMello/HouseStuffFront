@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 async function render(path = "/") {
@@ -65,4 +66,24 @@ test("renderiza o estado inicial do calendário e histórico", async () => {
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /Organizando sua rotina/);
+});
+
+test("mantém o cadastro de tarefas com linguagem de post-it", async () => {
+  const source = await readFile(new URL("../app/admin/tasks/page.tsx", import.meta.url), "utf8");
+  assert.match(source, /task-postit-form/);
+  assert.match(source, /O que precisa ser feito/);
+  assert.match(source, /Guardar no pote/);
+  assert.match(source, /postit-board/);
+});
+
+test("mantém a sequência acessível do sorteio animado", async () => {
+  const page = await readFile(new URL("../app/app/page.tsx", import.meta.url), "utf8");
+  const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(page, /Sortear uma tarefa/);
+  assert.match(page, /Qual pote você quer abrir/);
+  assert.match(page, /aria-pressed=\{selected\}/);
+  assert.match(page, /aria-modal="true"/);
+  assert.match(styles, /@keyframes jar-shake/);
+  assert.match(styles, /@keyframes postit-from-jar/);
+  assert.match(styles, /prefers-reduced-motion:reduce/);
 });

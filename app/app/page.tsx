@@ -1,10 +1,17 @@
 "use client";
 
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { type CSSProperties, FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { AuthenticatedHeader } from "../../components/AuthenticatedHeader";
 import { accessApi, ApiError, assignmentApi, potApi, residenceApi, type ActiveAssignment, type CompletedAssignment, type CurrentUser, type DrawProposal, type HouseholdTaskKind, type Pot, type Residence } from "../../lib/api";
 
 const taskKindLabels: Record<HouseholdTaskKind, string> = { oneTime: "Única", reusable: "Reutilizável", recurring: "Recorrente" };
+
+type DrawStyle = CSSProperties & { "--draw-from-x": string; "--draw-from-y": string };
+
+function waitForDrawAnimation(milliseconds: number) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return Promise.resolve();
+  return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+}
 
 export default function MyHomePage() {
   const [user, setUser] = useState<CurrentUser | null>(null);
@@ -12,7 +19,9 @@ export default function MyHomePage() {
   const [pots, setPots] = useState<Pot[]>([]);
   const [assignment, setAssignment] = useState<ActiveAssignment | null>(null);
   const [proposal, setProposal] = useState<DrawProposal | null>(null);
+  const [choosingPot, setChoosingPot] = useState(false);
   const [selectedPotId, setSelectedPotId] = useState("");
+  const [drawOrigin, setDrawOrigin] = useState({ x: "0px", y: "180px" });
   const [excludedTaskIds, setExcludedTaskIds] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -23,6 +32,8 @@ export default function MyHomePage() {
   const [completion, setCompletion] = useState<CompletedAssignment | null>(null);
   const [error, setError] = useState("");
   const [drawError, setDrawError] = useState("");
+  const selectedPotRef = useRef<HTMLButtonElement | null>(null);
+  const proposalRef = useRef<HTMLElement | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -34,7 +45,7 @@ export default function MyHomePage() {
         setResidence(home);
         setPots(availablePots);
         setAssignment(currentAssignment);
-        setSelectedPotId((current) => current || availablePots[0]?.id || "");
+        setSelectedPotId((current) => availablePots.some((pot) => pot.id === current) ? current : "");
       }
       catch (reason) {
         if (reason instanceof ApiError && reason.code === "residence_not_found") { setResidence(null); setPots([]); }
@@ -51,6 +62,18 @@ export default function MyHomePage() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     void load();
   }, [load]);
+
+  useEffect(() => {
+    if (!proposal) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    proposalRef.current?.focus();
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { setProposal(null); setExcludedTaskIds([]); }
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => { document.body.style.overflow = previousOverflow; window.removeEventListener("keydown", closeOnEscape); };
+  }, [proposal]);
 
   async function createResidence(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -74,7 +97,12 @@ export default function MyHomePage() {
     const excluded = isAnother && proposal ? [...excludedTaskIds, proposal.taskId] : excludedTaskIds;
     setDrawing(true); setDrawError("");
     if (isAnother) { setExcludedTaskIds(excluded); setProposal(null); }
-    try { setProposal(await assignmentApi.draw(selectedPotId, excluded)); }
+    const bounds = selectedPotRef.current?.getBoundingClientRect();
+    if (bounds) setDrawOrigin({ x: `${bounds.left + bounds.width / 2 - window.innerWidth / 2}px`, y: `${bounds.top + bounds.height * .38 - window.innerHeight / 2}px` });
+    try {
+      await waitForDrawAnimation(650);
+      setProposal(await assignmentApi.draw(selectedPotId, excluded));
+    }
     catch (reason) { setDrawError(reason instanceof ApiError ? reason.message : "Não foi possível sortear uma tarefa."); }
     finally { setDrawing(false); }
   }
@@ -106,11 +134,27 @@ export default function MyHomePage() {
       {residence ? <>
         <section className="welcome-panel residence-welcome"><div><p className="eyebrow">MINHA CASA</p><h1>{residence.name}</h1><p>Olá, {user.name.split(" ")[0]}. Você está vendo somente as informações vinculadas a esta residência.</p></div><span className="access-ok">CASA CONECTADA</span></section>
         {completion && <section className="completion-success" aria-live="polite"><span>✓</span><div><p className="eyebrow">TAREFA CONCLUÍDA</p><h2>{completion.taskName}</h2><p>{completion.kind === "oneTime" ? "Essa tarefa única foi encerrada e não voltará ao pote." : completion.kind === "reusable" ? "Ela já está disponível novamente para os próximos sorteios." : `Ela voltará ao pote em ${new Date(completion.nextAvailableAt!).toLocaleDateString("pt-BR")}.`}</p></div><button onClick={() => setCompletion(null)} type="button">Entendi</button></section>}
-        {assignment ? <section className="active-assignment"><div className="assignment-kicker"><span>TAREFA EM ANDAMENTO</span><strong>{assignment.potName}</strong></div><div><p className="eyebrow">VOCÊ ACEITOU</p><h2>{assignment.taskName}</h2><p>{assignment.description || "Faça a tarefa e marque como concluída quando terminar."}</p><div className="assignment-meta"><span>{taskKindLabels[assignment.kind]}</span>{assignment.kind === "recurring" && <span>A cada {assignment.recurrenceDays} dias</span>}<span>Aceita em {new Date(assignment.acceptedAt).toLocaleDateString("pt-BR")}</span></div>{confirmingCompletion ? <div className="completion-confirm" role="group" aria-label="Confirmar conclusão"><p>Confirmar que você terminou esta tarefa?</p><div><button className="complete-button" disabled={completing} onClick={completeAssignment} type="button">{completing ? "Concluindo..." : "Sim, concluí"}<span aria-hidden="true">✓</span></button><button className="cancel-completion" disabled={completing} onClick={() => setConfirmingCompletion(false)} type="button">Ainda não</button></div></div> : <button className="complete-button" onClick={() => setConfirmingCompletion(true)} type="button">Concluir tarefa<span aria-hidden="true">✓</span></button>}{error && <p className="assignment-error" role="alert">{error}</p>}</div></section> : <section className="draw-section">
-          <div className="members-title"><div><p className="eyebrow">QUAL É A PRÓXIMA?</p><h2>Escolha um pote</h2></div><span>{pots.length} {pots.length === 1 ? "POTE ATIVO" : "POTES ATIVOS"}</span></div>
-          {pots.length > 0 ? <><div className="pot-grid draw-pot-grid">{pots.map((pot, index) => <button aria-pressed={selectedPotId === pot.id} className={`pot-card pot-choice ${selectedPotId === pot.id ? "selected" : ""}`} key={pot.id} onClick={() => choosePot(pot.id)} type="button"><span className="pot-index">{String(index + 1).padStart(2, "0")}</span><span><strong>{pot.name}</strong><small>{pot.description || "Um espaço para as tarefas desta categoria."}</small></span><i>{selectedPotId === pot.id ? "ESCOLHIDO" : "ESCOLHER"}</i></button>)}</div>{!proposal && <div className="draw-controls"><p>O sorteio mostra uma proposta. A tarefa só fica com você depois do aceite.</p><button className="primary-button" disabled={drawing} onClick={() => drawAnother(false)} type="button">{drawing ? "Sorteando..." : "Sortear uma tarefa"}<span aria-hidden="true">✦</span></button></div>}</> : <div className="pot-empty"><span>◌</span><div><strong>Nenhum pote disponível</strong><p>{user.isAdministrator ? "Crie o primeiro pote para começar a organizar as tarefas da casa." : "O administrador da casa ainda não cadastrou potes."}</p></div>{user.isAdministrator && <a href="/admin/pots">Criar pote</a>}</div>}
-          {proposal && <article className="proposal-card"><div className="proposal-mark">✦</div><div className="proposal-copy"><p className="eyebrow">SUA PROPOSTA</p><span>{proposal.potName} · {taskKindLabels[proposal.kind]}</span><h3>{proposal.taskName}</h3><p>{proposal.description || "Esta tarefa está pronta para ser feita."}</p>{proposal.kind === "recurring" && <small>Volta ao pote {proposal.recurrenceDays} dias após a conclusão.</small>}</div><div className="proposal-actions"><button className="primary-button" disabled={accepting} onClick={acceptProposal} type="button">{accepting ? "Aceitando..." : "Aceitar tarefa"}<span aria-hidden="true">✓</span></button><button className="secondary-button" disabled={drawing} onClick={() => drawAnother(true)} type="button">Quero outra</button></div></article>}
+        {assignment ? <section className="active-assignment"><div className="assignment-kicker"><span>TAREFA EM ANDAMENTO</span><strong>{assignment.potName}</strong></div><div><p className="eyebrow">VOCÊ ACEITOU</p><h2>{assignment.taskName}</h2><p>{assignment.description || "Faça a tarefa e marque como concluída quando terminar."}</p><div className="assignment-meta"><span>{taskKindLabels[assignment.kind]}</span>{assignment.kind === "recurring" && <span>A cada {assignment.recurrenceDays} dias</span>}<span>Aceita em {new Date(assignment.acceptedAt).toLocaleDateString("pt-BR")}</span></div>{confirmingCompletion ? <div className="completion-confirm" role="group" aria-label="Confirmar conclusão"><p>Confirmar que você terminou esta tarefa?</p><div><button className="complete-button" disabled={completing} onClick={completeAssignment} type="button">{completing ? "Concluindo..." : "Sim, concluí"}<span aria-hidden="true">✓</span></button><button className="cancel-completion" disabled={completing} onClick={() => setConfirmingCompletion(false)} type="button">Ainda não</button></div></div> : <button className="complete-button" onClick={() => setConfirmingCompletion(true)} type="button">Concluir tarefa<span aria-hidden="true">✓</span></button>}{error && <p className="assignment-error" role="alert">{error}</p>}</div></section> : <section className={`draw-section playful-draw ${choosingPot ? "is-choosing" : ""}`}>
+          {!choosingPot ? <div className="draw-invitation">
+            <div className="floating-notes" aria-hidden="true"><i /><i /><i /></div>
+            <div><p className="eyebrow">QUAL É A PRÓXIMA?</p><h2>Vamos tirar um post-it?</h2><p>Escolha um dos potes da casa e deixe a sorte decidir qual tarefa vem agora.</p></div>
+            <button className="primary-button playful-start" disabled={pots.length === 0} onClick={() => setChoosingPot(true)} type="button">Sortear uma tarefa<span aria-hidden="true">✦</span></button>
+          </div> : <>
+            <div className="members-title draw-title"><div><p className="eyebrow">PASSO 1 DE 2</p><h2>Qual pote você quer abrir?</h2></div><button className="text-button" onClick={() => { setChoosingPot(false); setSelectedPotId(""); setDrawError(""); }} type="button">Agora não</button></div>
+            {pots.length > 0 ? <>
+              <div className={`jar-shelf ${selectedPotId ? "has-selection" : ""}`}>{pots.map((pot, index) => {
+                const selected = selectedPotId === pot.id;
+                return <button aria-label={`${pot.name}. ${pot.description || "Pote de tarefas"}${selected ? ". Selecionado" : ""}`} aria-pressed={selected} className={`task-jar jar-tone-${index % 4} ${selected ? "selected" : ""} ${selected && drawing ? "is-drawing" : ""}`} key={pot.id} onClick={() => choosePot(pot.id)} ref={selected ? selectedPotRef : null} type="button">
+                  <span className="jar-lid" aria-hidden="true" />
+                  <span className="jar-glass"><span className="paper-slips" aria-hidden="true"><i /><i /><i /><i /></span><span className="jar-label"><strong>{pot.name}</strong><small>{pot.description || "Tarefas para um próximo momento."}</small></span></span>
+                  <span className="jar-choice">{selected ? "É esse!" : "Escolher"}</span>
+                </button>;
+              })}</div>
+              <div className={`draw-controls playful-controls ${selectedPotId ? "ready" : ""}`} aria-live="polite"><p>{selectedPotId ? "Pote escolhido! Agora é só tirar um post-it." : "Toque em um pote para trazer ele para perto."}</p><button className="primary-button" disabled={!selectedPotId || drawing} onClick={() => drawAnother(false)} type="button">{drawing ? "Misturando os post-its..." : "Tirar um post-it"}<span aria-hidden="true">↥</span></button></div>
+            </> : <div className="pot-empty"><span>◌</span><div><strong>Nenhum pote disponível</strong><p>{user.isAdministrator ? "Crie o primeiro pote para começar a organizar as tarefas da casa." : "O administrador da casa ainda não cadastrou potes."}</p></div>{user.isAdministrator && <a href="/admin/pots">Criar pote</a>}</div>}
+          </>}
           {drawError && <div className="draw-error" role="alert"><p>{drawError}</p>{excludedTaskIds.length > 0 && <button onClick={() => { setExcludedTaskIds([]); setProposal(null); setDrawError(""); }} type="button">Recomeçar rodada</button>}</div>}
+          {proposal && <div className="proposal-backdrop" role="presentation"><article aria-labelledby="drawn-task-title" aria-modal="true" className="drawn-postit" ref={proposalRef} role="dialog" style={{ "--draw-from-x": drawOrigin.x, "--draw-from-y": drawOrigin.y } as DrawStyle} tabIndex={-1}><span aria-hidden="true" className="postit-tape" /><button aria-label="Fechar tarefa sorteada" className="close-proposal" onClick={() => { setProposal(null); setExcludedTaskIds([]); }} type="button">×</button><div className="proposal-copy"><p className="eyebrow">VOCÊ TIROU</p><span>{proposal.potName} · {taskKindLabels[proposal.kind]}</span><h3 id="drawn-task-title">{proposal.taskName}</h3><p>{proposal.description || "Esta tarefa está pronta para ser feita."}</p>{proposal.kind === "recurring" && <small>Volta ao pote {proposal.recurrenceDays} dias após a conclusão.</small>}</div><div className="proposal-actions"><button className="primary-button" disabled={accepting} onClick={acceptProposal} type="button">{accepting ? "Aceitando..." : "Fico com ela"}<span aria-hidden="true">✓</span></button><button className="secondary-button" disabled={drawing} onClick={() => drawAnother(true)} type="button">Tirar outro post-it</button></div></article></div>}
         </section>}
         <section className="residence-members">
           <div className="members-title"><div><p className="eyebrow">QUEM MORA AQUI</p><h2>{residence.members.length} {residence.members.length === 1 ? "pessoa" : "pessoas"}</h2></div><span>VÍNCULO PROTEGIDO</span></div>

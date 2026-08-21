@@ -413,12 +413,12 @@
         {
           "id": "HOUSE-090-03",
           "title": "Potes e sorteio animados",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-090-04",
           "title": "Acessibilidade, responsividade, testes e fechamento",
-          "status": "pending"
+          "status": "inProgress"
         }
       ]
     }

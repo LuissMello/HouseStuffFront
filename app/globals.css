@@ -147,3 +147,65 @@ footer { border-top:1px solid var(--line); color:var(--muted); display:flex; fon
 @media(max-width:900px) { .task-postit-form{transform:none} }
 @media(max-width:640px) { .postit-board{padding:18px}.house-task-cards .task-postit,.house-task-cards .task-postit:nth-child(even){min-height:225px;transform:rotate(-.5deg)} }
 @media(prefers-reduced-motion:reduce) { .task-postit-form .task-kind label,.house-task-cards .task-postit{transition:none}.house-task-cards .task-postit:hover,.house-task-cards .task-postit:focus-within{transform:none} }
+
+/* HOUSE-090 — potes com personalidade e sorteio em movimento */
+.playful-draw { background:#fffaf0; border-color:#eadfc9; min-height:310px; overflow:hidden; position:relative; }
+.draw-invitation { align-items:center; display:grid; gap:30px; grid-template-columns:150px 1fr auto; min-height:250px; padding:8px 12px; }
+.draw-invitation h2 { font-family:"Comic Sans MS","Segoe Print",cursive; font-size:36px; letter-spacing:-.035em; margin:4px 0 10px; }
+.draw-invitation>div:nth-child(2)>p:last-child { color:var(--muted); line-height:1.6; max-width:520px; }
+.floating-notes { height:140px; position:relative; width:150px; }
+.floating-notes i { background:#fff09a; box-shadow:0 8px 16px rgba(78,62,25,.15); height:76px; left:35px; position:absolute; top:30px; transform:rotate(-9deg); width:76px; }
+.floating-notes i:nth-child(2) { background:#ffc8c2; left:65px; top:13px; transform:rotate(8deg); }
+.floating-notes i:nth-child(3) { animation:note-float 2.4s ease-in-out infinite; background:#ccecb5; left:50px; top:48px; transform:rotate(2deg); }
+.playful-start { box-shadow:0 6px 0 #173d2c; gap:36px; min-width:230px; transform:translateY(-3px); }
+.playful-start:active { box-shadow:0 2px 0 #173d2c; transform:translateY(1px); }
+.draw-title { margin-bottom:8px; }
+.draw-title h2 { font-family:"Comic Sans MS","Segoe Print",cursive; font-size:31px; }
+.text-button { background:transparent; border:0; color:var(--muted); cursor:pointer; font-weight:700; min-height:44px; padding:0 4px; text-decoration:underline; text-underline-offset:4px; }
+.jar-shelf { align-items:end; display:grid; gap:22px; grid-template-columns:repeat(3,minmax(0,1fr)); margin:6px auto 0; max-width:940px; min-height:300px; padding:32px 24px 22px; perspective:900px; position:relative; }
+.jar-shelf::after { background:#ae7651; border-radius:8px; bottom:13px; box-shadow:0 8px 0 #835338,0 16px 22px rgba(81,53,35,.2); content:""; height:13px; left:0; position:absolute; right:0; }
+.task-jar { animation:jar-arrive .45s backwards cubic-bezier(.2,.8,.3,1); background:transparent; border:0; color:var(--ink); cursor:pointer; display:flex; flex-direction:column; font:inherit; margin:auto; max-width:230px; padding:0; position:relative; transform-origin:bottom center; transition:filter .3s ease,opacity .3s ease,transform .35s cubic-bezier(.2,.85,.25,1.25); width:100%; z-index:1; }
+.task-jar:nth-child(2) { animation-delay:.07s; }.task-jar:nth-child(3) { animation-delay:.14s; }.task-jar:nth-child(4) { animation-delay:.21s; }
+.jar-lid { background:linear-gradient(#e9a563,#c97836); border:2px solid #a85c27; border-radius:7px 7px 4px 4px; box-shadow:inset 0 4px rgba(255,255,255,.25),0 4px 5px rgba(80,44,18,.18); height:24px; margin:0 auto -3px; position:relative; transition:transform .25s ease; width:82%; z-index:3; }
+.jar-lid::before { background:repeating-linear-gradient(90deg,transparent 0 7px,rgba(100,50,20,.14) 8px 10px); content:""; inset:3px 5px; position:absolute; }
+.jar-glass { align-items:center; background:linear-gradient(110deg,rgba(255,255,255,.9),rgba(218,239,235,.58) 35%,rgba(255,255,255,.82)); border:3px solid rgba(84,130,121,.45); border-radius:18px 18px 38px 38px; box-shadow:inset 12px 0 18px rgba(255,255,255,.8),inset -8px -14px 24px rgba(91,150,135,.12),0 14px 22px rgba(61,91,80,.13); display:flex; height:205px; justify-content:center; overflow:hidden; padding:18px; position:relative; width:100%; }
+.jar-glass::before { background:rgba(255,255,255,.68); border-radius:999px; content:""; height:128px; left:14px; position:absolute; top:18px; transform:rotate(5deg); width:12px; }
+.jar-label { background:#fff1ac; border:1px solid #d9ba55; box-shadow:0 4px 8px rgba(91,70,23,.12); display:flex; flex-direction:column; gap:5px; max-width:88%; padding:13px 12px; position:relative; transform:rotate(-2deg); width:100%; z-index:2; }
+.jar-label strong { font-family:"Comic Sans MS","Segoe Print",cursive; font-size:22px; line-height:1.1; }
+.jar-label small { color:#705f36; display:-webkit-box; font-size:10px; line-height:1.35; overflow:hidden; -webkit-box-orient:vertical; -webkit-line-clamp:2; }
+.paper-slips { bottom:9px; height:62px; left:10px; position:absolute; right:10px; z-index:1; }
+.paper-slips i { background:#fff09a; bottom:0; height:34px; left:15%; position:absolute; transform:rotate(12deg); width:48px; }
+.paper-slips i:nth-child(2) { background:#ffc8c2; left:38%; transform:rotate(-8deg); }.paper-slips i:nth-child(3) { background:#ccecb5; left:59%; transform:rotate(17deg); }.paper-slips i:nth-child(4) { background:#c9e7f5; bottom:13px; left:28%; transform:rotate(3deg); }
+.jar-choice { color:var(--green); font-family:var(--font-geist-mono); font-size:9px; font-weight:900; letter-spacing:.08em; margin-top:12px; text-align:center; text-transform:uppercase; }
+.task-jar:hover { transform:translateY(-8px) rotate(-1deg); }.task-jar:focus-visible { outline:3px solid rgba(33,79,58,.35); outline-offset:7px; }
+.jar-shelf.has-selection .task-jar:not(.selected) { filter:saturate(.7); opacity:.54; transform:scale(.91); }
+.task-jar.selected { filter:none; opacity:1; transform:translateY(-24px) scale(1.09); z-index:4; }
+.task-jar.selected .jar-lid { transform:translateY(-7px) rotate(-4deg); }
+.task-jar.selected .jar-choice { background:var(--lime); border-radius:999px; margin:9px auto 0; padding:7px 12px; }
+.task-jar.is-drawing { animation:jar-shake .65s ease-in-out both; }
+.task-jar.is-drawing .jar-lid { animation:lid-rattle .18s ease-in-out 3; }
+.task-jar.is-drawing .paper-slips { animation:papers-jump .4s ease-in-out 1; }
+.playful-controls { background:#f3ecde; border:1px dashed #d4c4a7; transition:background .25s ease,border-color .25s ease; }
+.playful-controls.ready { background:#edf6df; border-color:#aeca86; }
+.playful-controls .primary-button { min-width:245px; }
+.proposal-backdrop { align-items:center; animation:backdrop-in .2s ease both; background:rgba(25,43,34,.58); display:flex; inset:0; justify-content:center; padding:20px; position:fixed; z-index:100; }
+.drawn-postit { animation:postit-from-jar .72s cubic-bezier(.18,.82,.28,1.15) both; background:#fff09a; border-radius:3px 3px 24px 3px; box-shadow:0 30px 70px rgba(17,31,24,.38); color:#27342d; max-height:calc(100vh - 40px); max-width:510px; outline:0; overflow:auto; padding:48px 42px 36px; position:relative; width:100%; }
+.drawn-postit::after { background:linear-gradient(135deg,transparent 50%,rgba(174,129,25,.22) 51%); bottom:0; content:""; height:42px; position:absolute; right:0; width:42px; }
+.drawn-postit .postit-tape { top:-2px; }
+.close-proposal { align-items:center; background:rgba(105,83,26,.09); border:0; border-radius:50%; color:#6d591e; cursor:pointer; display:flex; font-size:24px; height:42px; justify-content:center; position:absolute; right:16px; top:14px; width:42px; }
+.drawn-postit .proposal-copy>span { color:#816a25; }
+.drawn-postit .proposal-copy h3 { font-family:"Comic Sans MS","Segoe Print",cursive; font-size:38px; line-height:1.12; margin:18px 0 12px; }
+.drawn-postit .proposal-copy>p:not(.eyebrow) { color:#5f583a; font-size:14px; line-height:1.6; }
+.drawn-postit .proposal-copy small { color:#4c713b; font-weight:700; }
+.drawn-postit .proposal-actions { display:grid; gap:10px; grid-template-columns:1fr 1fr; margin-top:28px; }
+.drawn-postit .proposal-actions .secondary-button { border-color:rgba(74,74,44,.3); color:#425045; }
+@keyframes note-float { 0%,100%{transform:translateY(0) rotate(2deg)}50%{transform:translateY(-9px) rotate(-1deg)} }
+@keyframes jar-arrive { from{opacity:0;transform:translateY(35px) scale(.92)} }
+@keyframes jar-shake { 0%,100%{transform:translateY(-24px) scale(1.09) rotate(0)}15%{transform:translateY(-27px) scale(1.09) rotate(-5deg)}30%{transform:translateY(-24px) scale(1.09) rotate(5deg)}45%{transform:translateY(-28px) scale(1.09) rotate(-4deg)}60%{transform:translateY(-24px) scale(1.09) rotate(3deg)}75%{transform:translateY(-27px) scale(1.09) rotate(-2deg)} }
+@keyframes lid-rattle { 0%,100%{transform:translateY(-7px) rotate(-4deg)}50%{transform:translateY(-15px) rotate(5deg)} }
+@keyframes papers-jump { 0%,100%{transform:translateY(0)}50%{transform:translateY(-23px)} }
+@keyframes backdrop-in { from{background:rgba(25,43,34,0)} }
+@keyframes postit-from-jar { 0%{opacity:.25;transform:translate(var(--draw-from-x),var(--draw-from-y)) scale(.16) rotate(16deg)}58%{opacity:1;transform:translate(0,-14px) scale(1.06) rotate(-2deg)}100%{transform:translate(0,0) scale(1) rotate(.5deg)} }
+@media(max-width:900px) { .draw-invitation{grid-template-columns:110px 1fr}.draw-invitation .playful-start{grid-column:1 / -1;justify-self:stretch}.jar-shelf{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media(max-width:640px) { .playful-draw{padding:22px 16px}.draw-invitation{gap:8px;grid-template-columns:1fr;padding:0;text-align:center}.draw-invitation .floating-notes{height:100px;margin:0 auto;transform:scale(.75)}.draw-invitation h2{font-size:30px}.draw-invitation>div:nth-child(2)>p:last-child{font-size:12px}.draw-title{align-items:flex-start}.draw-title h2{font-size:27px}.jar-shelf{gap:12px;grid-template-columns:repeat(2,minmax(0,1fr));padding:30px 4px 20px}.jar-glass{border-radius:14px 14px 28px 28px;height:174px;padding:12px}.jar-label{padding:10px 7px}.jar-label strong{font-size:17px}.jar-label small{font-size:9px}.task-jar.selected{transform:translateY(-17px) scale(1.05)}.playful-controls{align-items:stretch}.playful-controls .primary-button{min-width:0;width:100%}.drawn-postit{padding:45px 25px 28px}.drawn-postit .proposal-copy h3{font-size:31px}.drawn-postit .proposal-actions{grid-template-columns:1fr}.proposal-backdrop{padding:14px}@keyframes jar-shake{0%,100%{transform:translateY(-17px) scale(1.05) rotate(0)}20%{transform:translateY(-20px) scale(1.05) rotate(-4deg)}40%{transform:translateY(-17px) scale(1.05) rotate(4deg)}60%{transform:translateY(-20px) scale(1.05) rotate(-3deg)}80%{transform:translateY(-17px) scale(1.05) rotate(2deg)}} }
+@media(prefers-reduced-motion:reduce) { .floating-notes i,.task-jar,.task-jar.is-drawing,.task-jar.is-drawing .jar-lid,.task-jar.is-drawing .paper-slips,.proposal-backdrop,.drawn-postit{animation:none}.task-jar,.jar-lid,.playful-controls{transition:none}.task-jar.selected{transform:none}.jar-shelf.has-selection .task-jar:not(.selected){transform:none} }
