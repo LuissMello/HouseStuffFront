@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-28",
   "status": "onTrack",
-  "currentStageId": "M13",
+  "currentStageId": "M14",
   "stages": [
     {
       "id": "M0",
@@ -74,6 +74,11 @@
       "id": "M13",
       "name": "Distribuição",
       "outcome": "Tarefas respeitam esforço desejado e quem pode realizá-las"
+    },
+    {
+      "id": "M14",
+      "name": "Administração",
+      "outcome": "Perfis administrativos podem ser ajustados com segurança dentro da casa"
     }
   ],
   "tasks": [
@@ -618,6 +623,38 @@
         {
           "id": "HOUSE-140-05",
           "title": "Integração, testes, documentação e fechamento",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-150",
+      "stageId": "M14",
+      "area": "Acesso",
+      "repository": "both",
+      "type": "feature",
+      "title": "Alteração de perfil dos moradores",
+      "status": "completed",
+      "result": "Administrador promove outro morador ou o rebaixa pela tela de pessoas da casa.",
+      "subtasks": [
+        {
+          "id": "HOUSE-150-01",
+          "title": "Regras, contrato e critérios de aceite",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-150-02",
+          "title": "API segura de alteração de perfil",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-150-03",
+          "title": "Ação responsiva na tela de pessoas",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-150-04",
+          "title": "Integração, testes, publicação e fechamento",
           "status": "completed"
         }
       ]
