@@ -40,6 +40,16 @@ test("renderiza o estado inicial protegido da área administrativa", async () =>
   assert.match(html, /Carregando usuários/);
 });
 
+test("mantém alteração administrativa de perfil com confirmação", async () => {
+  const page = await readFile(new URL("../app/admin/users/page.tsx", import.meta.url), "utf8");
+  const api = await readFile(new URL("../lib/api.ts", import.meta.url), "utf8");
+  assert.match(page, /Tornar admin/);
+  assert.match(page, /Tornar morador/);
+  assert.match(page, /role-confirm/);
+  assert.match(page, /accessApi\.changeUserRole/);
+  assert.match(api, /\/api\/v1\/admin\/users\/\$\{userId\}\/role/);
+});
+
 test("renderiza o estado inicial da administração de potes", async () => {
   const response = await render("/admin/pots");
   assert.equal(response.status, 200);

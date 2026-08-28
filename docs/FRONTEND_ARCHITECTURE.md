@@ -50,6 +50,7 @@ Rotas apenas compõem telas. Acesso à API, schemas e comportamento ficam na fea
 - `/app` possui três estados reais: administrador sem casa, morador aguardando vínculo e residência conectada;
 - a tela nunca seleciona uma residência por ID: consome somente `/residences/current`;
 - `/admin/users` mostra membros da casa atual e acessos pendentes permitidos pela API;
+- na mesma tela, o administrador promove ou rebaixa outro morador com confirmação explícita e retorno da API;
 - novos usuários herdam a residência do administrador no backend.
 
 ## Qualidade

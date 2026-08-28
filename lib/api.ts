@@ -165,6 +165,8 @@ export const accessApi = {
   listUsers: () => request<UserSummary[]>("/api/v1/admin/users"),
   createUser: (input: { name: string; email: string; temporaryPassword: string; isAdministrator: boolean }) =>
     request<UserSummary>("/api/v1/admin/users", { method: "POST", body: JSON.stringify(input) }),
+  changeUserRole: (userId: string, isAdministrator: boolean) =>
+    request<UserSummary>(`/api/v1/admin/users/${userId}/role`, { method: "PATCH", body: JSON.stringify({ isAdministrator }) }),
 };
 
 export const residenceApi = {

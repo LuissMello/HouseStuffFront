@@ -12,6 +12,8 @@ export default function UsersPage() {
   const [success, setSuccess] = useState("");
   const [saving, setSaving] = useState(false);
   const [assigning, setAssigning] = useState("");
+  const [changingRole, setChangingRole] = useState("");
+  const [confirmingRole, setConfirmingRole] = useState("");
 
   const load = useCallback(async () => {
     try {
@@ -61,6 +63,20 @@ export default function UsersPage() {
     } finally { setAssigning(""); }
   }
 
+  async function changeRole(user: UserSummary) {
+    setChangingRole(user.id); setError(""); setSuccess("");
+    try {
+      const changed = await accessApi.changeUserRole(user.id, !user.isAdministrator);
+      setUsers((items) => items.map((item) => item.id === changed.id ? changed : item));
+      setSuccess(changed.isAdministrator
+        ? `${changed.name} agora também administra a casa.`
+        : `${changed.name} voltou ao perfil de morador.`);
+      setConfirmingRole("");
+    } catch (reason) {
+      setError(reason instanceof ApiError ? reason.message : "Não foi possível alterar o perfil.");
+    } finally { setChangingRole(""); }
+  }
+
   if (loading) return <main className="center-state"><span className="loading-dot" /><p>Carregando usuários...</p></main>;
   if (!current) return <main className="center-state"><p role="alert">{error}</p><button onClick={load}>Tentar novamente</button></main>;
 
@@ -68,6 +84,8 @@ export default function UsersPage() {
     <AuthenticatedHeader user={current} />
     <div className="admin-shell">
       <div className="admin-title"><div><p className="eyebrow">ADMINISTRAÇÃO</p><h1>Pessoas da casa</h1><p>{current.residenceName ? `Gerencie os moradores da ${current.residenceName} e os acessos ainda pendentes.` : "Crie sua residência antes de associar moradores."}</p></div><span>{users.length} {users.length === 1 ? "acesso" : "acessos"}</span></div>
+      {error && <p className="user-feedback error" role="alert">{error}</p>}
+      {success && <p className="user-feedback success" role="status">{success}</p>}
       <div className="admin-grid">
         <form className="user-form" onSubmit={submit}>
           <div><span className="step-badge">NOVO ACESSO</span><h2>Criar usuário</h2></div>
@@ -75,13 +93,17 @@ export default function UsersPage() {
           <label>E-mail<input name="email" required type="email" placeholder="luis@exemplo.com" /></label>
           <label>Senha temporária<input minLength={10} name="password" required type="password" placeholder="Mínimo de 10 caracteres" /><small>Use maiúscula, minúscula, número e símbolo.</small></label>
           <label className="check-field"><input name="administrator" type="checkbox" /><span>Este usuário também administra a casa</span></label>
-          {error && <p className="form-alert" role="alert">{error}</p>}
-          {success && <p className="form-success" role="status">{success}</p>}
           <button className="primary-button" disabled={saving}>{saving ? "Criando..." : "Criar acesso"}<span aria-hidden="true">→</span></button>
         </form>
         <section className="user-list" aria-label="Usuários cadastrados">
           <div className="list-header"><h2>Acessos ativos</h2><span>PERFIL</span></div>
-          {users.length === 0 ? <p className="empty-state">Nenhum usuário cadastrado.</p> : users.map((user) => <article key={user.id}><span className="avatar">{user.name.charAt(0).toUpperCase()}</span><div><strong>{user.name}</strong><small>{user.residenceName ?? "Sem casa · vínculo pendente"}</small></div><div className="user-actions"><span className={`role-chip ${user.isAdministrator ? "admin" : ""}`}>{user.isAdministrator ? "Administrador" : "Morador"}</span>{!user.residenceId && current.residenceId && user.id !== current.id && <button className="assign-button" disabled={assigning === user.id} onClick={() => assign(user)}>{assigning === user.id ? "Associando..." : "Trazer para casa"}</button>}</div></article>)}
+          {users.length === 0 ? <p className="empty-state">Nenhum usuário cadastrado.</p> : users.map((user) => <article key={user.id}><span className="avatar">{user.name.charAt(0).toUpperCase()}</span><div><strong>{user.name}</strong><small>{user.residenceName ?? "Sem casa · vínculo pendente"}</small></div><div className="user-actions"><span className={`role-chip ${user.isAdministrator ? "admin" : ""}`}>{user.isAdministrator ? "Administrador" : "Morador"}</span>
+            {!user.residenceId && current.residenceId && user.id !== current.id && <button className="assign-button" disabled={assigning === user.id} onClick={() => assign(user)} type="button">{assigning === user.id ? "Associando..." : "Trazer para casa"}</button>}
+            {user.residenceId === current.residenceId && user.id !== current.id && (confirmingRole === user.id
+              ? <div className="role-confirm" role="group" aria-label={`Confirmar alteração do perfil de ${user.name}`}><small>{user.isAdministrator ? "Voltar para morador?" : "Tornar administrador?"}</small><span><button className="confirm-role-button" disabled={changingRole === user.id} onClick={() => changeRole(user)} type="button">{changingRole === user.id ? "Alterando..." : "Confirmar"}</button><button disabled={changingRole === user.id} onClick={() => setConfirmingRole("")} type="button">Cancelar</button></span></div>
+              : <button className="change-role-button" onClick={() => { setConfirmingRole(user.id); setError(""); setSuccess(""); }} type="button">{user.isAdministrator ? "Tornar morador" : "Tornar admin"}</button>)}
+            {user.id === current.id && <small className="current-profile">Seu perfil</small>}
+          </div></article>)}
         </section>
       </div>
     </div>
