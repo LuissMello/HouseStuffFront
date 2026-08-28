@@ -1,9 +1,9 @@
 {
   "$schema": "./project.schema.json",
   "project": "HouseStuff",
-  "updatedAt": "2026-08-20",
+  "updatedAt": "2026-08-28",
   "status": "onTrack",
-  "currentStageId": "M10",
+  "currentStageId": "M13",
   "stages": [
     {
       "id": "M0",
@@ -69,6 +69,11 @@
       "id": "M12",
       "name": "Colaboração",
       "outcome": "Todos os moradores organizam juntos os potes, tarefas e futuras listas da casa"
+    },
+    {
+      "id": "M13",
+      "name": "Distribuição",
+      "outcome": "Tarefas respeitam esforço desejado e quem pode realizá-las"
     }
   ],
   "tasks": [
@@ -80,7 +85,7 @@
       "type": "technical",
       "title": "Fundação e documentação do HouseStuff",
       "status": "completed",
-      "result": "API .NET 10 e frontend executáveis, documentação canônica e tela de acompanhamento conectada à fonte única.",
+      "result": "API .NET 8 e frontend executáveis, documentação canônica e tela de acompanhamento conectada à fonte única.",
       "subtasks": [
         {
           "id": "HOUSE-001-01",
@@ -576,6 +581,43 @@
         {
           "id": "HOUSE-130-04",
           "title": "Integração com Luis, testes e fechamento",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-140",
+      "stageId": "M13",
+      "area": "Tarefas",
+      "repository": "both",
+      "type": "feature",
+      "title": "Dificuldade e moradores elegíveis nas tarefas",
+      "status": "completed",
+      "result": "Morador cadastra post-it com dificuldade e pessoas elegíveis e sorteia somente tarefas adequadas para si.",
+      "subtasks": [
+        {
+          "id": "HOUSE-140-01",
+          "title": "Regras, contrato e critérios de aceite",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-140-02",
+          "title": "Domínio, persistência e migration",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-140-03",
+          "title": "API de cadastro e sorteio filtrado",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-140-04",
+          "title": "Cadastro responsivo e animação do post-it",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-140-05",
+          "title": "Integração, testes, documentação e fechamento",
           "status": "completed"
         }
       ]
