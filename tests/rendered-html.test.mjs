@@ -102,6 +102,10 @@ test("mantém o cadastro de tarefas com linguagem de post-it", async () => {
   assert.match(source, /O que precisa ser feito/);
   assert.match(source, /Guardar no pote/);
   assert.match(source, /postit-board/);
+  assert.match(source, /Qual é a dificuldade/);
+  assert.match(source, /Quem pode pegar/);
+  assert.match(source, /eligibleUserIds/);
+  assert.match(source, /postit-drop-scene/);
 });
 
 test("expõe a organização da casa a qualquer morador autenticado", async () => {
@@ -190,6 +194,9 @@ test("mantém a sequência acessível do sorteio animado", async () => {
   const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(page, /Sortear uma tarefa/);
   assert.match(page, /Qual pote você quer abrir/);
+  assert.match(page, /Qual dificuldade você quer/);
+  assert.match(page, /selectedDifficulty/);
+  assert.match(page, /assignmentApi\.draw\(selectedPotId, excluded, selectedDifficulty \|\| null\)/);
   assert.match(page, /aria-pressed=\{selected\}/);
   assert.match(page, /aria-modal="true"/);
   assert.match(styles, /@keyframes jar-shake/);

@@ -59,6 +59,8 @@ Lint, TypeScript e build são gates permanentes. Comportamentos de componentes r
 ## Tarefas
 
 - o formulário administrativo seleciona apenas potes ativos da casa;
+- cada tarefa registra dificuldade fácil, média ou difícil e exibe essa informação no mural;
+- a disponibilidade pode incluir automaticamente todos da casa ou somente moradores selecionados;
 - o intervalo em dias aparece somente quando o tipo recorrente é escolhido;
 - listagem e filtro usam os dados persistidos da API, sem mocks;
 - em telas pequenas, formulário, filtros e cartões ficam em uma coluna com ações touch.
@@ -85,8 +87,10 @@ Lint, TypeScript e build são gates permanentes. Comportamentos de componentes r
 - o cadastro administrativo trata cada tarefa como uma anotação em post-it;
 - o catálogo varia cores e pequenas inclinações sem prejudicar a leitura;
 - o sorteio começa por uma chamada clara, depois pede a escolha de um pote;
+- depois do pote, o morador escolhe uma dificuldade ou mantém a opção surpresa;
 - potes são elementos HTML/CSS acessíveis, e o escolhido avança antes de chacoalhar;
 - a proposta continua vindo da API e entra no centro como post-it em um diálogo;
+- ao cadastrar, o post-it dobra e cai visualmente no pote sem bloquear o formulário;
 - `prefers-reduced-motion` remove animações sem remover nenhuma ação ou informação.
 
 ## Lista de compras

@@ -24,6 +24,18 @@ export type Pot = {
 };
 
 export type HouseholdTaskKind = "oneTime" | "reusable" | "recurring";
+export type TaskDifficulty = "easy" | "medium" | "hard";
+
+export type SaveHouseholdTask = {
+  potId: string;
+  name: string;
+  description: string;
+  kind: HouseholdTaskKind;
+  recurrenceDays: number | null;
+  difficulty: TaskDifficulty;
+  isAvailableToAllResidents: boolean;
+  eligibleUserIds: string[];
+};
 
 export type HouseholdTask = {
   id: string;
@@ -34,6 +46,9 @@ export type HouseholdTask = {
   kind: HouseholdTaskKind;
   recurrenceDays: number | null;
   isActive: boolean;
+  difficulty: TaskDifficulty;
+  isAvailableToAllResidents: boolean;
+  eligibleUserIds: string[];
 };
 
 export type DrawProposal = {
@@ -44,6 +59,7 @@ export type DrawProposal = {
   description: string | null;
   kind: HouseholdTaskKind;
   recurrenceDays: number | null;
+  difficulty: TaskDifficulty;
 };
 
 export type ActiveAssignment = DrawProposal & {
@@ -168,16 +184,16 @@ export const potApi = {
 
 export const householdTaskApi = {
   listForManagement: (potId?: string) => request<HouseholdTask[]>(`/api/v1/admin/tasks${potId ? `?potId=${encodeURIComponent(potId)}` : ""}`),
-  create: (input: { potId: string; name: string; description: string; kind: HouseholdTaskKind; recurrenceDays: number | null }) =>
+  create: (input: SaveHouseholdTask) =>
     request<HouseholdTask>("/api/v1/admin/tasks", { method: "POST", body: JSON.stringify(input) }),
-  update: (id: string, input: { potId: string; name: string; description: string; kind: HouseholdTaskKind; recurrenceDays: number | null }) =>
+  update: (id: string, input: SaveHouseholdTask) =>
     request<HouseholdTask>(`/api/v1/admin/tasks/${id}`, { method: "PUT", body: JSON.stringify(input) }),
   setActive: (id: string, isActive: boolean) => request<HouseholdTask>(`/api/v1/admin/tasks/${id}/status`, { method: "PATCH", body: JSON.stringify({ isActive }) }),
 };
 
 export const assignmentApi = {
   current: () => request<ActiveAssignment | null>("/api/v1/assignments/current"),
-  draw: (potId: string, excludedTaskIds: string[]) => request<DrawProposal>("/api/v1/draws", { method: "POST", body: JSON.stringify({ potId, excludedTaskIds }) }),
+  draw: (potId: string, excludedTaskIds: string[], difficulty: TaskDifficulty | null) => request<DrawProposal>("/api/v1/draws", { method: "POST", body: JSON.stringify({ potId, excludedTaskIds, difficulty }) }),
   accept: (taskId: string) => request<ActiveAssignment>("/api/v1/assignments/accept", { method: "POST", body: JSON.stringify({ taskId }) }),
   completeCurrent: () => request<CompletedAssignment>("/api/v1/assignments/current/complete", { method: "POST" }),
 };
