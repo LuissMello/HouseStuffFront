@@ -64,6 +64,7 @@ Lint, TypeScript e build são gates permanentes. Comportamentos de componentes r
 - a disponibilidade pode incluir automaticamente todos da casa ou somente moradores selecionados;
 - o intervalo em dias aparece somente quando o tipo recorrente é escolhido;
 - listagem e filtro usam os dados persistidos da API, sem mocks;
+- o mural filtra por uma prateleira navegável e circular, mostrando o pote anterior, o atual e o próximo;
 - em telas pequenas, formulário, filtros e cartões ficam em uma coluna com ações touch.
 
 ## Conclusão

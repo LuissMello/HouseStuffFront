@@ -39,6 +39,8 @@ type Draft = {
   eligibleUserIds: string[];
 };
 
+type PotFilter = Pick<Pot, "id" | "name" | "isActive">;
+
 const emptyDraft: Draft = {
   potId: "",
   name: "",
@@ -65,6 +67,14 @@ export default function TasksAdminPage() {
   const [success, setSuccess] = useState("");
 
   const activePots = useMemo(() => pots.filter((pot) => pot.isActive), [pots]);
+  const potFilters = useMemo<PotFilter[]>(
+    () => [{ id: "all", name: "Todos os potes", isActive: true }, ...pots],
+    [pots],
+  );
+  const selectedFilterIndex = Math.max(0, potFilters.findIndex((pot) => pot.id === filterPotId));
+  const selectedFilter = potFilters[selectedFilterIndex];
+  const previousFilter = potFilters[(selectedFilterIndex - 1 + potFilters.length) % potFilters.length];
+  const nextFilter = potFilters[(selectedFilterIndex + 1) % potFilters.length];
   const visibleTasks = useMemo(
     () => filterPotId === "all" ? tasks : tasks.filter((task) => task.potId === filterPotId),
     [tasks, filterPotId],
@@ -83,6 +93,7 @@ export default function TasksAdminPage() {
       setResidence(home);
       setPots(availablePots);
       setTasks(storedTasks);
+      setFilterPotId((currentFilter) => currentFilter === "all" || availablePots.some((pot) => pot.id === currentFilter) ? currentFilter : "all");
       setDraft((currentDraft) => ({
         ...currentDraft,
         potId: currentDraft.potId || availablePots.find((pot) => pot.isActive)?.id || "",
@@ -104,6 +115,12 @@ export default function TasksAdminPage() {
   function resetDraft() {
     setEditingId(null);
     setDraft({ ...emptyDraft, potId: activePots[0]?.id || "" });
+  }
+
+  function navigateFilter(offset: -1 | 1) {
+    if (potFilters.length === 0) return;
+    const nextIndex = (selectedFilterIndex + offset + potFilters.length) % potFilters.length;
+    setFilterPotId(potFilters[nextIndex].id);
   }
 
   function toggleEligibleUser(userId: string) {
@@ -269,9 +286,21 @@ export default function TasksAdminPage() {
         </form>
 
         <section className="house-task-list">
-          <div className="list-header task-list-header"><div><h2>Tarefas da casa</h2><span>{visibleTasks.length} NO FILTRO</span></div><label>Filtrar por pote
-            <select onChange={(event) => setFilterPotId(event.target.value)} value={filterPotId}><option value="all">Todos os potes</option>{pots.map((pot) => <option key={pot.id} value={pot.id}>{pot.name}</option>)}</select>
-          </label></div>
+          <div className="list-header task-list-header"><div><h2>Tarefas da casa</h2><span>{visibleTasks.length} NO FILTRO</span></div><small>NAVEGUE PELA PRATELEIRA</small></div>
+          <div className="task-pot-shelf" aria-label="Filtro das tarefas por pote">
+            <div aria-hidden="true" className="shelf-jars">
+              {[previousFilter, selectedFilter, nextFilter].map((pot, index) => <span className={`shelf-jar ${index === 1 ? "selected" : "neighbor"} ${!pot.isActive ? "archived" : ""}`} key={`${pot.id}-${index}`}>
+                <i className="shelf-jar-lid" /><i className="shelf-paper one" /><i className="shelf-paper two" /><strong>{pot.id === "all" ? "TODOS" : pot.name}</strong>
+              </span>)}
+            </div>
+            <div className="shelf-plank" aria-hidden="true" />
+            <div className="shelf-navigation">
+              <button aria-label={`Ir para o pote anterior: ${previousFilter.name}`} onClick={() => navigateFilter(-1)} type="button">‹‹</button>
+              <strong aria-live="polite">{selectedFilter.name}</strong>
+              <button aria-label={`Ir para o próximo pote: ${nextFilter.name}`} onClick={() => navigateFilter(1)} type="button">››</button>
+            </div>
+            {!selectedFilter.isActive && <small className="archived-filter-note">Pote arquivado · tarefas preservadas</small>}
+          </div>
           {visibleTasks.length === 0 ? <div className="empty-state">Nenhum post-it neste pote ainda.</div> : <div className="house-task-cards postit-board">
             {visibleTasks.map((task, index) => <article className={`task-postit postit-tone-${index % 4} ${!task.isActive ? "is-archived" : ""}`} key={task.id}>
               <span aria-hidden="true" className="postit-pin" />

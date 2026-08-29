@@ -118,6 +118,19 @@ test("mantém o cadastro de tarefas com linguagem de post-it", async () => {
   assert.match(source, /postit-drop-scene/);
 });
 
+test("navega circularmente pela prateleira de potes do mural", async () => {
+  const source = await readFile(new URL("../app/admin/tasks/page.tsx", import.meta.url), "utf8");
+  const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(source, /task-pot-shelf/);
+  assert.match(source, /previousFilter/);
+  assert.match(source, /nextFilter/);
+  assert.match(source, /navigateFilter\(-1\)/);
+  assert.match(source, /navigateFilter\(1\)/);
+  assert.match(source, /aria-live="polite"/);
+  assert.doesNotMatch(source, /<label>Filtrar por pote/);
+  assert.match(styles, /\.task-pot-shelf/);
+});
+
 test("expõe a organização da casa a qualquer morador autenticado", async () => {
   const header = await readFile(new URL("../components/AuthenticatedHeader.tsx", import.meta.url), "utf8");
   const pots = await readFile(new URL("../app/admin/pots/page.tsx", import.meta.url), "utf8");
