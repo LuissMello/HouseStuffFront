@@ -1,6 +1,6 @@
 import { sites } from "@openai/sites-vite-plugin";
 import vinext from "vinext";
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import hostingConfig from "./.openai/hosting.json";
 
 const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
@@ -33,7 +33,14 @@ const localBindingConfig = {
     : [],
 };
 
-export default defineConfig(async () => {
+export default defineConfig(async ({ mode }) => {
+  const environment = loadEnv(mode, process.cwd(), "");
+  const apiProxyTarget =
+    process.env.HOUSESTUFF_API_PROXY_TARGET ??
+    environment.HOUSESTUFF_API_PROXY_TARGET ??
+    "https://housestuffapi.fly.dev";
+  const proxyUsesHttps = apiProxyTarget.startsWith("https://");
+
   // Keep Wrangler and Miniflare state project-local. These are non-secret tool
   // settings; application environment belongs in ignored `.env*` files.
   process.env.WRANGLER_WRITE_LOGS ??= "false";
@@ -50,9 +57,9 @@ export default defineConfig(async () => {
         : {}),
       proxy: {
         "/api": {
-          target: "https://housestuffapi.fly.dev",
+          target: apiProxyTarget,
           changeOrigin: true,
-          secure: true,
+          secure: proxyUsesHttps,
         },
       },
     },

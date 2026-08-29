@@ -8,6 +8,7 @@
   "scripts": {
     "sync:tracking": "node scripts/sync-project-tracking.mjs",
     "dev": "npm run sync:tracking && vinext dev",
+    "dev:visual-studio": "npm run sync:tracking && node scripts/start-visual-studio.mjs",
     "build": "npm run sync:tracking && vinext build",
     "build:github-pages": "vite build --config vite.github-pages.config.ts",
     "start": "vinext start",

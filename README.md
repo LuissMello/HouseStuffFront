@@ -39,6 +39,12 @@ Em `/app/wishes`, os moradores cadastram coisas para comprar para a casa, guarda
 
 O comando sincroniza automaticamente `app/data/project.generated.json` a partir de `../HouseStuffAPi/docs/tracking/project.json` antes de iniciar.
 
+## Visual Studio
+
+O arquivo `HouseStuffFront.esproj` permite carregar este frontend na solução conjunta do backend. Nesse perfil, `npm run dev:visual-studio` injeta explicitamente as URLs locais, mantém as chamadas do navegador na origem `http://localhost:3000` e encaminha `/api` para a API real em `http://localhost:5049`. A API decide qual PostgreSQL usar pela configuração .NET; nenhum mock é usado.
+
+Abra `HouseStuffAPi/HouseStuff.VisualStudio.sln` para iniciar os dois projetos juntos. O roteiro completo, inclusive a configuração segura da conexão PostgreSQL, está no README do backend.
+
 ## Validar
 
 ```powershell

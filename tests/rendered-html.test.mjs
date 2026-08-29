@@ -192,11 +192,20 @@ test("publica todas as telas com hash routing no GitHub Pages", async () => {
   assert.match(workflow, /actions\/deploy-pages@v4/);
 });
 
-test("encaminha a API local para o ambiente do Fly.io", async () => {
+test("encaminha a API para o Fly por padrão e para a API local no Visual Studio", async () => {
   const config = await readFile(new URL("../vite.config.ts", import.meta.url), "utf8");
+  const visualStudioEnvironment = await readFile(new URL("../.env.visual-studio", import.meta.url), "utf8");
+  const visualStudioProject = await readFile(new URL("../HouseStuffFront.esproj", import.meta.url), "utf8");
+  const visualStudioStarter = await readFile(new URL("../scripts/start-visual-studio.mjs", import.meta.url), "utf8");
   assert.match(config, /"\/api"/);
-  assert.match(config, /target: "https:\/\/housestuffapi\.fly\.dev"/);
+  assert.match(config, /HOUSESTUFF_API_PROXY_TARGET/);
+  assert.match(config, /"https:\/\/housestuffapi\.fly\.dev"/);
   assert.match(config, /changeOrigin: true/);
+  assert.match(visualStudioEnvironment, /NEXT_PUBLIC_API_URL=http:\/\/localhost:3000/);
+  assert.match(visualStudioEnvironment, /HOUSESTUFF_API_PROXY_TARGET=http:\/\/localhost:5049/);
+  assert.match(visualStudioProject, /npm run dev:visual-studio/);
+  assert.match(visualStudioStarter, /NEXT_PUBLIC_API_URL = "http:\/\/localhost:3000"/);
+  assert.match(visualStudioStarter, /HOUSESTUFF_API_PROXY_TARGET = "http:\/\/localhost:5049"/);
 });
 
 test("mantém cadastro exclusivo por todos ou moradores no calendário", async () => {

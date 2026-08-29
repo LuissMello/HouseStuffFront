@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-29",
   "status": "onTrack",
-  "currentStageId": "M16",
+  "currentStageId": "M17",
   "stages": [
     {
       "id": "M0",
@@ -89,6 +89,11 @@
       "id": "M16",
       "name": "Acessibilidade",
       "outcome": "Senhas podem ser conferidas antes do envio sem perder a proteção padrão"
+    },
+    {
+      "id": "M17",
+      "name": "Desenvolvimento",
+      "outcome": "API e frontend iniciam juntos no Visual Studio contra PostgreSQL real"
     }
   ],
   "tasks": [
@@ -720,6 +725,38 @@
           "id": "HOUSE-170-03",
           "title": "Testes, publicação e fechamento",
           "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-180",
+      "stageId": "M17",
+      "area": "Geral",
+      "repository": "both",
+      "type": "technical",
+      "title": "Execução conjunta no Visual Studio",
+      "status": "inProgress",
+      "result": "Desenvolvedor abre uma solução, inicia API e frontend juntos e testa dados persistidos em PostgreSQL real.",
+      "subtasks": [
+        {
+          "id": "HOUSE-180-01",
+          "title": "Contrato de execução e banco real",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-180-02",
+          "title": "Projeto frontend e proxy local para a API",
+          "status": "inProgress"
+        },
+        {
+          "id": "HOUSE-180-03",
+          "title": "Solução e perfil conjunto do Visual Studio",
+          "status": "pending"
+        },
+        {
+          "id": "HOUSE-180-04",
+          "title": "Validação, documentação e fechamento",
+          "status": "pending"
         }
       ]
     }
