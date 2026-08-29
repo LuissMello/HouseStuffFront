@@ -33,6 +33,16 @@ test("renderiza a tela real de login", async () => {
   assert.match(html, /Entrar na minha casa/);
 });
 
+test("converte o hash routing em rotas reais no ambiente local", async () => {
+  const bridge = await readFile(new URL("../components/LocalHashNavigation.tsx", import.meta.url), "utf8");
+  const layout = await readFile(new URL("../app/layout.tsx", import.meta.url), "utf8");
+  assert.match(layout, /<LocalHashNavigation \/>/);
+  assert.match(bridge, /window\.addEventListener\("hashchange", navigate\)/);
+  assert.match(bridge, /window\.location\.assign\(target\)/);
+  assert.match(bridge, /route\.startsWith\("\/\/"\)/);
+  assert.match(bridge, /searchParams\.get\("section"\)/);
+});
+
 test("permite mostrar e ocultar senhas sem alterar os formulários", async () => {
   const component = await readFile(new URL("../components/PasswordInput.tsx", import.meta.url), "utf8");
   const login = await readFile(new URL("../app/login/page.tsx", import.meta.url), "utf8");
