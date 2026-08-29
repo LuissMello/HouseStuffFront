@@ -130,8 +130,11 @@ export type SaveCalendarEvent = {
 };
 
 type Problem = { title?: string; detail?: string; code?: string };
+type TokenResponse = { tokenType: string; accessToken: string; expiresIn: number; refreshToken: string };
+type StoredSession = TokenResponse & { rememberMe: boolean };
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5049";
+const sessionKey = "housestuff.session";
 
 export class ApiError extends Error {
   constructor(message: string, readonly status: number, readonly code?: string) {
@@ -139,12 +142,69 @@ export class ApiError extends Error {
   }
 }
 
-async function request<T>(path: string, init?: RequestInit): Promise<T> {
+function readSession(): StoredSession | null {
+  if (typeof window === "undefined") return null;
+  const value = window.sessionStorage.getItem(sessionKey) ?? window.localStorage.getItem(sessionKey);
+  if (!value) return null;
+  try {
+    return JSON.parse(value) as StoredSession;
+  } catch {
+    window.sessionStorage.removeItem(sessionKey);
+    window.localStorage.removeItem(sessionKey);
+    return null;
+  }
+}
+
+function saveSession(tokens: TokenResponse, rememberMe: boolean) {
+  if (typeof window === "undefined") return;
+  window.sessionStorage.removeItem(sessionKey);
+  window.localStorage.removeItem(sessionKey);
+  const storage = rememberMe ? window.localStorage : window.sessionStorage;
+  storage.setItem(sessionKey, JSON.stringify({ ...tokens, rememberMe } satisfies StoredSession));
+}
+
+function clearSession() {
+  if (typeof window === "undefined") return;
+  window.sessionStorage.removeItem(sessionKey);
+  window.localStorage.removeItem(sessionKey);
+}
+
+let refreshRequest: Promise<boolean> | null = null;
+
+async function refreshSession(session: StoredSession): Promise<boolean> {
+  if (refreshRequest) return refreshRequest;
+  refreshRequest = (async () => {
+    const response = await fetch(`${apiUrl}/api/v1/auth/refresh`, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ refreshToken: session.refreshToken }),
+    });
+    if (!response.ok) {
+      clearSession();
+      return false;
+    }
+    saveSession(await response.json() as TokenResponse, session.rememberMe);
+    return true;
+  })().finally(() => { refreshRequest = null; });
+  return refreshRequest;
+}
+
+async function request<T>(path: string, init?: RequestInit, retryAfterRefresh = true): Promise<T> {
+  const session = readSession();
   const response = await fetch(`${apiUrl}${path}`, {
     ...init,
     credentials: "include",
-    headers: { "Content-Type": "application/json", ...init?.headers },
+    headers: {
+      "Content-Type": "application/json",
+      ...(session ? { Authorization: `${session.tokenType} ${session.accessToken}` } : {}),
+      ...init?.headers,
+    },
   });
+
+  if (response.status === 401 && retryAfterRefresh && session && await refreshSession(session)) {
+    return request<T>(path, init, false);
+  }
 
   if (!response.ok) {
     const problem = await response.json().catch(() => ({})) as Problem;
@@ -156,11 +216,21 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export const accessApi = {
-  login: (email: string, password: string, rememberMe: boolean) => request<CurrentUser>("/api/v1/auth/login", {
-    method: "POST",
-    body: JSON.stringify({ email, password, rememberMe }),
-  }),
-  logout: () => request<void>("/api/v1/auth/logout", { method: "POST" }),
+  login: async (email: string, password: string, rememberMe: boolean) => {
+    const tokens = await request<TokenResponse>("/api/v1/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password, rememberMe }),
+    }, false);
+    saveSession(tokens, rememberMe);
+    return request<CurrentUser>("/api/v1/auth/me");
+  },
+  logout: async () => {
+    try {
+      await request<void>("/api/v1/auth/logout", { method: "POST" }, false);
+    } finally {
+      clearSession();
+    }
+  },
   me: () => request<CurrentUser>("/api/v1/auth/me"),
   listUsers: () => request<UserSummary[]>("/api/v1/admin/users"),
   createUser: (input: { name: string; email: string; temporaryPassword: string; isAdministrator: boolean }) =>

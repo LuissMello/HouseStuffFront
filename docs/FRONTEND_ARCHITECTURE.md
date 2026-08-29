@@ -43,7 +43,8 @@ Rotas apenas compõem telas. Acesso à API, schemas e comportamento ficam na fea
 - `/app/shopping`: catálogo colaborativo e geração temporária da lista de compras;
 - `/app/wishes`: desejos compartilhados da casa com link opcional e prioridade persistida;
 - `/admin/pots` e `/admin/tasks`: aliases mantidos temporariamente por compatibilidade;
-- a API mantém a sessão em cookie HTTP-only e o frontend sempre envia credenciais nas chamadas.
+- a API emite tokens opacos protegidos pelo ASP.NET Identity; o frontend envia o token de acesso no cabeçalho `Authorization` e renova a sessão sem depender de cookies entre GitHub Pages e Fly.io;
+- sem “continuar conectado”, os tokens ficam no `sessionStorage`; com a opção marcada, ficam no `localStorage`. Logout e falha de renovação removem ambos;
 - campos de senha permanecem mascarados por padrão e compartilham um controle acessível para mostrar ou ocultar o valor digitado.
 
 ## Residência

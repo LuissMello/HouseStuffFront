@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-29",
   "status": "onTrack",
-  "currentStageId": "M18",
+  "currentStageId": "M19",
   "stages": [
     {
       "id": "M0",
@@ -99,6 +99,11 @@
       "id": "M18",
       "name": "Roteamento",
       "outcome": "A navegação por hash funciona no GitHub Pages e no desenvolvimento local"
+    },
+    {
+      "id": "M19",
+      "name": "Sessão móvel",
+      "outcome": "O login publicado funciona mesmo quando o navegador bloqueia cookies entre sites"
     }
   ],
   "tasks": [
@@ -789,6 +794,38 @@
           "id": "HOUSE-190-03",
           "title": "Teste visual, gates e fechamento",
           "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-200",
+      "stageId": "M19",
+      "area": "Acesso",
+      "repository": "both",
+      "type": "feature",
+      "title": "Login compatível com navegadores móveis",
+      "status": "inProgress",
+      "result": "Morador entra pelo GitHub Pages no celular sem depender da aceitação de cookies de terceiros.",
+      "subtasks": [
+        {
+          "id": "HOUSE-200-01",
+          "title": "Diagnóstico e contrato de sessão",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-200-02",
+          "title": "Tokens de acesso e renovação na API",
+          "status": "inProgress"
+        },
+        {
+          "id": "HOUSE-200-03",
+          "title": "Sessão por token no frontend",
+          "status": "pending"
+        },
+        {
+          "id": "HOUSE-200-04",
+          "title": "Testes, publicação e validação em produção",
+          "status": "pending"
         }
       ]
     }

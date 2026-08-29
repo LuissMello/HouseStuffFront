@@ -218,6 +218,15 @@ test("encaminha a API para o Fly por padrão e para a API local no Visual Studio
   assert.match(visualStudioStarter, /HOUSESTUFF_API_PROXY_TARGET = "http:\/\/localhost:5049"/);
 });
 
+test("mantém sessão móvel sem depender de cookie entre sites", async () => {
+  const api = await readFile(new URL("../lib/api.ts", import.meta.url), "utf8");
+  assert.match(api, /Authorization: `\$\{session\.tokenType\} \$\{session\.accessToken\}`/);
+  assert.match(api, /\/api\/v1\/auth\/refresh/);
+  assert.match(api, /window\.sessionStorage/);
+  assert.match(api, /window\.localStorage/);
+  assert.match(api, /clearSession\(\)/);
+});
+
 test("mantém cadastro exclusivo por todos ou moradores no calendário", async () => {
   const form = await readFile(new URL("../components/CalendarEventForm.tsx", import.meta.url), "utf8");
   assert.match(form, /Data de nascimento/);
