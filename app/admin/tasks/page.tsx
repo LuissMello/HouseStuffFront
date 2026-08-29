@@ -267,21 +267,6 @@ export default function TasksAdminPage() {
                 </label>)}
               </div>}
             </fieldset>
-
-            <fieldset className="task-kind"><legend>Como ela funciona?</legend>
-              {(Object.keys(kindLabels) as HouseholdTaskKind[]).map((kind) => <label className={draft.kind === kind ? "selected" : ""} htmlFor={`kind-${kind}`} key={kind}>
-                <span className="sr-only">Selecionar funcionamento</span>
-                <input checked={draft.kind === kind} id={`kind-${kind}`} name="kind" onChange={() => setDraft({ ...draft, kind, recurrenceDays: kind === "recurring" ? draft.recurrenceDays : "" })} type="radio" value={kind} />
-                <span><strong>{kindLabels[kind]}</strong><small>{kind === "oneTime" ? "Concluiu, não volta" : kind === "reusable" ? "Pode voltar ao pote" : "Volta após um intervalo"}</small></span>
-              </label>)}
-            </fieldset>
-            {draft.kind === "recurring" && <label>Intervalo em dias
-              <input inputMode="numeric" max={3650} min={1} name="recurrenceDays" onChange={(event) => setDraft({ ...draft, recurrenceDays: event.target.value })} placeholder="Ex.: 30" required type="number" value={draft.recurrenceDays} />
-            </label>}
-            {error && <p className="form-alert" role="alert">{error}</p>}
-            {success && <p className="form-success" role="status">{success}</p>}
-            <button className="primary-button" disabled={saving}>{saving ? "Guardando..." : editingId ? "Atualizar post-it" : "Dobrar e guardar"}<span aria-hidden="true">↘</span></button>
-            {editingId && <button className="secondary-button" onClick={resetDraft} type="button">Cancelar edição</button>}
           </>}
         </form>
 
