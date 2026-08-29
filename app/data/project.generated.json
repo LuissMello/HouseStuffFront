@@ -1,9 +1,9 @@
 {
   "$schema": "./project.schema.json",
   "project": "HouseStuff",
-  "updatedAt": "2026-08-28",
+  "updatedAt": "2026-08-29",
   "status": "onTrack",
-  "currentStageId": "M15",
+  "currentStageId": "M16",
   "stages": [
     {
       "id": "M0",
@@ -84,6 +84,11 @@
       "id": "M15",
       "name": "Navegação",
       "outcome": "O mural usa os próprios potes para navegar entre as tarefas"
+    },
+    {
+      "id": "M16",
+      "name": "Acessibilidade",
+      "outcome": "Senhas podem ser conferidas antes do envio sem perder a proteção padrão"
     }
   ],
   "tasks": [
@@ -687,6 +692,33 @@
         {
           "id": "HOUSE-160-03",
           "title": "Responsividade, testes, publicação e fechamento",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-170",
+      "stageId": "M16",
+      "area": "Acesso",
+      "repository": "front",
+      "type": "feature",
+      "title": "Mostrar e ocultar senha",
+      "status": "completed",
+      "result": "Usuário confere a senha digitada no login e na criação de acessos.",
+      "subtasks": [
+        {
+          "id": "HOUSE-170-01",
+          "title": "Componente acessível de senha",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-170-02",
+          "title": "Integração no login e administração",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-170-03",
+          "title": "Testes, publicação e fechamento",
           "status": "completed"
         }
       ]
