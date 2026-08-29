@@ -735,7 +735,7 @@
       "repository": "both",
       "type": "technical",
       "title": "Execução conjunta no Visual Studio",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Desenvolvedor abre uma solução, inicia API e frontend juntos e testa dados persistidos em PostgreSQL real.",
       "subtasks": [
         {
@@ -746,17 +746,17 @@
         {
           "id": "HOUSE-180-02",
           "title": "Projeto frontend e proxy local para a API",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-180-03",
           "title": "Solução e perfil conjunto do Visual Studio",
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "HOUSE-180-04",
           "title": "Validação, documentação e fechamento",
-          "status": "pending"
+          "status": "completed"
         }
       ]
     }
