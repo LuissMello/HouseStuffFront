@@ -33,6 +33,19 @@ test("renderiza a tela real de login", async () => {
   assert.match(html, /Entrar na minha casa/);
 });
 
+test("permite mostrar e ocultar senhas sem alterar os formulários", async () => {
+  const component = await readFile(new URL("../components/PasswordInput.tsx", import.meta.url), "utf8");
+  const login = await readFile(new URL("../app/login/page.tsx", import.meta.url), "utf8");
+  const users = await readFile(new URL("../app/admin/users/page.tsx", import.meta.url), "utf8");
+  assert.match(component, /visible \? "text" : "password"/);
+  assert.match(component, /aria-pressed=\{visible\}/);
+  assert.match(component, /type="button"/);
+  assert.match(component, /Ocultar/);
+  assert.match(component, /Mostrar/);
+  assert.match(login, /autoComplete="current-password"/);
+  assert.match(users, /name="password"/);
+});
+
 test("renderiza o estado inicial protegido da área administrativa", async () => {
   const response = await render("/admin/users");
   assert.equal(response.status, 200);

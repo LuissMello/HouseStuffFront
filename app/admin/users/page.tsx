@@ -2,6 +2,7 @@
 
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { AuthenticatedHeader } from "../../../components/AuthenticatedHeader";
+import { PasswordInput } from "../../../components/PasswordInput";
 import { accessApi, ApiError, residenceApi, type CurrentUser, type UserSummary } from "../../../lib/api";
 
 export default function UsersPage() {
@@ -91,7 +92,7 @@ export default function UsersPage() {
           <div><span className="step-badge">NOVO ACESSO</span><h2>Criar usuário</h2></div>
           <label>Nome completo<input name="name" required placeholder="Ex.: Luis Henrique" /></label>
           <label>E-mail<input name="email" required type="email" placeholder="luis@exemplo.com" /></label>
-          <label>Senha temporária<input minLength={10} name="password" required type="password" placeholder="Mínimo de 10 caracteres" /><small>Use maiúscula, minúscula, número e símbolo.</small></label>
+          <PasswordInput hint="Use maiúscula, minúscula, número e símbolo." id="new-user-password" label="Senha temporária" minLength={10} name="password" placeholder="Mínimo de 10 caracteres" required />
           <label className="check-field"><input name="administrator" type="checkbox" /><span>Este usuário também administra a casa</span></label>
           <button className="primary-button" disabled={saving}>{saving ? "Criando..." : "Criar acesso"}<span aria-hidden="true">→</span></button>
         </form>

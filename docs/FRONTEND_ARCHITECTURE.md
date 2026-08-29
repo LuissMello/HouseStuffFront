@@ -44,6 +44,7 @@ Rotas apenas compõem telas. Acesso à API, schemas e comportamento ficam na fea
 - `/app/wishes`: desejos compartilhados da casa com link opcional e prioridade persistida;
 - `/admin/pots` e `/admin/tasks`: aliases mantidos temporariamente por compatibilidade;
 - a API mantém a sessão em cookie HTTP-only e o frontend sempre envia credenciais nas chamadas.
+- campos de senha permanecem mascarados por padrão e compartilham um controle acessível para mostrar ou ocultar o valor digitado.
 
 ## Residência
 

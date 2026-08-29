@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { PasswordInput } from "../../components/PasswordInput";
 import { accessApi, ApiError } from "../../lib/api";
 
 export default function LoginPage() {
@@ -37,7 +38,7 @@ export default function LoginPage() {
       <form className="access-form" onSubmit={submit}>
         <div className="form-heading"><span className="step-badge">ACESSO</span><h2>Que bom ter você de volta.</h2><p>Use o acesso criado pelo administrador da sua casa.</p></div>
         <label>E-mail<input autoComplete="email" required type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="voce@exemplo.com" /></label>
-        <label>Senha<input autoComplete="current-password" required type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Sua senha" /></label>
+        <PasswordInput autoComplete="current-password" id="login-password" label="Senha" onChange={(event) => setPassword(event.target.value)} placeholder="Sua senha" required value={password} />
         <label className="check-field"><input checked={rememberMe} onChange={(event) => setRememberMe(event.target.checked)} type="checkbox" /><span>Continuar conectado neste dispositivo</span></label>
         {error && <p className="form-alert" role="alert">{error}</p>}
         <button className="primary-button" disabled={loading} type="submit">{loading ? "Entrando..." : "Entrar na minha casa"}<span aria-hidden="true">→</span></button>
