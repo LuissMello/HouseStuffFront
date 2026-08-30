@@ -103,9 +103,14 @@ test("renderiza as tarefas na rota compartilhada pelos moradores", async () => {
 
 test("renderiza o estado inicial da residência autenticada", async () => {
   const response = await render("/app");
+  const source = await readFile(new URL("../app/app/page.tsx", import.meta.url), "utf8");
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /Preparando sua casa/);
+  assert.doesNotMatch(source, /admin-callout-grid/);
+  assert.doesNotMatch(source, /Cadastre as tarefas da casa/);
+  assert.doesNotMatch(source, /Cadastre e ordene os potes/);
+  assert.doesNotMatch(source, /Gerencie as pessoas da casa/);
 });
 
 test("renderiza o estado inicial do calendário e histórico", async () => {

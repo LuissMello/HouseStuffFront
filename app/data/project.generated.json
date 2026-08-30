@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-30",
   "status": "onTrack",
-  "currentStageId": "M20",
+  "currentStageId": "M21",
   "stages": [
     {
       "id": "M0",
@@ -109,6 +109,11 @@
       "id": "M20",
       "name": "Interface móvel",
       "outcome": "Cadastros são mais simples e o calendário cabe integralmente na largura do celular"
+    },
+    {
+      "id": "M21",
+      "name": "Página inicial",
+      "outcome": "A página da casa mostra somente conteúdo útil para a rotina atual"
     }
   ],
   "tasks": [
@@ -858,6 +863,28 @@
           "id": "HOUSE-210-03",
           "title": "Teste responsivo, publicação e fechamento",
           "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-220",
+      "stageId": "M21",
+      "area": "Frontend",
+      "repository": "front",
+      "type": "feature",
+      "title": "Remoção dos atalhos da página da casa",
+      "status": "inProgress",
+      "result": "Morador acessa a página da casa sem o bloco redundante de atalhos administrativos.",
+      "subtasks": [
+        {
+          "id": "HOUSE-220-01",
+          "title": "Remoção do bloco e cobertura automatizada",
+          "status": "inProgress"
+        },
+        {
+          "id": "HOUSE-220-02",
+          "title": "Publicação e fechamento",
+          "status": "pending"
         }
       ]
     }

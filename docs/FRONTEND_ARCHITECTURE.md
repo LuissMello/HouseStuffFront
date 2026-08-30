@@ -46,6 +46,7 @@ Rotas apenas compõem telas. Acesso à API, schemas e comportamento ficam na fea
 - a API emite tokens opacos protegidos pelo ASP.NET Identity; o frontend envia o token de acesso no cabeçalho `Authorization` e renova a sessão sem depender de cookies entre GitHub Pages e Fly.io;
 - sem “continuar conectado”, os tokens ficam no `sessionStorage`; com a opção marcada, ficam no `localStorage`. Logout e falha de renovação removem ambos;
 - campos de senha permanecem mascarados por padrão e compartilham um controle acessível para mostrar ou ocultar o valor digitado.
+- a página principal concentra casa, sorteio e moradores; os atalhos administrativos redundantes ficam somente na navegação global.
 
 ## Residência
 
