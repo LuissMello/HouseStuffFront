@@ -141,6 +141,19 @@ test("mantém o cadastro de tarefas com linguagem de post-it", async () => {
   assert.match(source, /postit-drop-scene/);
 });
 
+test("simplifica o cadastro e encaixa o mês na largura do celular", async () => {
+  const page = await readFile(new URL("../app/admin/tasks/page.tsx", import.meta.url), "utf8");
+  const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.doesNotMatch(page, /Como ela funciona/);
+  assert.doesNotMatch(page, /name="kind"/);
+  assert.match(page, /kind: "reusable"/);
+  assert.match(page, /Dobrar e guardar/);
+  assert.match(page, /Atualizar post-it/);
+  assert.match(styles, /\.calendar-month-grid\{min-width:0;width:100%\}/);
+  assert.match(styles, /\.calendar-month-grid>section\{min-height:68px;padding:3px\}/);
+  assert.doesNotMatch(styles, /calendar-month-grid\{min-width:(720|850)px/);
+});
+
 test("navega circularmente pela prateleira de potes do mural", async () => {
   const source = await readFile(new URL("../app/admin/tasks/page.tsx", import.meta.url), "utf8");
   const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
