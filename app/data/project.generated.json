@@ -873,18 +873,18 @@
       "repository": "front",
       "type": "feature",
       "title": "Remoção dos atalhos da página da casa",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Morador acessa a página da casa sem o bloco redundante de atalhos administrativos.",
       "subtasks": [
         {
           "id": "HOUSE-220-01",
           "title": "Remoção do bloco e cobertura automatizada",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-220-02",
           "title": "Publicação e fechamento",
-          "status": "pending"
+          "status": "completed"
         }
       ]
     }
