@@ -841,23 +841,23 @@
       "repository": "front",
       "type": "feature",
       "title": "Cadastro simplificado e calendário móvel compacto",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Morador cadastra uma tarefa sem escolher comportamento e visualiza o mês inteiro sem rolagem lateral no celular.",
       "subtasks": [
         {
           "id": "HOUSE-210-01",
           "title": "Remoção da escolha de comportamento da tarefa",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-210-02",
           "title": "Calendário mensal compacto no celular",
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "HOUSE-210-03",
           "title": "Teste responsivo, publicação e fechamento",
-          "status": "pending"
+          "status": "completed"
         }
       ]
     }
