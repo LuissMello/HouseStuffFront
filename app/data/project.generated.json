@@ -1,9 +1,9 @@
 {
   "$schema": "./project.schema.json",
   "project": "HouseStuff",
-  "updatedAt": "2026-08-29",
+  "updatedAt": "2026-08-30",
   "status": "onTrack",
-  "currentStageId": "M19",
+  "currentStageId": "M20",
   "stages": [
     {
       "id": "M0",
@@ -104,6 +104,11 @@
       "id": "M19",
       "name": "Sessão móvel",
       "outcome": "O login publicado funciona mesmo quando o navegador bloqueia cookies entre sites"
+    },
+    {
+      "id": "M20",
+      "name": "Interface móvel",
+      "outcome": "Cadastros são mais simples e o calendário cabe integralmente na largura do celular"
     }
   ],
   "tasks": [
@@ -826,6 +831,33 @@
           "id": "HOUSE-200-04",
           "title": "Testes, publicação e validação em produção",
           "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-210",
+      "stageId": "M20",
+      "area": "Frontend",
+      "repository": "front",
+      "type": "feature",
+      "title": "Cadastro simplificado e calendário móvel compacto",
+      "status": "inProgress",
+      "result": "Morador cadastra uma tarefa sem escolher comportamento e visualiza o mês inteiro sem rolagem lateral no celular.",
+      "subtasks": [
+        {
+          "id": "HOUSE-210-01",
+          "title": "Remoção da escolha de comportamento da tarefa",
+          "status": "inProgress"
+        },
+        {
+          "id": "HOUSE-210-02",
+          "title": "Calendário mensal compacto no celular",
+          "status": "pending"
+        },
+        {
+          "id": "HOUSE-210-03",
+          "title": "Teste responsivo, publicação e fechamento",
+          "status": "pending"
         }
       ]
     }

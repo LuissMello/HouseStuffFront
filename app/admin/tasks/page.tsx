@@ -267,6 +267,10 @@ export default function TasksAdminPage() {
                 </label>)}
               </div>}
             </fieldset>
+            {error && <p className="form-alert" role="alert">{error}</p>}
+            {success && <p className="form-success" role="status">{success}</p>}
+            <button className="primary-button" disabled={saving}>{saving ? "Guardando..." : editingId ? "Atualizar post-it" : "Dobrar e guardar"}<span aria-hidden="true">↘</span></button>
+            {editingId && <button className="secondary-button" onClick={resetDraft} type="button">Cancelar edição</button>}
           </>}
         </form>
 
