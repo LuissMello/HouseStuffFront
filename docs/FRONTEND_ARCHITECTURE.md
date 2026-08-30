@@ -86,7 +86,7 @@ Lint, TypeScript e build são gates permanentes. Comportamentos de componentes r
 - eventos da casa e tarefas recorrentes usam cartões visualmente distintos;
 - datas são apresentadas no fuso do navegador;
 - estados sem recorrências ou sem conclusões possuem orientação própria;
-- telas menores recebem navegação inferior para Casa, Rotina, Potes e Tarefas.
+- telas menores recebem navegação inferior para Casa, Calendário, Potes e Tarefas.
 
 ## Experiência lúdica
 

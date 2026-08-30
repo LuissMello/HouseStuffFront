@@ -258,6 +258,7 @@ test("mantém cadastro exclusivo por todos ou moradores no calendário", async (
 test("oferece calendário real diário, semanal e mensal", async () => {
   const page = await readFile(new URL("../app/app/routine/page.tsx", import.meta.url), "utf8");
   const board = await readFile(new URL("../components/CalendarBoard.tsx", import.meta.url), "utf8");
+  const header = await readFile(new URL("../components/AuthenticatedHeader.tsx", import.meta.url), "utf8");
   assert.match(board, /\['day', 'Dia'\]/);
   assert.match(board, /\['week', 'Semana'\]/);
   assert.match(board, /\['month', 'Mês'\]/);
@@ -269,6 +270,8 @@ test("oferece calendário real diário, semanal e mensal", async () => {
   assert.match(board, /todayKey/);
   assert.match(page, /calendarApi\.range/);
   assert.match(page, /routineApi\.overview/);
+  assert.match(header, /href="#\/app\/routine"><span aria-hidden="true">◷<\/span>Calendário<\/a>/);
+  assert.doesNotMatch(header, />Rotina<\/a>/);
 });
 
 test("mantém a sequência acessível do sorteio animado", async () => {

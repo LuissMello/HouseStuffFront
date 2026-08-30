@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-08-30",
   "status": "onTrack",
-  "currentStageId": "M21",
+  "currentStageId": "M22",
   "stages": [
     {
       "id": "M0",
@@ -114,6 +114,11 @@
       "id": "M21",
       "name": "Página inicial",
       "outcome": "A página da casa mostra somente conteúdo útil para a rotina atual"
+    },
+    {
+      "id": "M22",
+      "name": "Navegação móvel",
+      "outcome": "Os menus usam nomes claros e consistentes em todas as telas"
     }
   ],
   "tasks": [
@@ -885,6 +890,28 @@
           "id": "HOUSE-220-02",
           "title": "Publicação e fechamento",
           "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-230",
+      "stageId": "M22",
+      "area": "Frontend",
+      "repository": "front",
+      "type": "feature",
+      "title": "Calendário no menu móvel",
+      "status": "inProgress",
+      "result": "Morador encontra o calendário pelo mesmo nome nos menus desktop e mobile.",
+      "subtasks": [
+        {
+          "id": "HOUSE-230-01",
+          "title": "Rótulo, teste e documentação",
+          "status": "inProgress"
+        },
+        {
+          "id": "HOUSE-230-02",
+          "title": "Publicação e fechamento",
+          "status": "pending"
         }
       ]
     }

@@ -20,5 +20,5 @@ export function AuthenticatedHeader({ user }: { user: CurrentUser }) {
       {user.isAdministrator && <a href="#/admin/users">Usuários</a>}
     </nav>
     <div className="user-menu"><span><strong>{user.name}</strong><small>{user.residenceName ?? (user.isAdministrator ? "Administrador" : "Morador")}</small></span><button onClick={signOut}>Sair</button></div>
-  </header><nav className="mobile-app-nav" aria-label="Navegação móvel"><a href="#/app"><span aria-hidden="true">⌂</span>Casa</a><a href="#/app/routine"><span aria-hidden="true">◷</span>Rotina</a><a href="#/app/pots"><span aria-hidden="true">◉</span>Potes</a><a href="#/app/tasks"><span aria-hidden="true">▣</span>Tarefas</a><a href="#/app/shopping"><span aria-hidden="true">▤</span>Compras</a><a href="#/app/wishes"><span aria-hidden="true">♡</span>Desejos</a></nav></>;
+  </header><nav className="mobile-app-nav" aria-label="Navegação móvel"><a href="#/app"><span aria-hidden="true">⌂</span>Casa</a><a href="#/app/routine"><span aria-hidden="true">◷</span>Calendário</a><a href="#/app/pots"><span aria-hidden="true">◉</span>Potes</a><a href="#/app/tasks"><span aria-hidden="true">▣</span>Tarefas</a><a href="#/app/shopping"><span aria-hidden="true">▤</span>Compras</a><a href="#/app/wishes"><span aria-hidden="true">♡</span>Desejos</a></nav></>;
 }
