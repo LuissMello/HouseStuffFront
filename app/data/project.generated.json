@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-09-01",
   "status": "onTrack",
-  "currentStageId": "M30",
+  "currentStageId": "M31",
   "stages": [
     {
       "id": "M0",
@@ -159,6 +159,11 @@
       "id": "M30",
       "name": "Caderno de compras",
       "outcome": "A casa acompanha pendências por categoria e conserva um histórico das compras finalizadas"
+    },
+    {
+      "id": "M31",
+      "name": "Identificação no calendário",
+      "outcome": "Eventos individuais mostram de forma imediata a cor do morador envolvido"
     }
   ],
   "tasks": [
@@ -1183,6 +1188,33 @@
           "id": "HOUSE-310-04",
           "title": "Testes, publicação, migration e fechamento",
           "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-320",
+      "stageId": "M31",
+      "area": "Calendário",
+      "repository": "front",
+      "type": "feature",
+      "title": "Cards do calendário na cor do morador",
+      "status": "inProgress",
+      "result": "Evento individual usa toda a área do card para identificar a cor do morador com texto legível.",
+      "subtasks": [
+        {
+          "id": "HOUSE-320-01",
+          "title": "Cor integral e contraste acessível no card",
+          "status": "inProgress"
+        },
+        {
+          "id": "HOUSE-320-02",
+          "title": "Eventos coletivos, responsividade e testes",
+          "status": "pending"
+        },
+        {
+          "id": "HOUSE-320-03",
+          "title": "Publicação e fechamento",
+          "status": "pending"
         }
       ]
     }

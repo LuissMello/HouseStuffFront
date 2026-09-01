@@ -1,7 +1,7 @@
 "use client";
 
 import { type CalendarEntry } from "../lib/api";
-import { safeProfileColor } from "./PersonColor";
+import { personColorStyle, safeProfileColor } from "./PersonColor";
 
 export type CalendarMode = "day" | "week" | "month";
 export type CalendarPeriod = { start: Date; end: Date; days: Date[] };
@@ -53,9 +53,11 @@ function timeLabel(entry: CalendarEntry) {
 }
 
 function CalendarChip({ entry, onSelect }: { entry: CalendarEntry; onSelect: (entry: CalendarEntry) => void }) {
-  const className = `calendar-chip ${entry.source === "task" ? "task-entry" : `event-${entry.kind}`}`;
+  const hasPersonalColor = entry.source === "event" && !entry.appliesToAll && entry.participants.length > 0;
+  const className = `calendar-chip ${entry.source === "task" ? "task-entry" : `event-${entry.kind}${hasPersonalColor ? " person-event" : ""}`}`;
   if (entry.source === "task") return <div className={className}><span aria-hidden="true">↻</span><strong>{entry.title}</strong><small>Tarefa recorrente · {timeLabel(entry)}</small></div>;
-  return <article className={className}><button aria-label={`Ver detalhes de ${entry.title}`} className="calendar-chip-main" onClick={() => onSelect(entry)} type="button"><span aria-hidden="true">{entry.kind === "birthday" ? "♡" : entry.kind === "appointment" ? "◷" : "□"}</span><strong>{entry.title}</strong><small>{timeLabel(entry)} · {audience(entry)}</small></button>{!entry.appliesToAll && entry.participants.length > 0 && <span aria-label={`Participantes: ${audience(entry)}`} className="calendar-participant-colors">{entry.participants.map((participant) => <i key={participant.userId} style={{ backgroundColor: safeProfileColor(participant.profileColor) }} title={participant.name} />)}</span>}</article>;
+  const style = hasPersonalColor ? personColorStyle(entry.participants[0].profileColor) : undefined;
+  return <article className={className} style={style}><button aria-label={`Ver detalhes de ${entry.title}`} className="calendar-chip-main" onClick={() => onSelect(entry)} type="button"><span aria-hidden="true">{entry.kind === "birthday" ? "♡" : entry.kind === "appointment" ? "◷" : "□"}</span><strong>{entry.title}</strong><small>{timeLabel(entry)} · {audience(entry)}</small></button>{entry.participants.length > 1 && <span aria-label={`Participantes: ${audience(entry)}`} className="calendar-participant-colors">{entry.participants.map((participant) => <i key={participant.userId} style={{ backgroundColor: safeProfileColor(participant.profileColor) }} title={participant.name} />)}</span>}</article>;
 }
 
 function periodLabel(period: CalendarPeriod, cursor: Date, mode: CalendarMode) {

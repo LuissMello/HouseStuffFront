@@ -361,6 +361,8 @@ footer { border-top:1px solid var(--line); color:var(--muted); display:flex; fon
 .calendar-members label>span.person-avatar { background:var(--person-color, var(--green)); color:var(--person-contrast,#fff); }
 .calendar-participant-colors { bottom:2px; display:flex; gap:2px; position:absolute; right:18px; z-index:2; }
 .calendar-participant-colors i { border:1px solid rgba(255,255,255,.85); border-radius:50%; display:block; height:8px; width:8px; }
+.calendar-chip.person-event { background:var(--person-color,var(--green)); border:1px solid color-mix(in srgb,var(--person-contrast,#fff) 20%,transparent); color:var(--person-contrast,#fff); }
+.calendar-chip.person-event .calendar-chip-main:focus-visible { outline:2px solid var(--person-contrast,#fff); outline-offset:-3px; }
 .calendar-details-backdrop { align-items:center; background:rgba(20,31,24,.56); display:flex; inset:0; justify-content:center; padding:20px; position:fixed; z-index:60; }
 .calendar-event-details { background:var(--surface); border-radius:23px; box-shadow:0 24px 70px rgba(19,35,25,.28); max-height:calc(100vh - 40px); max-width:580px; overflow:auto; padding:30px; position:relative; width:100%; }
 .calendar-event-details::before { background:#f0bb55; content:""; height:7px; left:0; position:absolute; right:0; top:0; }

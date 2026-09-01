@@ -300,6 +300,9 @@ test("permite escolher uma cor pessoal e a reutiliza nas referências da casa", 
   assert.match(header, /saveCustomColor/);
   assert.match(tasks, /member\.profileColor/);
   assert.match(calendar, /participant\.profileColor/);
+  assert.match(calendar, /personColorStyle\(entry\.participants\[0\]\.profileColor\)/);
+  assert.match(calendar, /person-event/);
+  assert.match(calendar, /entry\.participants\.length > 1/);
   assert.match(api, /\/api\/v1\/auth\/me\/color/);
 });
 

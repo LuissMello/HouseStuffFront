@@ -56,6 +56,7 @@ Rotas apenas compõem telas. Acesso à API, schemas e comportamento ficam na fea
 - na mesma tela, o administrador promove ou rebaixa outro morador com confirmação explícita e retorno da API;
 - novos usuários herdam a residência do administrador no backend.
 - cada usuário escolhe a própria cor em uma paleta acessível no cabeçalho; a preferência é persistida pela API e reaparece nos avatares, responsáveis de tarefas e participantes do calendário;
+- eventos individuais preenchem o card do calendário com a cor pessoal e contraste automático; eventos para todos permanecem neutros, e eventos com vários participantes conservam indicadores das demais cores;
 - a cor é somente uma identidade visual e nunca substitui nome, texto ou estado na comunicação de informações.
 
 ## Qualidade
