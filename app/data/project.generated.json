@@ -1198,23 +1198,23 @@
       "repository": "front",
       "type": "feature",
       "title": "Cards do calendário na cor do morador",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Evento individual usa toda a área do card para identificar a cor do morador com texto legível.",
       "subtasks": [
         {
           "id": "HOUSE-320-01",
           "title": "Cor integral e contraste acessível no card",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-320-02",
           "title": "Eventos coletivos, responsividade e testes",
-          "status": "pending"
+          "status": "completed"
         },
         {
           "id": "HOUSE-320-03",
           "title": "Publicação e fechamento",
-          "status": "pending"
+          "status": "completed"
         }
       ]
     }
