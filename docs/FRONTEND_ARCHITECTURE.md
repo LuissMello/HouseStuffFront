@@ -89,6 +89,8 @@ Lint, TypeScript e build são gates permanentes. Comportamentos de componentes r
 - datas são apresentadas no fuso do navegador;
 - estados sem recorrências ou sem conclusões possuem orientação própria;
 - telas menores recebem navegação inferior para Casa, Calendário, Potes e Tarefas.
+- tocar em um evento abre primeiro um cartão de detalhes somente para leitura; o formulário recebe os dados apenas após a ação explícita “Alterar evento”;
+- exclusão e alteração ficam concentradas nos detalhes, evitando que um toque de consulta pareça um novo cadastro ou provoque uma ação acidental.
 
 ## Experiência lúdica
 

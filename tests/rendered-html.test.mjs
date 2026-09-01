@@ -289,6 +289,21 @@ test("oferece calendário real diário, semanal e mensal", async () => {
   assert.doesNotMatch(header, />Rotina<\/a>/);
 });
 
+test("consulta um evento antes de permitir sua alteração", async () => {
+  const page = await readFile(new URL("../app/app/routine/page.tsx", import.meta.url), "utf8");
+  const board = await readFile(new URL("../components/CalendarBoard.tsx", import.meta.url), "utf8");
+  const details = await readFile(new URL("../components/CalendarEventDetails.tsx", import.meta.url), "utf8");
+  assert.match(page, /selected && <CalendarEventDetails/);
+  assert.match(page, /setSelected\(entry\)/);
+  assert.match(board, /Ver detalhes de/);
+  assert.doesNotMatch(board, /calendar-chip-delete/);
+  assert.match(details, /role="dialog"/);
+  assert.match(details, /Alterar evento/);
+  assert.match(details, /Detalhes/);
+  assert.match(details, /Para quem/);
+  assert.match(details, /onEdit\(entry\)/);
+});
+
 test("mantém a sequência acessível do sorteio animado", async () => {
   const page = await readFile(new URL("../app/app/page.tsx", import.meta.url), "utf8");
   const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");

@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-09-01",
   "status": "onTrack",
-  "currentStageId": "M23",
+  "currentStageId": "M24",
   "stages": [
     {
       "id": "M0",
@@ -124,6 +124,11 @@
       "id": "M23",
       "name": "Identidade visual",
       "outcome": "Cada morador escolhe uma cor que o identifica em toda a casa"
+    },
+    {
+      "id": "M24",
+      "name": "Consulta do calendário",
+      "outcome": "Eventos abrem primeiro para leitura e só entram em edição por uma ação explícita"
     }
   ],
   "tasks": [
@@ -954,6 +959,33 @@
           "id": "HOUSE-240-05",
           "title": "Integração, testes, publicação e fechamento",
           "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-250",
+      "stageId": "M24",
+      "area": "Frontend",
+      "repository": "front",
+      "type": "feature",
+      "title": "Visualização de eventos antes da edição",
+      "status": "inProgress",
+      "result": "Morador consulta os detalhes de um evento em modo somente leitura e escolhe explicitamente quando quer alterá-lo.",
+      "subtasks": [
+        {
+          "id": "HOUSE-250-01",
+          "title": "Cartão de detalhes e abertura pelo calendário",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-250-02",
+          "title": "Transição explícita para alteração",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-250-03",
+          "title": "Responsividade, testes, publicação e fechamento",
+          "status": "inProgress"
         }
       ]
     }
