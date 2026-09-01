@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-09-01",
   "status": "onTrack",
-  "currentStageId": "M29",
+  "currentStageId": "M30",
   "stages": [
     {
       "id": "M0",
@@ -154,6 +154,11 @@
       "id": "M29",
       "name": "Personalização",
       "outcome": "Cada morador usa qualquer cor hexadecimal para representar sua identidade na casa"
+    },
+    {
+      "id": "M30",
+      "name": "Caderno de compras",
+      "outcome": "A casa acompanha pendências por categoria e conserva um histórico das compras finalizadas"
     }
   ],
   "tasks": [
@@ -1146,6 +1151,38 @@
           "id": "HOUSE-300-03",
           "title": "Contraste, testes, publicação e fechamento",
           "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-310",
+      "stageId": "M30",
+      "area": "Compras",
+      "repository": "both",
+      "type": "feature",
+      "title": "Caderno de compras com histórico",
+      "status": "inProgress",
+      "result": "Morador marca itens no caderno, confirma a compra e consulta os itens finalizados no histórico da casa.",
+      "subtasks": [
+        {
+          "id": "HOUSE-310-01",
+          "title": "Regra, contrato e persistência do histórico",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-310-02",
+          "title": "Fechamento da compra e consulta do histórico na API",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-310-03",
+          "title": "Caderno responsivo e integração no frontend",
+          "status": "inProgress"
+        },
+        {
+          "id": "HOUSE-310-04",
+          "title": "Testes, publicação, migration e fechamento",
+          "status": "pending"
         }
       ]
     }

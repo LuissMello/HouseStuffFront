@@ -101,6 +101,12 @@ export type RoutineOverview = {
 
 export type ShoppingItem = { id: string; categoryId: string; name: string };
 export type ShoppingCategory = { id: string; name: string; displayOrder: number; items: ShoppingItem[] };
+export type ShoppingPurchase = {
+  id: string;
+  completedAt: string;
+  completedByName: string;
+  items: Array<{ categoryName: string; itemName: string }>;
+};
 export type PurchaseWish = { id: string; name: string; storeUrl: string | null; priority: number };
 export type CalendarEventKind = "date" | "birthday" | "appointment";
 export type CalendarParticipant = { userId: string; name: string; profileColor: string };
@@ -296,6 +302,8 @@ export const shoppingApi = {
   createItem: (input: { categoryId: string; name: string }) => request<ShoppingItem>("/api/v1/shopping/items", { method: "POST", body: JSON.stringify(input) }),
   updateItem: (id: string, input: { categoryId: string; name: string }) => request<ShoppingItem>(`/api/v1/shopping/items/${id}`, { method: "PUT", body: JSON.stringify(input) }),
   deleteItem: (id: string) => request<boolean>(`/api/v1/shopping/items/${id}`, { method: "DELETE" }),
+  completePurchase: (itemIds: string[]) => request<ShoppingPurchase>("/api/v1/shopping/purchases", { method: "POST", body: JSON.stringify({ itemIds }) }),
+  purchaseHistory: () => request<ShoppingPurchase[]>("/api/v1/shopping/purchases/history"),
 };
 
 export const purchaseWishApi = {

@@ -105,11 +105,11 @@ Lint, TypeScript e build são gates permanentes. Comportamentos de componentes r
 
 ## Lista de compras
 
-- a mesma rota alterna claramente entre cadastro do catálogo e geração da lista;
+- a rota abre no caderno de pendências agrupadas por categoria e oferece áreas secundárias para cadastro e histórico;
+- marcar mantém o item visível e riscado; somente `Finalizar compra` confirma a baixa na API;
+- o histórico é persistido e mostra compras da residência com data, morador e nomes preservados;
 - categorias respeitam a ordem persistida da casa ou podem ser apresentadas em ordem alfabética;
-- seleção de categoria possui estados completo, parcial e vazio sem depender apenas de cor;
-- a seleção atual permanece no componente e não representa histórico ou item já comprado;
-- formulários, categorias e itens ficam em uma coluna nas telas pequenas, com navegação inferior para Compras.
+- caderno, formulários e histórico ficam em uma coluna nas telas pequenas, com controles adequados ao toque.
 
 ## Desejos da casa
 

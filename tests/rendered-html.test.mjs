@@ -124,7 +124,7 @@ test("renderiza o estado inicial da lista de compras", async () => {
   const response = await render("/app/shopping");
   assert.equal(response.status, 200);
   const html = await response.text();
-  assert.match(html, /Preparando as compras da casa/);
+  assert.match(html, /Preparando o caderno de compras/);
 });
 
 test("renderiza o estado inicial dos desejos da casa", async () => {
@@ -182,21 +182,26 @@ test("expõe a organização da casa a qualquer morador autenticado", async () =
   assert.doesNotMatch(tasks, /!current\.isAdministrator/);
 });
 
-test("mantém seleção individual, total e parcial na lista de compras", async () => {
+test("mantém o caderno de compras e finaliza itens no histórico", async () => {
   const page = await readFile(new URL("../app/app/shopping/page.tsx", import.meta.url), "utf8");
   const header = await readFile(new URL("../components/AuthenticatedHeader.tsx", import.meta.url), "utf8");
-  assert.match(page, /indeterminate/);
-  assert.match(page, /toggleCategory/);
-  assert.match(page, /toggleItem/);
-  assert.match(page, /Ordem alfabética/);
-  assert.match(page, /Limpar seleção/);
-  assert.match(page, /Começar compras/);
-  assert.match(page, /markPurchased/);
-  assert.match(page, /markCategoryPurchased/);
+  const api = await readFile(new URL("../lib/api.ts", import.meta.url), "utf8");
+  const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(page, /shopping-notebook/);
+  assert.match(page, /CADERNO DA CASA/);
+  assert.match(page, /toggleChecked/);
   assert.match(page, /Marcar .* como comprado/);
-  assert.match(page, /remainingIds/);
-  assert.match(page, /Compras concluídas/);
-  assert.match(page, /setPurchasedIds\(new Set\(\)\)/);
+  assert.match(page, /Finalizar compra/);
+  assert.match(page, /shoppingApi\.completePurchase/);
+  assert.match(page, /Histórico de compras/);
+  assert.match(page, /groupPurchaseItems/);
+  assert.doesNotMatch(page, /Gerar lista/);
+  assert.doesNotMatch(page, /Começar compras/);
+  assert.match(api, /shopping\/purchases/);
+  assert.match(api, /shopping\/purchases\/history/);
+  assert.match(styles, /\.notebook-category li\.checked span/);
+  assert.match(styles, /text-decoration:line-through/);
+  assert.match(styles, /@media\(max-width:420px\)/);
   assert.match(header, /href="#\/app\/shopping">Compras/);
 });
 
