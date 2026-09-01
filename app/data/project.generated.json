@@ -1028,7 +1028,7 @@
       "repository": "both",
       "type": "feature",
       "title": "Reserva e acompanhamento de múltiplos post-its",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Morador aceita vários post-its, cada item fica indisponível para toda a casa e todos os itens em andamento aparecem juntos.",
       "subtasks": [
         {
@@ -1044,12 +1044,12 @@
         {
           "id": "HOUSE-270-03",
           "title": "Lista responsiva e sorteio sem troca no frontend",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-270-04",
           "title": "Integração, testes, publicação e fechamento",
-          "status": "pending"
+          "status": "completed"
         }
       ]
     }
