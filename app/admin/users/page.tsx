@@ -2,6 +2,7 @@
 
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { AuthenticatedHeader } from "../../../components/AuthenticatedHeader";
+import { PersonAvatar } from "../../../components/PersonColor";
 import { PasswordInput } from "../../../components/PasswordInput";
 import { accessApi, ApiError, residenceApi, type CurrentUser, type UserSummary } from "../../../lib/api";
 
@@ -98,7 +99,7 @@ export default function UsersPage() {
         </form>
         <section className="user-list" aria-label="Usuários cadastrados">
           <div className="list-header"><h2>Acessos ativos</h2><span>PERFIL</span></div>
-          {users.length === 0 ? <p className="empty-state">Nenhum usuário cadastrado.</p> : users.map((user) => <article key={user.id}><span className="avatar">{user.name.charAt(0).toUpperCase()}</span><div><strong>{user.name}</strong><small>{user.residenceName ?? "Sem casa · vínculo pendente"}</small></div><div className="user-actions"><span className={`role-chip ${user.isAdministrator ? "admin" : ""}`}>{user.isAdministrator ? "Administrador" : "Morador"}</span>
+          {users.length === 0 ? <p className="empty-state">Nenhum usuário cadastrado.</p> : users.map((user) => <article key={user.id}><PersonAvatar name={user.name} profileColor={user.profileColor} /><div><strong>{user.name}</strong><small>{user.residenceName ?? "Sem casa · vínculo pendente"}</small></div><div className="user-actions"><span className={`role-chip ${user.isAdministrator ? "admin" : ""}`}>{user.isAdministrator ? "Administrador" : "Morador"}</span>
             {!user.residenceId && current.residenceId && user.id !== current.id && <button className="assign-button" disabled={assigning === user.id} onClick={() => assign(user)} type="button">{assigning === user.id ? "Associando..." : "Trazer para casa"}</button>}
             {user.residenceId === current.residenceId && user.id !== current.id && (confirmingRole === user.id
               ? <div className="role-confirm" role="group" aria-label={`Confirmar alteração do perfil de ${user.name}`}><small>{user.isAdministrator ? "Voltar para morador?" : "Tornar administrador?"}</small><span><button className="confirm-role-button" disabled={changingRole === user.id} onClick={() => changeRole(user)} type="button">{changingRole === user.id ? "Alterando..." : "Confirmar"}</button><button disabled={changingRole === user.id} onClick={() => setConfirmingRole("")} type="button">Cancelar</button></span></div>

@@ -2,6 +2,7 @@
 
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { AuthenticatedHeader } from "../../../components/AuthenticatedHeader";
+import { PersonAvatar } from "../../../components/PersonColor";
 import {
   accessApi,
   ApiError,
@@ -202,12 +203,8 @@ export default function TasksAdminPage() {
     }
   }
 
-  function eligibilityLabel(task: HouseholdTask) {
-    if (task.isAvailableToAllResidents) return "Todos da casa";
-    const names = residence?.members
-      .filter((member) => task.eligibleUserIds?.includes(member.id))
-      .map((member) => member.name) ?? [];
-    return names.join(", ") || "Moradores selecionados";
+  function eligibilityMembers(task: HouseholdTask) {
+    return residence?.members.filter((member) => task.eligibleUserIds?.includes(member.id)) ?? [];
   }
 
   if (loading) return <main className="center-state"><span className="loading-dot" /><p>Preparando as tarefas...</p></main>;
@@ -262,7 +259,7 @@ export default function TasksAdminPage() {
                 {residence?.members.map((member) => <label key={member.id}>
                   <span className="sr-only">Selecionar morador</span>
                   <input checked={draft.eligibleUserIds.includes(member.id)} onChange={() => toggleEligibleUser(member.id)} type="checkbox" />
-                  <span className="avatar">{member.name.charAt(0).toUpperCase()}</span>
+                  <PersonAvatar name={member.name} profileColor={member.profileColor} />
                   <span><strong>{member.name}</strong><small>{member.email}</small></span>
                 </label>)}
               </div>}
@@ -295,7 +292,7 @@ export default function TasksAdminPage() {
               <span aria-hidden="true" className="postit-pin" />
               <div className="task-card-top"><span className="pot-name-chip">{task.potName}</span><span className={`state-chip ${task.isActive ? "completed" : "pending"}`}>{task.isActive ? "No pote" : "Arquivada"}</span></div>
               <h3>{task.name}</h3><p>{task.description || "Sem lembrete adicional."}</p>
-              <div className="task-card-badges"><span className={`difficulty-chip ${task.difficulty}`}>{difficultyLabels[task.difficulty]}</span><span>👥 {eligibilityLabel(task)}</span></div>
+              <div className="task-card-badges"><span className={`difficulty-chip ${task.difficulty}`}>{difficultyLabels[task.difficulty]}</span>{task.isAvailableToAllResidents ? <span>👥 Todos da casa</span> : eligibilityMembers(task).map((member) => <span className="person-reference" key={member.id}><i style={{ backgroundColor: member.profileColor }} />{member.name}</span>)}</div>
               <div className="task-card-meta"><strong>{kindLabels[task.kind]}</strong>{task.kind === "recurring" && <span>A cada {task.recurrenceDays} dias</span>}</div>
               <div className="pot-actions"><button onClick={() => edit(task)} type="button">Editar</button><button className="danger-action" onClick={() => toggle(task)} type="button">{task.isActive ? "Arquivar" : "Reativar"}</button></div>
             </article>)}

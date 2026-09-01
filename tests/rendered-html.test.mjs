@@ -255,6 +255,21 @@ test("mantém cadastro exclusivo por todos ou moradores no calendário", async (
   assert.match(form, /calendarApi\.update/);
 });
 
+test("permite escolher uma cor pessoal e a reutiliza nas referências da casa", async () => {
+  const header = await readFile(new URL("../components/AuthenticatedHeader.tsx", import.meta.url), "utf8");
+  const colors = await readFile(new URL("../components/PersonColor.tsx", import.meta.url), "utf8");
+  const tasks = await readFile(new URL("../app/admin/tasks/page.tsx", import.meta.url), "utf8");
+  const calendar = await readFile(new URL("../components/CalendarBoard.tsx", import.meta.url), "utf8");
+  const api = await readFile(new URL("../lib/api.ts", import.meta.url), "utf8");
+  assert.match(header, /Sua cor na casa/);
+  assert.match(header, /accessApi\.updateProfileColor/);
+  assert.match(colors, /#2F6B50/);
+  assert.match(colors, /#9B356A/);
+  assert.match(tasks, /member\.profileColor/);
+  assert.match(calendar, /participant\.profileColor/);
+  assert.match(api, /\/api\/v1\/auth\/me\/color/);
+});
+
 test("oferece calendário real diário, semanal e mensal", async () => {
   const page = await readFile(new URL("../app/app/routine/page.tsx", import.meta.url), "utf8");
   const board = await readFile(new URL("../components/CalendarBoard.tsx", import.meta.url), "utf8");

@@ -1,6 +1,7 @@
 "use client";
 
 import { type CalendarEntry } from "../lib/api";
+import { safeProfileColor } from "./PersonColor";
 
 export type CalendarMode = "day" | "week" | "month";
 export type CalendarPeriod = { start: Date; end: Date; days: Date[] };
@@ -54,7 +55,7 @@ function timeLabel(entry: CalendarEntry) {
 function CalendarChip({ entry, onEdit, onDelete }: { entry: CalendarEntry; onEdit: (entry: CalendarEntry) => void; onDelete: (entry: CalendarEntry) => void }) {
   const className = `calendar-chip ${entry.source === "task" ? "task-entry" : `event-${entry.kind}`}`;
   if (entry.source === "task") return <div className={className}><span aria-hidden="true">↻</span><strong>{entry.title}</strong><small>Tarefa recorrente · {timeLabel(entry)}</small></div>;
-  return <article className={className}><button className="calendar-chip-main" onClick={() => onEdit(entry)} type="button"><span aria-hidden="true">{entry.kind === "birthday" ? "♡" : entry.kind === "appointment" ? "◷" : "□"}</span><strong>{entry.title}</strong><small>{timeLabel(entry)} · {audience(entry)}</small></button><button aria-label={`Excluir ${entry.title}`} className="calendar-chip-delete" onClick={() => onDelete(entry)} type="button">×</button></article>;
+  return <article className={className}><button className="calendar-chip-main" onClick={() => onEdit(entry)} type="button"><span aria-hidden="true">{entry.kind === "birthday" ? "♡" : entry.kind === "appointment" ? "◷" : "□"}</span><strong>{entry.title}</strong><small>{timeLabel(entry)} · {audience(entry)}</small></button>{!entry.appliesToAll && entry.participants.length > 0 && <span aria-label={`Participantes: ${audience(entry)}`} className="calendar-participant-colors">{entry.participants.map((participant) => <i key={participant.userId} style={{ backgroundColor: safeProfileColor(participant.profileColor) }} title={participant.name} />)}</span>}<button aria-label={`Excluir ${entry.title}`} className="calendar-chip-delete" onClick={() => onDelete(entry)} type="button">×</button></article>;
 }
 
 function periodLabel(period: CalendarPeriod, cursor: Date, mode: CalendarMode) {

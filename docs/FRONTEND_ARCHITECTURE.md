@@ -55,6 +55,8 @@ Rotas apenas compõem telas. Acesso à API, schemas e comportamento ficam na fea
 - `/admin/users` mostra membros da casa atual e acessos pendentes permitidos pela API;
 - na mesma tela, o administrador promove ou rebaixa outro morador com confirmação explícita e retorno da API;
 - novos usuários herdam a residência do administrador no backend.
+- cada usuário escolhe a própria cor em uma paleta acessível no cabeçalho; a preferência é persistida pela API e reaparece nos avatares, responsáveis de tarefas e participantes do calendário;
+- a cor é somente uma identidade visual e nunca substitui nome, texto ou estado na comunicação de informações.
 
 ## Qualidade
 

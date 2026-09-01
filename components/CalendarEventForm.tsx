@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { ApiError, calendarApi, type CalendarEntry, type CalendarEventKind, type Residence } from "../lib/api";
+import { PersonAvatar } from "./PersonColor";
 
 function localDateKey(date: Date) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
@@ -84,7 +85,7 @@ export function CalendarEventForm({ residence, editing, onChanged, onCancelEdit 
     {kind === "appointment" ? <div className="calendar-time-fields"><label>Início<input onChange={(event) => setStartsAt(event.target.value)} required type="datetime-local" value={startsAt} /></label><label>Fim <small>opcional</small><input min={startsAt} onChange={(event) => setEndsAt(event.target.value)} type="datetime-local" value={endsAt} /></label></div> : <label>{kind === "birthday" ? "Data de nascimento" : "Data"}<input onChange={(event) => setAllDayDate(event.target.value)} required type="date" value={allDayDate} /></label>}
     <label>Descrição <small>opcional</small><textarea maxLength={500} onChange={(event) => setDescription(event.target.value)} placeholder="Algum detalhe para a casa lembrar..." value={description} /></label>
     <fieldset className="calendar-audience"><legend>Para quem é?</legend><label className={appliesToAll ? "selected" : ""}><input checked={appliesToAll} name="audience" onChange={() => { setAppliesToAll(true); setParticipantIds(new Set()); }} type="radio" />Todos da casa</label><label className={!appliesToAll ? "selected" : ""}><input checked={!appliesToAll} name="audience" onChange={() => setAppliesToAll(false)} type="radio" />Escolher moradores</label></fieldset>
-    {!appliesToAll && <div className="calendar-members" aria-label="Moradores envolvidos">{residence.members.map((member) => <label key={member.id}><input checked={participantIds.has(member.id)} onChange={() => toggleParticipant(member.id)} type="checkbox" /><span>{member.name.slice(0, 1).toUpperCase()}</span>{member.name}</label>)}</div>}
+    {!appliesToAll && <div className="calendar-members" aria-label="Moradores envolvidos">{residence.members.map((member) => <label key={member.id}><input checked={participantIds.has(member.id)} onChange={() => toggleParticipant(member.id)} type="checkbox" /><PersonAvatar name={member.name} profileColor={member.profileColor} />{member.name}</label>)}</div>}
     <button className="primary-button" disabled={saving || (!appliesToAll && participantIds.size === 0)}>{saving ? "Salvando..." : editing ? "Salvar evento" : "Adicionar à agenda"}</button>
     {editing && <button className="secondary-button" onClick={() => { reset(); onCancelEdit(); }} type="button">Cancelar edição</button>}
   </form>;

@@ -1,9 +1,9 @@
 {
   "$schema": "./project.schema.json",
   "project": "HouseStuff",
-  "updatedAt": "2026-08-30",
+  "updatedAt": "2026-09-01",
   "status": "onTrack",
-  "currentStageId": "M22",
+  "currentStageId": "M23",
   "stages": [
     {
       "id": "M0",
@@ -119,6 +119,11 @@
       "id": "M22",
       "name": "Navegação móvel",
       "outcome": "Os menus usam nomes claros e consistentes em todas as telas"
+    },
+    {
+      "id": "M23",
+      "name": "Identidade visual",
+      "outcome": "Cada morador escolhe uma cor que o identifica em toda a casa"
     }
   ],
   "tasks": [
@@ -912,6 +917,43 @@
           "id": "HOUSE-230-02",
           "title": "Publicação e fechamento",
           "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-240",
+      "stageId": "M23",
+      "area": "Acesso",
+      "repository": "both",
+      "type": "feature",
+      "title": "Cor pessoal dos moradores",
+      "status": "inProgress",
+      "result": "Cada morador escolhe uma cor persistida e é reconhecido por ela em avatares, tarefas e calendário.",
+      "subtasks": [
+        {
+          "id": "HOUSE-240-01",
+          "title": "Regra, contrato e migration da cor pessoal",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-240-02",
+          "title": "Endpoint de preferência do usuário",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-240-03",
+          "title": "Seletor responsivo no perfil",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-240-04",
+          "title": "Cores em referências de moradores",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-240-05",
+          "title": "Integração, testes, publicação e fechamento",
+          "status": "inProgress"
         }
       ]
     }

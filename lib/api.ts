@@ -5,6 +5,7 @@ export type CurrentUser = {
   isAdministrator: boolean;
   residenceId: string | null;
   residenceName: string | null;
+  profileColor: string;
 };
 
 export type UserSummary = CurrentUser;
@@ -12,7 +13,7 @@ export type UserSummary = CurrentUser;
 export type Residence = {
   id: string;
   name: string;
-  members: Array<{ id: string; name: string; email: string; isAdministrator: boolean }>;
+  members: Array<{ id: string; name: string; email: string; isAdministrator: boolean; profileColor: string }>;
 };
 
 export type Pot = {
@@ -102,7 +103,7 @@ export type ShoppingItem = { id: string; categoryId: string; name: string };
 export type ShoppingCategory = { id: string; name: string; displayOrder: number; items: ShoppingItem[] };
 export type PurchaseWish = { id: string; name: string; storeUrl: string | null; priority: number };
 export type CalendarEventKind = "date" | "birthday" | "appointment";
-export type CalendarParticipant = { userId: string; name: string };
+export type CalendarParticipant = { userId: string; name: string; profileColor: string };
 export type CalendarEntry = {
   entryId: string;
   eventId: string | null;
@@ -232,6 +233,8 @@ export const accessApi = {
     }
   },
   me: () => request<CurrentUser>("/api/v1/auth/me"),
+  updateProfileColor: (profileColor: string) =>
+    request<CurrentUser>("/api/v1/auth/me/color", { method: "PATCH", body: JSON.stringify({ profileColor }) }),
   listUsers: () => request<UserSummary[]>("/api/v1/admin/users"),
   createUser: (input: { name: string; email: string; temporaryPassword: string; isAdministrator: boolean }) =>
     request<UserSummary>("/api/v1/admin/users", { method: "POST", body: JSON.stringify(input) }),
