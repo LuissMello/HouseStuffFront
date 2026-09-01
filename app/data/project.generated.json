@@ -1129,7 +1129,7 @@
       "repository": "both",
       "type": "feature",
       "title": "Cor pessoal hexadecimal livre",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Morador escolhe qualquer cor hexadecimal válida e continua identificado com contraste legível nas telas da casa.",
       "subtasks": [
         {
@@ -1140,12 +1140,12 @@
         {
           "id": "HOUSE-300-02",
           "title": "Seletor e digitação livre da cor no frontend",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-300-03",
           "title": "Contraste, testes, publicação e fechamento",
-          "status": "pending"
+          "status": "completed"
         }
       ]
     }
