@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-09-01",
   "status": "onTrack",
-  "currentStageId": "M24",
+  "currentStageId": "M25",
   "stages": [
     {
       "id": "M0",
@@ -129,6 +129,11 @@
       "id": "M24",
       "name": "Consulta do calendário",
       "outcome": "Eventos abrem primeiro para leitura e só entram em edição por uma ação explícita"
+    },
+    {
+      "id": "M25",
+      "name": "Documentação da API",
+      "outcome": "A API publicada oferece documentação OpenAPI interativa com suporte a autenticação"
     }
   ],
   "tasks": [
@@ -985,6 +990,28 @@
         {
           "id": "HOUSE-250-03",
           "title": "Responsividade, testes, publicação e fechamento",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-260",
+      "stageId": "M25",
+      "area": "API",
+      "repository": "api",
+      "type": "technical",
+      "title": "Swagger público da API",
+      "status": "completed",
+      "result": "Desenvolvedor acessa a documentação interativa da API publicada e autentica chamadas protegidas com token Bearer.",
+      "subtasks": [
+        {
+          "id": "HOUSE-260-01",
+          "title": "Configuração OpenAPI e autenticação Bearer",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-260-02",
+          "title": "Teste, publicação e verificação pública",
           "status": "completed"
         }
       ]
