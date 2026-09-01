@@ -396,5 +396,58 @@ footer { border-top:1px solid var(--line); color:var(--muted); display:flex; fon
 @media(max-width:640px) { .user-residence{display:none!important}.user-menu{gap:7px}.profile-color-trigger>span:not(.avatar){display:none}.profile-color-trigger .avatar{height:34px;width:34px}.profile-color-picker{position:fixed;right:14px;top:58px;width:min(280px,calc(100vw - 28px))}.profile-color-picker>div{gap:10px}.user-menu .profile-color-picker button{height:34px;width:34px}.user-menu .logout-button{padding:8px 9px}.calendar-month-grid .calendar-participant-colors{bottom:1px;right:11px}.calendar-month-grid .calendar-participant-colors i{height:6px;width:6px} }
 @media(max-width:640px) { .calendar-details-backdrop{align-items:flex-end;padding:0}.calendar-event-details{border-radius:22px 22px 0 0;max-height:88vh;padding:26px 20px 22px}.calendar-event-details h2{font-size:25px}.calendar-event-details>header{grid-template-columns:44px 1fr}.calendar-event-details>header>span{border-radius:12px;height:44px;width:44px}.calendar-event-details dl{margin:20px 0}.calendar-event-details dl>div{gap:6px;grid-template-columns:1fr;padding:13px 0}.calendar-event-details>footer{grid-template-columns:1fr 1fr}.calendar-event-details>footer .primary-button{grid-column:1 / -1}.calendar-event-details>footer .secondary-button,.calendar-detail-delete{width:100%} }
 @media(max-width:640px) { .task-pot-shelf{min-height:225px;padding:20px 10px 16px}.shelf-jars{gap:5px;grid-template-columns:.65fr 1.35fr .65fr;min-height:130px;padding:10px 2px 0}.shelf-jar{height:86px;transform:scale(.72)}.shelf-jar.selected{height:120px;transform:scale(1)}.shelf-jar.neighbor strong{font-size:0;padding:5px}.shelf-jar.neighbor strong::after{content:"•";font-size:12px}.shelf-navigation{gap:8px;grid-template-columns:52px minmax(0,1fr) 52px;margin-top:17px}.shelf-navigation button{min-height:48px}.shelf-navigation strong{font-size:18px}.task-list-header>small{display:none} }
+
+/* Safari móvel e iPhone 12 (390 × 844): evita zoom, estouros e conteúdo sob as áreas seguras. */
+@media(max-width:430px) {
+  html { -webkit-text-size-adjust:100%; overflow-x:hidden; width:100%; }
+  body,#root { max-width:100%; min-height:100%; overflow-x:hidden; width:100%; }
+  button,a,input,select,textarea { touch-action:manipulation; }
+  input:not([type="checkbox"]):not([type="radio"]),select,textarea { font-size:16px!important; max-width:100%; width:100%; }
+  img,svg,canvas { max-width:100%; }
+
+  .authenticated-page { min-height:100dvh; overflow-x:hidden; }
+  .topbar,.app-header { padding-left:max(14px,env(safe-area-inset-left,0px)); padding-right:max(14px,env(safe-area-inset-right,0px)); padding-top:env(safe-area-inset-top,0px); }
+  .app-header { min-height:calc(66px + env(safe-area-inset-top,0px)); }
+  .app-header .brand,.user-menu { min-width:0; }
+  .user-menu { max-width:170px; }
+  .user-menu .logout-button { min-height:44px; }
+
+  .app-shell,.admin-shell,.shopping-shell,.wishes-shell,.routine-shell { max-width:100%; padding-left:max(12px,env(safe-area-inset-left,0px)); padding-right:max(12px,env(safe-area-inset-right,0px)); padding-bottom:calc(94px + env(safe-area-inset-bottom,0px)); width:100%; }
+  .app-shell>*,.admin-shell>*,.shopping-shell>*,.wishes-shell>*,.routine-shell>*,.admin-grid>*,.pot-admin-grid>*,.task-admin-grid>*,.routine-grid>*,.shopping-forms>*,.wishes-layout>* { max-width:100%; min-width:0; }
+  .welcome-panel,.routine-hero,.shopping-hero,.wishes-hero,.create-home-panel { overflow:hidden; width:100%; }
+  .welcome-panel h1,.routine-hero h1,.shopping-hero h1,.wishes-hero h1,.admin-title h1 { overflow-wrap:anywhere; }
+
+  .mobile-app-nav { bottom:0; height:auto; min-height:66px; overflow:hidden; padding:5px max(2px,env(safe-area-inset-right,0px)) max(5px,env(safe-area-inset-bottom,0px)) max(2px,env(safe-area-inset-left,0px)); width:100%; }
+  .mobile-app-nav a { flex:1 1 0; font-size:7.5px; gap:2px; justify-content:center; min-height:52px; min-width:0; overflow:hidden; padding:2px 1px; text-overflow:ellipsis; white-space:nowrap; }
+  .mobile-app-nav span { font-size:18px; line-height:1; }
+
+  .access-page { min-height:100dvh; overflow-x:hidden; }
+  .access-story { min-height:285px; padding:calc(24px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) 24px max(20px,env(safe-area-inset-left,0px)); }
+  .access-story h1 { font-size:31px; overflow-wrap:anywhere; }
+  .access-story>div>p:last-child { font-size:12px; }
+  .access-form-wrap { padding:28px max(18px,env(safe-area-inset-right,0px)) calc(30px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px)); }
+  .access-form { min-width:0; }
+  .access-form .primary-button { min-height:50px; width:100%; }
+
+  .member-grid article,.user-list article,.pot-list article,.wish-card { min-width:0; }
+  .member-grid article div,.user-list article div,.pot-admin-copy,.wish-copy { min-width:0; }
+  .member-grid article small,.user-list article small,.pot-admin-copy p,.wish-copy h3,.wish-copy p { overflow-wrap:anywhere; }
+  .pot-actions,.wish-actions,.generated-actions,.completion-confirm>div { max-width:100%; }
+  .pot-actions button,.wish-actions button,.generated-actions button { min-height:44px; }
+  .task-list-header>div,.task-card-meta,.active-postit-top { flex-wrap:wrap; }
+  .house-task-cards,.member-grid,.pot-grid,.active-postit-grid { min-width:0; width:100%; }
+
+  .calendar-board,.calendar-month,.calendar-month-grid { max-width:100%; min-width:0; width:100%; }
+  .calendar-toolbar,.calendar-legend { min-width:0; }
+  .calendar-toolbar h2 { overflow-wrap:anywhere; }
+  .calendar-navigation button,.calendar-modes button { min-height:44px; }
+  .calendar-week-grid { -webkit-overflow-scrolling:touch; max-width:100%; overscroll-behavior-x:contain; }
+
+  .proposal-backdrop { padding:max(12px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px)); }
+  .drawn-postit { max-height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px) - 24px); max-width:100%; overflow-y:auto; }
+  .calendar-details-backdrop { padding-top:env(safe-area-inset-top,0px); }
+  .calendar-event-details { max-height:calc(100dvh - env(safe-area-inset-top,0px)); padding-bottom:calc(22px + env(safe-area-inset-bottom,0px)); }
+  .profile-color-picker { right:max(12px,env(safe-area-inset-right,0px)); top:calc(58px + env(safe-area-inset-top,0px)); }
+}
 @media(prefers-reduced-motion:reduce) { .task-eligibility>label,.draw-difficulty-picker,.draw-difficulty-picker label{transition:none}.task-eligibility>label.selected,.draw-difficulty-picker label.selected{transform:none}.postit-drop-scene{animation:scene-fade .7s both}.postit-folding{animation:none;opacity:1;transform:translateY(-45px) scale(.75)}.postit-drop-box{animation:none;opacity:1} }
 @media(prefers-reduced-motion:reduce) { .shelf-jar{transition:none}.shelf-jar.selected{transform:none} }

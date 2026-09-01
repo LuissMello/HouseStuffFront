@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-09-01",
   "status": "onTrack",
-  "currentStageId": "M27",
+  "currentStageId": "M28",
   "stages": [
     {
       "id": "M0",
@@ -144,6 +144,11 @@
       "id": "M27",
       "name": "Compras em andamento",
       "outcome": "A lista da ida ao mercado mostra somente o que ainda falta comprar"
+    },
+    {
+      "id": "M28",
+      "name": "Compatibilidade iPhone",
+      "outcome": "As telas principais permanecem utilizáveis no Safari do iPhone 12 sem estouros, zoom ou sobreposição"
     }
   ],
   "tasks": [
@@ -1082,6 +1087,33 @@
           "id": "HOUSE-280-03",
           "title": "Testes, publicação e fechamento",
           "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-290",
+      "stageId": "M28",
+      "area": "Frontend",
+      "repository": "front",
+      "type": "technical",
+      "title": "Compatibilidade responsiva com iPhone 12",
+      "status": "inProgress",
+      "result": "Andressa utiliza as telas principais no Safari do iPhone 12 com navegação, formulários e conteúdo ajustados ao viewport de 390 por 844 pixels.",
+      "subtasks": [
+        {
+          "id": "HOUSE-290-01",
+          "title": "Auditoria do viewport, áreas seguras e estouros",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-290-02",
+          "title": "Camada responsiva específica para celulares",
+          "status": "inProgress"
+        },
+        {
+          "id": "HOUSE-290-03",
+          "title": "Validação, publicação e fechamento",
+          "status": "pending"
         }
       ]
     }

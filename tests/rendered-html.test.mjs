@@ -227,6 +227,20 @@ test("publica todas as telas com hash routing no GitHub Pages", async () => {
   assert.match(workflow, /actions\/deploy-pages@v4/);
 });
 
+test("protege o layout do Safari no viewport do iPhone 12", async () => {
+  const html = await readFile(new URL("../github-pages/index.html", import.meta.url), "utf8");
+  const layout = await readFile(new URL("../app/layout.tsx", import.meta.url), "utf8");
+  const styles = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(html, /viewport-fit=cover/);
+  assert.match(layout, /viewportFit: "cover"/);
+  assert.match(styles, /@media\(max-width:430px\)/);
+  assert.match(styles, /env\(safe-area-inset-bottom,0px\)/);
+  assert.match(styles, /font-size:16px!important/);
+  assert.match(styles, /min-height:100dvh/);
+  assert.match(styles, /\.mobile-app-nav a \{ flex:1 1 0/);
+  assert.match(styles, /overflow-x:hidden/);
+});
+
 test("encaminha a API para o Fly por padrão e para a API local no Visual Studio", async () => {
   const config = await readFile(new URL("../vite.config.ts", import.meta.url), "utf8");
   const visualStudioEnvironment = await readFile(new URL("../.env.visual-studio", import.meta.url), "utf8");
