@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-09-01",
   "status": "onTrack",
-  "currentStageId": "M25",
+  "currentStageId": "M26",
   "stages": [
     {
       "id": "M0",
@@ -134,6 +134,11 @@
       "id": "M25",
       "name": "Documentação da API",
       "outcome": "A API publicada oferece documentação OpenAPI interativa com suporte a autenticação"
+    },
+    {
+      "id": "M26",
+      "name": "Post-its em andamento",
+      "outcome": "Moradores acumulam post-its reservados, acompanham todos os seus itens e concluem cada um separadamente"
     }
   ],
   "tasks": [
@@ -1013,6 +1018,38 @@
           "id": "HOUSE-260-02",
           "title": "Teste, publicação e verificação pública",
           "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-270",
+      "stageId": "M26",
+      "area": "Tarefas",
+      "repository": "both",
+      "type": "feature",
+      "title": "Reserva e acompanhamento de múltiplos post-its",
+      "status": "inProgress",
+      "result": "Morador aceita vários post-its, cada item fica indisponível para toda a casa e todos os itens em andamento aparecem juntos.",
+      "subtasks": [
+        {
+          "id": "HOUSE-270-01",
+          "title": "Regra, contratos e migration para múltiplas atribuições",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-270-02",
+          "title": "Consulta e conclusão individual na API",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-270-03",
+          "title": "Lista responsiva e sorteio sem troca no frontend",
+          "status": "inProgress"
+        },
+        {
+          "id": "HOUSE-270-04",
+          "title": "Integração, testes, publicação e fechamento",
+          "status": "pending"
         }
       ]
     }

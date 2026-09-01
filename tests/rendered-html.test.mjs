@@ -311,9 +311,14 @@ test("mantém a sequência acessível do sorteio animado", async () => {
   assert.match(page, /Qual pote você quer abrir/);
   assert.match(page, /Qual dificuldade você quer/);
   assert.match(page, /selectedDifficulty/);
-  assert.match(page, /assignmentApi\.draw\(selectedPotId, excluded, selectedDifficulty \|\| null\)/);
+  assert.match(page, /assignmentApi\.draw\(selectedPotId, \[\], selectedDifficulty \|\| null\)/);
   assert.match(page, /aria-pressed=\{selected\}/);
   assert.match(page, /aria-modal="true"/);
+  assert.match(page, /Seus post-its em andamento/);
+  assert.match(page, /assignments\.map/);
+  assert.match(page, /assignmentApi\.complete\(assignmentId\)/);
+  assert.doesNotMatch(page, /Tirar outro post-it/);
+  assert.doesNotMatch(page, /close-proposal/);
   assert.match(styles, /@keyframes jar-shake/);
   assert.match(styles, /@keyframes postit-from-jar/);
   assert.match(styles, /prefers-reduced-motion:reduce/);

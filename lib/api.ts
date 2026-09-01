@@ -267,10 +267,10 @@ export const householdTaskApi = {
 };
 
 export const assignmentApi = {
-  current: () => request<ActiveAssignment | null>("/api/v1/assignments/current"),
+  active: () => request<ActiveAssignment[]>("/api/v1/assignments"),
   draw: (potId: string, excludedTaskIds: string[], difficulty: TaskDifficulty | null) => request<DrawProposal>("/api/v1/draws", { method: "POST", body: JSON.stringify({ potId, excludedTaskIds, difficulty }) }),
   accept: (taskId: string) => request<ActiveAssignment>("/api/v1/assignments/accept", { method: "POST", body: JSON.stringify({ taskId }) }),
-  completeCurrent: () => request<CompletedAssignment>("/api/v1/assignments/current/complete", { method: "POST" }),
+  complete: (assignmentId: string) => request<CompletedAssignment>(`/api/v1/assignments/${assignmentId}/complete`, { method: "POST" }),
 };
 
 export const routineApi = {
