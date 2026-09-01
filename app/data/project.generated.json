@@ -1097,7 +1097,7 @@
       "repository": "front",
       "type": "technical",
       "title": "Compatibilidade responsiva com iPhone 12",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Andressa utiliza as telas principais no Safari do iPhone 12 com navegação, formulários e conteúdo ajustados ao viewport de 390 por 844 pixels.",
       "subtasks": [
         {
@@ -1108,12 +1108,12 @@
         {
           "id": "HOUSE-290-02",
           "title": "Camada responsiva específica para celulares",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-290-03",
           "title": "Validação, publicação e fechamento",
-          "status": "pending"
+          "status": "completed"
         }
       ]
     }
