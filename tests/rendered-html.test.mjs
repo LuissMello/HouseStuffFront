@@ -190,6 +190,13 @@ test("mantém seleção individual, total e parcial na lista de compras", async 
   assert.match(page, /toggleItem/);
   assert.match(page, /Ordem alfabética/);
   assert.match(page, /Limpar seleção/);
+  assert.match(page, /Começar compras/);
+  assert.match(page, /markPurchased/);
+  assert.match(page, /markCategoryPurchased/);
+  assert.match(page, /Marcar .* como comprado/);
+  assert.match(page, /remainingIds/);
+  assert.match(page, /Compras concluídas/);
+  assert.match(page, /setPurchasedIds\(new Set\(\)\)/);
   assert.match(header, /href="#\/app\/shopping">Compras/);
 });
 

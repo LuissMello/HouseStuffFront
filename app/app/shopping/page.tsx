@@ -6,6 +6,7 @@ import { accessApi, ApiError, shoppingApi, type CurrentUser, type ShoppingCatego
 
 type ShoppingMode = "catalog" | "list";
 type CategoryOrder = "house" | "alphabetical";
+type ListPhase = "planning" | "shopping";
 
 function CategoryCheckbox({ checked, indeterminate, disabled, label, onChange }: { checked: boolean; indeterminate: boolean; disabled: boolean; label: string; onChange: () => void }) {
   const ref = useRef<HTMLInputElement>(null);
@@ -19,6 +20,8 @@ export default function ShoppingPage() {
   const [mode, setMode] = useState<ShoppingMode>("catalog");
   const [order, setOrder] = useState<CategoryOrder>("house");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [purchasedIds, setPurchasedIds] = useState<Set<string>>(new Set());
+  const [listPhase, setListPhase] = useState<ListPhase>("planning");
   const [categoryName, setCategoryName] = useState("");
   const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
   const [itemName, setItemName] = useState("");
@@ -34,6 +37,7 @@ export default function ShoppingPage() {
     setCategories(stored);
     setItemCategoryId((current) => stored.some((category) => category.id === current) ? current : stored[0]?.id ?? "");
     setSelectedIds((current) => new Set([...current].filter((id) => stored.some((category) => category.items.some((item) => item.id === id)))));
+    setPurchasedIds((current) => new Set([...current].filter((id) => stored.some((category) => category.items.some((item) => item.id === id)))));
     return stored;
   }, []);
 
@@ -55,6 +59,7 @@ export default function ShoppingPage() {
 
   const allItems = useMemo(() => categories.flatMap((category) => category.items), [categories]);
   const orderedCategories = useMemo(() => order === "alphabetical" ? [...categories].sort((a, b) => a.name.localeCompare(b.name, "pt-BR")) : categories, [categories, order]);
+  const remainingIds = useMemo(() => new Set([...selectedIds].filter((id) => !purchasedIds.has(id))), [purchasedIds, selectedIds]);
 
   function showCatalogMessage(message: string) { setSuccess(message); setError(""); }
   function clearCategoryDraft() { setEditingCategoryId(null); setCategoryName(""); }
@@ -101,11 +106,19 @@ export default function ShoppingPage() {
     catch (reason) { setError(reason instanceof ApiError ? reason.message : "Não foi possível excluir o item."); }
   }
 
-  function generateList() { setSelectedIds(new Set(allItems.map((item) => item.id))); setMode("list"); setError(""); setSuccess(""); }
+  function generateList() { setSelectedIds(new Set(allItems.map((item) => item.id))); setPurchasedIds(new Set()); setListPhase("planning"); setMode("list"); setError(""); setSuccess(""); }
   function toggleItem(id: string) { setSelectedIds((current) => { const next = new Set(current); if (next.has(id)) next.delete(id); else next.add(id); return next; }); }
   function toggleCategory(category: ShoppingCategory) {
     const allSelected = category.items.length > 0 && category.items.every((item) => selectedIds.has(item.id));
     setSelectedIds((current) => { const next = new Set(current); category.items.forEach((item) => allSelected ? next.delete(item.id) : next.add(item.id)); return next; });
+  }
+  function markPurchased(id: string) { setPurchasedIds((current) => new Set(current).add(id)); }
+  function markCategoryPurchased(category: ShoppingCategory) {
+    setPurchasedIds((current) => {
+      const next = new Set(current);
+      category.items.forEach((item) => { if (selectedIds.has(item.id)) next.add(item.id); });
+      return next;
+    });
   }
 
   if (loading) return <main className="center-state"><span className="loading-dot" /><p>Preparando as compras da casa...</p></main>;
@@ -123,10 +136,17 @@ export default function ShoppingPage() {
       <section className="shopping-catalog"><div className="list-header"><div><p className="eyebrow">CATÁLOGO DA CASA</p><h2>{categories.length} {categories.length === 1 ? "categoria" : "categorias"}</h2></div><button className="primary-button" disabled={allItems.length === 0} onClick={generateList} type="button">Gerar lista agora</button></div>
         {categories.length === 0 ? <div className="shopping-empty"><span>▤</span><h3>Seu catálogo está vazio</h3><p>Comece criando uma categoria, como Mercado, Limpeza ou Hortifruti.</p></div> : <div className="shopping-category-grid">{categories.map((category, index) => <article className={`shopping-category-card category-tone-${index % 4}`} key={category.id}><header><div className="category-order"><button aria-label={`Mover ${category.name} para cima`} disabled={index === 0} onClick={() => moveCategory(category, -1)} type="button">↑</button><button aria-label={`Mover ${category.name} para baixo`} disabled={index === categories.length - 1} onClick={() => moveCategory(category, 1)} type="button">↓</button></div><div><small>CATEGORIA {String(index + 1).padStart(2, "0")}</small><h3>{category.name}</h3></div><div className="category-actions"><button onClick={() => { setEditingCategoryId(category.id); setCategoryName(category.name); window.scrollTo({ top: 0, behavior: "smooth" }); }} type="button">Editar</button><button onClick={() => deleteCategory(category)} type="button">Excluir</button></div></header>{category.items.length === 0 ? <p className="category-empty">Nenhum item cadastrado.</p> : <ul>{category.items.map((item) => <li key={item.id}><span>{item.name}</span><div><button onClick={() => editItem(item)} type="button">Editar</button><button onClick={() => deleteItem(item)} type="button">Excluir</button></div></li>)}</ul>}</article>)}</div>}
       </section>
-    </> : <section className="generated-list"><div className="generated-list-head"><div><p className="eyebrow">LISTA DE HOJE</p><h2>{selectedIds.size} de {allItems.length} itens selecionados</h2><p>Desmarque o que não precisa comprar desta vez.</p></div><label>Ordenar categorias<select onChange={(event) => setOrder(event.target.value as CategoryOrder)} value={order}><option value="house">Ordem da casa</option><option value="alphabetical">Ordem alfabética</option></select></label></div>
-      <div className="generated-actions"><button onClick={() => setSelectedIds(new Set(allItems.map((item) => item.id)))} type="button">Selecionar tudo</button><button onClick={() => setSelectedIds(new Set())} type="button">Limpar seleção</button><button className="secondary-button" onClick={() => setMode("catalog")} type="button">Voltar ao catálogo</button></div>
-      {orderedCategories.map((category) => { const selectedCount = category.items.filter((item) => selectedIds.has(item.id)).length; const checked = category.items.length > 0 && selectedCount === category.items.length; const partial = selectedCount > 0 && !checked; return <article className={`generated-category ${partial ? "partial" : ""}`} key={category.id}><header><CategoryCheckbox checked={checked} disabled={category.items.length === 0} indeterminate={partial} label={`${checked ? "Desselecionar" : "Selecionar"} categoria ${category.name}`} onChange={() => toggleCategory(category)} /><div><h3>{category.name}</h3><span>{selectedCount}/{category.items.length} selecionados{partial ? " · seleção parcial" : ""}</span></div></header>{category.items.length === 0 ? <p>Sem itens nesta categoria.</p> : <ul>{category.items.map((item) => <li className={selectedIds.has(item.id) ? "selected" : ""} key={item.id}><label><input checked={selectedIds.has(item.id)} onChange={() => toggleItem(item.id)} type="checkbox" /><span>{item.name}</span></label></li>)}</ul>}</article>; })}
-      {selectedIds.size === 0 && <div className="shopping-empty compact"><span>○</span><h3>Nada selecionado ainda</h3><p>Escolha uma categoria inteira ou apenas os itens necessários.</p></div>}
+    </> : <section className={`generated-list ${listPhase === "shopping" ? "shopping-in-progress" : ""}`}>
+      <div className="generated-list-head"><div><p className="eyebrow">{listPhase === "planning" ? "PREPARE A LISTA" : "LISTA DE HOJE"}</p><h2>{listPhase === "planning" ? `${selectedIds.size} de ${allItems.length} itens selecionados` : `${remainingIds.size} ${remainingIds.size === 1 ? "item falta" : "itens faltam"}`}</h2><p>{listPhase === "planning" ? "Desmarque o que não precisa comprar desta vez." : "Marque o que já colocou no carrinho. O item comprado sai da lista."}</p></div><label>Ordenar categorias<select onChange={(event) => setOrder(event.target.value as CategoryOrder)} value={order}><option value="house">Ordem da casa</option><option value="alphabetical">Ordem alfabética</option></select></label></div>
+      {listPhase === "planning" ? <>
+        <div className="generated-actions"><button onClick={() => setSelectedIds(new Set(allItems.map((item) => item.id)))} type="button">Selecionar tudo</button><button onClick={() => setSelectedIds(new Set())} type="button">Limpar seleção</button><button className="secondary-button" onClick={() => setMode("catalog")} type="button">Voltar ao catálogo</button><button className="primary-button start-shopping" disabled={selectedIds.size === 0} onClick={() => setListPhase("shopping")} type="button">Começar compras</button></div>
+        {orderedCategories.map((category) => { const selectedCount = category.items.filter((item) => selectedIds.has(item.id)).length; const checked = category.items.length > 0 && selectedCount === category.items.length; const partial = selectedCount > 0 && !checked; return <article className={`generated-category ${partial ? "partial" : ""}`} key={category.id}><header><CategoryCheckbox checked={checked} disabled={category.items.length === 0} indeterminate={partial} label={`${checked ? "Desselecionar" : "Selecionar"} categoria ${category.name}`} onChange={() => toggleCategory(category)} /><div><h3>{category.name}</h3><span>{selectedCount}/{category.items.length} selecionados{partial ? " · seleção parcial" : ""}</span></div></header>{category.items.length === 0 ? <p>Sem itens nesta categoria.</p> : <ul>{category.items.map((item) => <li className={selectedIds.has(item.id) ? "selected" : ""} key={item.id}><label><input checked={selectedIds.has(item.id)} onChange={() => toggleItem(item.id)} type="checkbox" /><span>{item.name}</span></label></li>)}</ul>}</article>; })}
+        {selectedIds.size === 0 && <div className="shopping-empty compact"><span>○</span><h3>Nada selecionado ainda</h3><p>Escolha uma categoria inteira ou apenas os itens necessários.</p></div>}
+      </> : <>
+        <div className="generated-actions shopping-progress-actions"><span>{purchasedIds.size} {purchasedIds.size === 1 ? "item comprado" : "itens comprados"}</span><button onClick={() => { setPurchasedIds(new Set()); setListPhase("planning"); }} type="button">Refazer seleção</button><button className="secondary-button" onClick={() => setMode("catalog")} type="button">Voltar ao catálogo</button></div>
+        <div aria-live="polite" className="remaining-shopping-list">{orderedCategories.map((category) => { const remainingItems = category.items.filter((item) => remainingIds.has(item.id)); if (remainingItems.length === 0) return null; return <article className="generated-category shopping-category" key={category.id}><header><CategoryCheckbox checked={false} disabled={false} indeterminate={false} label={`Marcar categoria ${category.name} como comprada`} onChange={() => markCategoryPurchased(category)} /><div><h3>{category.name}</h3><span>{remainingItems.length} {remainingItems.length === 1 ? "item pendente" : "itens pendentes"}</span></div></header><ul>{remainingItems.map((item) => <li className="shopping-pending-item" key={item.id}><label><input aria-label={`Marcar ${item.name} como comprado`} checked={false} onChange={() => markPurchased(item.id)} type="checkbox" /><span>{item.name}</span></label><small>Marcar como comprado</small></li>)}</ul></article>; })}</div>
+        {remainingIds.size === 0 && <div className="shopping-empty compact shopping-complete" role="status"><span>✓</span><h3>Compras concluídas!</h3><p>Todos os itens desta lista já foram comprados. O catálogo continua pronto para a próxima vez.</p><button className="primary-button" onClick={generateList} type="button">Gerar nova lista</button></div>}
+      </>}
     </section>}
   </div></main>;
 }
