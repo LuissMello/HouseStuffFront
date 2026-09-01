@@ -1161,7 +1161,7 @@
       "repository": "both",
       "type": "feature",
       "title": "Caderno de compras com histórico",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Morador marca itens no caderno, confirma a compra e consulta os itens finalizados no histórico da casa.",
       "subtasks": [
         {
@@ -1177,12 +1177,12 @@
         {
           "id": "HOUSE-310-03",
           "title": "Caderno responsivo e integração no frontend",
-          "status": "inProgress"
+          "status": "completed"
         },
         {
           "id": "HOUSE-310-04",
           "title": "Testes, publicação, migration e fechamento",
-          "status": "pending"
+          "status": "completed"
         }
       ]
     }
