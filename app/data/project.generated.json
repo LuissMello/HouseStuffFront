@@ -927,7 +927,7 @@
       "repository": "both",
       "type": "feature",
       "title": "Cor pessoal dos moradores",
-      "status": "inProgress",
+      "status": "completed",
       "result": "Cada morador escolhe uma cor persistida e é reconhecido por ela em avatares, tarefas e calendário.",
       "subtasks": [
         {
@@ -953,7 +953,7 @@
         {
           "id": "HOUSE-240-05",
           "title": "Integração, testes, publicação e fechamento",
-          "status": "inProgress"
+          "status": "completed"
         }
       ]
     }
