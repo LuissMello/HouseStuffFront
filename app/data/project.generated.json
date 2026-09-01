@@ -3,7 +3,7 @@
   "project": "HouseStuff",
   "updatedAt": "2026-09-01",
   "status": "onTrack",
-  "currentStageId": "M28",
+  "currentStageId": "M29",
   "stages": [
     {
       "id": "M0",
@@ -149,6 +149,11 @@
       "id": "M28",
       "name": "Compatibilidade iPhone",
       "outcome": "As telas principais permanecem utilizáveis no Safari do iPhone 12 sem estouros, zoom ou sobreposição"
+    },
+    {
+      "id": "M29",
+      "name": "Personalização",
+      "outcome": "Cada morador usa qualquer cor hexadecimal para representar sua identidade na casa"
     }
   ],
   "tasks": [
@@ -1114,6 +1119,33 @@
           "id": "HOUSE-290-03",
           "title": "Validação, publicação e fechamento",
           "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "HOUSE-300",
+      "stageId": "M29",
+      "area": "Acesso",
+      "repository": "both",
+      "type": "feature",
+      "title": "Cor pessoal hexadecimal livre",
+      "status": "inProgress",
+      "result": "Morador escolhe qualquer cor hexadecimal válida e continua identificado com contraste legível nas telas da casa.",
+      "subtasks": [
+        {
+          "id": "HOUSE-300-01",
+          "title": "Validação de qualquer hexadecimal na API",
+          "status": "completed"
+        },
+        {
+          "id": "HOUSE-300-02",
+          "title": "Seletor e digitação livre da cor no frontend",
+          "status": "inProgress"
+        },
+        {
+          "id": "HOUSE-300-03",
+          "title": "Contraste, testes, publicação e fechamento",
+          "status": "pending"
         }
       ]
     }

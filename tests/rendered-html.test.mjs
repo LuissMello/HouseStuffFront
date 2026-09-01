@@ -286,6 +286,13 @@ test("permite escolher uma cor pessoal e a reutiliza nas referências da casa", 
   assert.match(header, /accessApi\.updateProfileColor/);
   assert.match(colors, /#2F6B50/);
   assert.match(colors, /#9B356A/);
+  assert.match(colors, /\^#\[0-9a-f\]\{6\}\$/i);
+  assert.match(colors, /profileColorContrast/);
+  assert.match(colors, /--person-contrast/);
+  assert.match(header, /type="color"/);
+  assert.match(header, /Código hexadecimal/);
+  assert.match(header, /pattern="#\[0-9A-Fa-f\]\{6\}"/);
+  assert.match(header, /saveCustomColor/);
   assert.match(tasks, /member\.profileColor/);
   assert.match(calendar, /participant\.profileColor/);
   assert.match(api, /\/api\/v1\/auth\/me\/color/);

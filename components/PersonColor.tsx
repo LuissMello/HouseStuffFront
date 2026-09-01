@@ -11,14 +11,25 @@ export const profileColors = [
 
 export const defaultProfileColor = profileColors[0].value;
 
+export function normalizeProfileColor(value?: string | null) {
+  const trimmed = value?.trim();
+  return trimmed && /^#[0-9a-f]{6}$/i.test(trimmed) ? trimmed.toUpperCase() : null;
+}
+
 export function safeProfileColor(value?: string | null) {
-  return profileColors.some((color) => color.value.toLowerCase() === value?.toLowerCase())
-    ? value!
-    : defaultProfileColor;
+  return normalizeProfileColor(value) ?? defaultProfileColor;
+}
+
+export function profileColorContrast(value?: string | null) {
+  const color = safeProfileColor(value);
+  const red = Number.parseInt(color.slice(1, 3), 16);
+  const green = Number.parseInt(color.slice(3, 5), 16);
+  const blue = Number.parseInt(color.slice(5, 7), 16);
+  return (red * 299 + green * 587 + blue * 114) / 1000 >= 150 ? "#17211B" : "#FFFFFF";
 }
 
 export function personColorStyle(value?: string | null): CSSProperties {
-  return { "--person-color": safeProfileColor(value) } as CSSProperties;
+  return { "--person-color": safeProfileColor(value), "--person-contrast": profileColorContrast(value) } as CSSProperties;
 }
 
 export function PersonAvatar({ name, profileColor, className = "" }: { name: string; profileColor?: string | null; className?: string }) {
